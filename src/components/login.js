@@ -17,7 +17,7 @@ const Login = () => {
 	const userLogin = e => {
 		e.preventDefault();
 		axios
-			.post('https://newpkmtcg.herokuapp.com/api-token-auth/')
+			.post('https://newpkmtcg.herokuapp.com/api-token-auth/', user)
 			.then(res => {
 				console.log(res, 'res dont you see halo 3');
 			})
