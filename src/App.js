@@ -6,7 +6,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 
 function App(props) {
-	console.log(props);
+	console.log(props, 'props');
 	return (
 		<div className='App'>
 			<Sidebar />
