@@ -22,6 +22,7 @@ const Login = props => {
 			.post(`https://newpkmtcg.herokuapp.com/api-token-auth/`, user)
 			.then(res => {
 				console.log(res, 'res dont you see halo 3');
+				localStorage.setItem('token', res.data.token);
 				props.history.push('/dashboard');
 			})
 			.catch(err => console.log(err, 'for sure error'));
