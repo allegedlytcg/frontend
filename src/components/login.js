@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = props => {
+	console.log(props);
 	const [user, setUser] = useState({
 		username: '',
 		password: '',
@@ -21,21 +22,9 @@ const Login = () => {
 			.post(`https://newpkmtcg.herokuapp.com/api-token-auth/`, user)
 			.then(res => {
 				console.log(res, 'res dont you see halo 3');
+				props.history.push('/dashboard:id');
 			})
 			.catch(err => console.log(err, 'for sure error'));
-		// fetch('https://newpkmtcg.herokuapp.com/api-token-auth/', user, {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(user),
-		// 	mode: 'no-cors',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Accept: 'application/json',
-		// 	},
-		// })
-		// 	.then(res => {
-		// 		console.log(res, 'res dont you see halo 3');
-		// 	})
-		// 	.catch(err => console.log(err, 'for sure error'));
 	};
 
 	return (
