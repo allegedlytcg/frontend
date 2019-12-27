@@ -29,15 +29,6 @@ const Sidebar = () => {
 			</div>
 		);
 	}
-	// return (
-	// 	<div>
-	// 		<h1>Sidebar</h1>
-	// 		<NavLink to='/'>Home</NavLink>
-	// 		<NavLink to='/login'>log in</NavLink>
-	// 		<NavLink to='/dashboard'>Dashboard</NavLink>
-	// 		<NavLink to='/lobby'>lobby</NavLink>
-	// 	</div>
-	// );
 };
 
 export default Sidebar;
