@@ -23,52 +23,42 @@ const DeckEditor = () => {
 
 	// console.log(cards);
 
-<<<<<<< HEAD
-	const addToDeck = cardId => {
-		console.log(cardId);
+	const addToDeck = card => {
+		if (card.supertype != 'Energy') {
+			let check = checkNumInDeck(card);
+			if (check === false) {
+				console.log(
+					'error: Can not have more than 4 of the same non-elemental card.',
+				);
+				return;
+			}
+		}
 		const updated = myDeck;
-		updated.push(cardId);
+		updated.push(card);
 		setMyDeck(updated);
 		console.log(myDeck);
 	};
-=======
-	const addToDeck = card => {
-		if (card.supertype != 'Energy'){
-			let check = checkNumInDeck(card)
-			if (check === false){
-				console.log("error: Can not have more than 4 of the same non-elemental card.")
-				return
+
+	const checkNumInDeck = card => {
+		let duplicate = 0;
+		for (let i = 0; i < myDeck.length; i++) {
+			if (myDeck[i].id === card.id && duplicate < 3) {
+				duplicate = duplicate + 1;
+				console.log('DUP-Inside1 ' + duplicate);
+				console.log(myDeck[i]);
+			} else if (duplicate === 3) {
+				console.log('DUP-Inside2 ' + duplicate);
+				return false;
 			}
 		}
-			const updated = myDeck
-			updated.push(card)
-			setMyDeck(updated)
-			console.log(myDeck)
-	}
-
-	const checkNumInDeck=(card) => {
-		let duplicate = 0
-			for (let i = 0; i < myDeck.length; i++) {
-					if (myDeck[i].id === card.id && duplicate < 3) {
-							duplicate = duplicate + 1
-							console.log("DUP-Inside1 " + duplicate)
-							console.log(myDeck[i])
-					}
-					else if (duplicate === 3){
-						console.log("DUP-Inside2 " + duplicate)
-						return false
-					}
-			}
-			return true
-	}
->>>>>>> fe77b9f5619e7a4512f698c5bafdeaadfa54d53c
+		return true;
+	};
 
 	return (
 		<>
 			<h1>Deck Editor</h1>
 			<h3>my deck</h3>
 			<h3>available cards</h3>
-<<<<<<< HEAD
 			<StyledDeckEditor>
 				{lodash
 					.sortBy(cards, 'nationalPokedexNumber', 'supertype')
@@ -85,22 +75,21 @@ const DeckEditor = () => {
 						);
 					})}
 			</StyledDeckEditor>
-=======
-		<StyledDeckEditor>
-			{cards.map(card => {
-				// console.log(card);
-				return (
-					<div key={card.id} className='container'>
-						<img src={card.imageUrl} alt='card' onClick={()=> addToDeck(card)}/>
-<<<<<<< HEAD
-=======
 
->>>>>>> 03bf445da3b78438b92a936599010e64502f7921
-					</div>
-				);
-			})}
-		</StyledDeckEditor>
->>>>>>> fe77b9f5619e7a4512f698c5bafdeaadfa54d53c
+			<StyledDeckEditor>
+				{cards.map(card => {
+					// console.log(card);
+					return (
+						<div key={card.id} className='container'>
+							<img
+								src={card.imageUrl}
+								alt='card'
+								onClick={() => addToDeck(card)}
+							/>
+						</div>
+					);
+				})}
+			</StyledDeckEditor>
 		</>
 	);
 };
