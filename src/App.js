@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import Login from './components/Login';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import styled from 'styled-components';
 
@@ -11,9 +11,11 @@ function App(props) {
 	return (
 		<StyledApp>
 			<Sidebar />
-			<Route exact path='/' component={Home} />
-			<Route path='/login' component={Login} />
-			<Route path='/dashboard' component={Dashboard} />
+			<Switch>
+				<Route exact path='/' component={Home} />
+				<Route path='/login' component={Login} />
+				<Route path='/dashboard' component={Dashboard} />
+			</Switch>
 		</StyledApp>
 	);
 }
