@@ -37,9 +37,11 @@ const DeckEditor = () => {
 			<h3>available cards</h3>
 		<StyledDeckEditor>
 			{cards.map(card => {
+				console.log(card);
 				return (
 					<div key={card.id} className='container'>
 						<img src={card.imageUrl} alt='card' onClick={()=> addToDeck(card)}/>
+
 					</div>
 				);
 			})}
