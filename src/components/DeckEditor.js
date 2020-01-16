@@ -20,14 +20,36 @@ const DeckEditor = () => {
 			.catch(err => console.log(err, '100% error'));
 	}, []);
 
-	console.log(cards);
+	// console.log(cards);
 
-	const addToDeck = cardId => {
-		console.log(cardId)
-		const updated = myDeck
-		updated.push(cardId)
-		setMyDeck(updated)
-		console.log(myDeck)
+	const addToDeck = card => {
+		if (card.supertype != 'Energy'){
+			let check = checkNumInDeck(card)
+			if (check === false){
+				console.log("error: Can not have more than 4 of the same non-elemental card.")
+				return
+			}
+		}
+			const updated = myDeck
+			updated.push(card)
+			setMyDeck(updated)
+			console.log(myDeck)
+	}
+
+	const checkNumInDeck=(card) => {
+		let duplicate = 0
+			for (let i = 0; i < myDeck.length; i++) {
+					if (myDeck[i].id === card.id && duplicate < 3) {
+							duplicate = duplicate + 1
+							console.log("DUP-Inside1 " + duplicate)
+							console.log(myDeck[i])
+					}
+					else if (duplicate === 3){
+						console.log("DUP-Inside2 " + duplicate)
+						return false
+					}
+			}
+			return true
 	}
 
 	return (
@@ -37,11 +59,14 @@ const DeckEditor = () => {
 			<h3>available cards</h3>
 		<StyledDeckEditor>
 			{cards.map(card => {
-				console.log(card);
+				// console.log(card);
 				return (
 					<div key={card.id} className='container'>
 						<img src={card.imageUrl} alt='card' onClick={()=> addToDeck(card)}/>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 03bf445da3b78438b92a936599010e64502f7921
 					</div>
 				);
 			})}
