@@ -63,6 +63,10 @@ const DeckEditor = () => {
 				return (
 					<div key={card.id} className='container'>
 						<img src={card.imageUrl} alt='card' onClick={()=> addToDeck(card)}/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03bf445da3b78438b92a936599010e64502f7921
 					</div>
 				);
 			})}
