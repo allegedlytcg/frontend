@@ -6,7 +6,8 @@ const DeckEditor = () => {
 	//state
 	const [cards, setCards] = useState([]);
 
-	const [myDeck, setMyDeck] = useState([{}]);
+	const [myDeck, setMyDeck] = useState([]);
+	// let myDeck = [];
 
 	//get request on load
 	useEffect(() => {
@@ -28,11 +29,17 @@ const DeckEditor = () => {
 			<h3>my deck</h3>
 			<h3>available cards</h3>
 			{cards.map(card => {
+				console.log(card);
 				return (
 					<div key={card.id} className='container'>
-						<img src={card.imageUrl} />
+						<img src={card.imageUrl} alt='card' />
 						<div>
-							<button>add</button>
+							<button
+								onClick={() => {
+									setMyDeck(card.imageUrl);
+								}}>
+								add
+							</button>
 						</div>
 					</div>
 				);
