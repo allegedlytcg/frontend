@@ -75,21 +75,6 @@ const DeckEditor = () => {
 						);
 					})}
 			</StyledDeckEditor>
-
-			<StyledDeckEditor>
-				{cards.map(card => {
-					// console.log(card);
-					return (
-						<div key={card.id} className='container'>
-							<img
-								src={card.imageUrl}
-								alt='card'
-								onClick={() => addToDeck(card)}
-							/>
-						</div>
-					);
-				})}
-			</StyledDeckEditor>
 		</>
 	);
 };
