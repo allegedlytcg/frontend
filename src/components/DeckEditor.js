@@ -14,7 +14,7 @@ const DeckEditor = () => {
 			.get('https://api.pokemontcg.io/v1/cards?setCode=base1') // for sure figure out how to get more than one of the sets in one get
 			// .get('https://api.pokemontcg.io/v1/cards?setCode=base2')
 			.then(res => {
-				// console.log(res)
+				console.log(res)
 				setCards(res.data.cards);
 			})
 			.catch(err => console.log(err, '100% error'));
@@ -23,7 +23,7 @@ const DeckEditor = () => {
 	// console.log(cards);
 
 	const addToDeck = card => {
-		if (card.supertype != 'Energy'){
+		if (card.supertype !== 'Energy'){
 			let check = checkNumInDeck(card)
 			if (check === false){
 				console.log("error: Can not have more than 4 of the same non-elemental card.")
@@ -40,22 +40,27 @@ const DeckEditor = () => {
 		let duplicate = 0
 			for (let i = 0; i < myDeck.length; i++) {
 					if (myDeck[i].id === card.id && duplicate < 3) {
-							duplicate = duplicate + 1
-							console.log("DUP-Inside1 " + duplicate)
-							console.log(myDeck[i])
+						duplicate = duplicate + 1
 					}
 					else if (duplicate === 3){
-						console.log("DUP-Inside2 " + duplicate)
 						return false
 					}
 			}
 			return true
 	}
-
+                 
 	return (
 		<>
 			<h1>Deck Editor</h1>
 			<h3>my deck</h3>
+			{myDeck.length === 0 ? <p>There are no cards in your deck</p> : myDeck.map(card => {
+				console.log("Updated Deck: ", myDeck)
+				return (
+					<div key={card.id} className='container'>
+						 <img src={card.imageUrl} alt='card' /> {/*onClick={()=> removeFromDeck(card)} */}
+					</div>
+				)
+			})}
 			<h3>available cards</h3>
 		<StyledDeckEditor>
 			{cards.map(card => {
@@ -63,10 +68,6 @@ const DeckEditor = () => {
 				return (
 					<div key={card.id} className='container'>
 						<img src={card.imageUrl} alt='card' onClick={()=> addToDeck(card)}/>
-<<<<<<< HEAD
-=======
-
->>>>>>> 03bf445da3b78438b92a936599010e64502f7921
 					</div>
 				);
 			})}
