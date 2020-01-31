@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = props => {
+const Register = props => {
 	console.log(props);
 	const [user, setUser] = useState({
 		username: '',
@@ -16,21 +16,21 @@ const Login = props => {
 		console.log(user);
 	};
 
-	const userLogin = e => {
+	const userRegistration = e => {
 		e.preventDefault();
 		axios
-			.post(`https://alleged-backend.herokuapp.com/api/auth/login`, user)
+			.post(`https://alleged-backend.herokuapp.com/api/auth/register`, user)
 			.then(res => {
 				console.log(res, 'res dont you see halo 3');
-				localStorage.setItem('token', res.data.token);
-				props.history.push('/dashboard');
+				// localStorage.setItem('token', res.data.token);
+				props.history.push('/login');
 			})
 			.catch(err => console.log(err, 'for sure error'));
 	};
 
 	return (
 		<div>
-			<form onSubmit={userLogin}>
+			<form onSubmit={userRegistration}>
 				<label>username</label> <br />
 				<input
 					name='username'
@@ -57,4 +57,4 @@ const Login = props => {
 	);
 };
 
-export default Login;
+export default Register;

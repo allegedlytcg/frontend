@@ -24,9 +24,8 @@ const Sidebar = () => {
 			<StyledSidebar>
 				<h1>Sidebar</h1>
 				<NavLink to='/'>Home</NavLink>
+				<NavLink to='/register'>Register</NavLink>
 				<NavLink to='/login'>log in</NavLink>
-				{/* <NavLink to='/dashboard'>Dashboard</NavLink>
-				<NavLink to='/lobby'>lobby</NavLink> */}
 			</StyledSidebar>
 		);
 	}

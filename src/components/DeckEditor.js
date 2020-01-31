@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import * as lodash from 'lodash'; /* sorts our get request <--------->https://masteringjs.io/tutorials/lodash/sortby*/
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const DeckEditor = () => {
 	//state
@@ -9,16 +10,15 @@ const DeckEditor = () => {
 
 	const [myDeck, setMyDeck] = useState([]);
 
-	//get request on load
+	// get request on load
 	useEffect(() => {
-		axios
-			.get('https://api.pokemontcg.io/v1/cards?setCode=base1') // for sure figure out how to get more than one of the sets in one get
-			// .get('https://api.pokemontcg.io/v1/cards?setCode=base2')
+		axiosWithAuth()
+			.get('/pokemon/allpokemon')
 			.then(res => {
 				console.log(res);
-				setCards(res.data.cards);
+				setCards(res.data);
 			})
-			.catch(err => console.log(err, '100% error'));
+			.catch(err => console.log(err, 'can not get pokemon'));
 	}, []);
 
 	// console.log(cards);
