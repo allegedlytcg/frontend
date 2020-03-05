@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import * as lodash from 'lodash'; /* sorts our get request <--------->https://masteringjs.io/tutorials/lodash/sortby*/
+import * as _ from 'lodash'; /* sorts our get request <--------->https://masteringjs.io/tutorials/lodash/sortby  <--------->  https://lodash.com/docs/4.17.15  */
 
 const DeckEditor = () => {
 	//state
@@ -38,14 +38,23 @@ const DeckEditor = () => {
 		}
 		
 		const newDeck = [...myDeck, card]
-		console.log("shooting before update state", myDeck)
+		if(!card.quantity) card.quantity = 0;
+		card.quantity = card.quantity+=1;
 		setMyDeck(newDeck);
 	};
+
+	const removeCard = card => {
+		const newDeck = [...myDeck]
+		card.quantity = card.quantity-=1;
+		const cardIndex = _.indexOf(newDeck, card)
+		_.pullAt(newDeck, cardIndex);
+		setMyDeck(newDeck);
+	}
 
 	const checkNumInDeck=(card) => {
 		let duplicate = 0
 			for (let i = 0; i < myDeck.length; i++) {
-					if (myDeck[i].id === card.id && duplicate < 3) {
+					if (myDeck[i].name === card.name && duplicate < 3) {
 						duplicate = duplicate + 1
 					}
 					else if (duplicate === 3){
@@ -56,22 +65,25 @@ const DeckEditor = () => {
 	}
        
 	return (
-		<>
+		<DeckWrapper>
+		<StyledMyDeck>
 			<h1>Deck Editor</h1>
 			<h3>my deck</h3>
-		<StyledMyDeck>
+			<div className="deck-container">
 			{myDeck.length === 0 ? <p>There are no cards in your deck</p> : myDeck.map(card => {
 				console.log("Updated Deck: ", myDeck)
 				return (
-					<div key={Math.random()} >
+					<div key={Math.random()} onClick={() => removeCard(card)} >
 						 <img src={card.imageUrl} alt='card' /> 
 					</div>
 				)
 			})}
+			</div>
 			</StyledMyDeck>
-			<h3>available cards</h3>
 			<StyledDeckEditor>
-				{lodash
+			<h3>available cards</h3>
+			<div>
+				{_
 					.sortBy(cards, 'nationalPokedexNumber', 'supertype')
 					.map(card => {
 						return (
@@ -81,22 +93,30 @@ const DeckEditor = () => {
 									alt='card'
 								/>
 								<div className="buttons">
-									<div className="button remove">-</div>
+									<h1>{card.quantity ? card.quantity : '0' }</h1>
 									<div onClick={() => addToDeck(card)} className="button add">+</div>
 								</div>
 							</div>
 						);
 					})}
+					</div>
 			</StyledDeckEditor>
-		</>
+		</DeckWrapper>
 	);
 };
 
 const StyledDeckEditor = styled.div`
+	order: 1;
 	display: flex;
 	text-align: center;
 	flex-wrap: wrap;
-	flex-direction: row;
+	width: 80%;
+	flex-direction: column;
+	div {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
 	.container {
 		display: flex;
 		flex-direction: column;
@@ -133,15 +153,35 @@ const StyledDeckEditor = styled.div`
 
 const StyledMyDeck = styled.div`
 display:flex;
-width: 75%;
+width: 40%;
 flex-wrap: wrap;
-div {
+order: 2;
+flex-direction: column;
+
+.deck-container {
 	margin: 0px;
 	padding:  0px;
 	display: flex;
-	img {
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	:hover {
+		z-index: 100;
+	}
+	div {
+		width: 20%;
+		margin:4px;
 
+		img {
+			width: 100%;
+		}
 	}
 }
+`
+
+const DeckWrapper = styled.div`
+display:flex;
+width: 100%;
+
 `
 export default DeckEditor;
