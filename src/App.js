@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import Menu from './components/Menu';
 import Home from './components/Home';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
 import Register from './components/Register';
+import DeckEditor from './components/DeckEditor';
 
 function App(props) {
 	// console.log(props, 'props');
@@ -19,7 +19,7 @@ function App(props) {
 				<Route exact path='/' component={Home} />
 				<Route path='/register' component={Register} />
 				<Route path='/login' component={Login} />
-				<Route path='/dashboard' component={Dashboard} />
+				<Route path='/deckeditor' component={DeckEditor} />
 			</Switch>
 		</StyledApp>
 	);

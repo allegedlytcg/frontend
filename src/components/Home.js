@@ -8,7 +8,7 @@ const Home = () => {
 			<h1>Welcome to Allegedly TCG</h1>
 			<div className='buttons'>
 				<button>Play</button>
-				<Link to='dashboard'>
+				<Link to='deckeditor'>
 					<button>Deck Editor</button>
 				</Link>
 				<button>Settings</button>
