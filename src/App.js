@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 //components
-import Sidebar from './components/Sidebar';
+import Menu from './components/Menu';
 import Home from './components/Home';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -14,7 +14,7 @@ function App(props) {
 	// console.log(props, 'props');
 	return (
 		<StyledApp>
-			<Sidebar />
+			<Menu />
 			<Switch>
 				<Route exact path='/' component={Home} />
 				<Route path='/register' component={Register} />
@@ -29,5 +29,6 @@ export default App;
 
 const StyledApp = styled.div`
 	display: flex;
-	margin: 0;
+	flex-direction: column;
+	/* margin: 0; */
 `;
