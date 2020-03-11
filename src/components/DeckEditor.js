@@ -103,6 +103,7 @@ const DeckEditor = () => {
 	return (
 		<DeckWrapper>
 			<form>
+				Water
 				<input
 					type='checkbox'
 					defaultChecked={tags.Water}
@@ -110,6 +111,7 @@ const DeckEditor = () => {
 					label='Water'
 					onChange={() => toggleCheck('Water')}
 				/>
+				Grass
 				<input
 					type='checkbox'
 					defaultChecked={tags.Grass}
@@ -117,6 +119,7 @@ const DeckEditor = () => {
 					label='Grass'
 					onChange={() => toggleCheck('Grass')}
 				/>
+				Fire
 				<input
 					type='checkbox'
 					defaultChecked={tags.Fire}
@@ -125,7 +128,7 @@ const DeckEditor = () => {
 					onChange={() => toggleCheck('Fire')}
 				/>
 			</form>
-			<button onClick={() => toggleCheck('Water')}></button>
+			{/* <button onClick={() => toggleCheck('Water')}></button> */}
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>

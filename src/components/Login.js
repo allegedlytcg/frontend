@@ -24,7 +24,7 @@ const Login = props => {
 				console.log(res, 'res dont you see halo 3');
 				localStorage.setItem('user', res.data.message);
 				localStorage.setItem('token', res.data.token);
-				props.history.push('/dashboard');
+				props.history.push('');
 			})
 			.catch(err => console.log(err, 'for sure error'));
 	};
