@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import * as _ from 'lodash'; /* sorts our get request <--------->https://masteringjs.io/tutorials/lodash/sortby  <--------->  https://lodash.com/docs/4.17.15  */
@@ -6,20 +6,11 @@ import * as _ from 'lodash'; /* sorts our get request <--------->https://masteri
 const DeckEditor = () => {
 	//state
 	const [cards, setCards] = useState([]);
-
+	const [visible, setVisible] = useState(false)
 	const [myDeck, setMyDeck] = useState([]);
+	const [updating, setUpdating] = useState(false)
 	const [tags, setTag] = useState({
-		"Colorless": true,
-		"Darkness": true,
-		"Dragon": true,
-		"Fairy": true,
-		"Fighting": true,
-		"Fire": true,
-		"Grass": true,
-		"Lightning": true,
-		"Metal": true,
-		"Psychic": true,
-		"Water": true
+
 	});
 
 
@@ -34,6 +25,26 @@ const DeckEditor = () => {
 			})
 			.catch(err => console.log(err, '100% error'));
 	}, []);
+
+	const result = useRef(cards)
+
+	useEffect(() => {
+		setUpdating(true);
+	}, [tags]);
+
+	useEffect(() => {
+		if (result) {
+
+			if (visible === {}) {
+				result.current = cards;
+			} else {
+				console.log("idk how we got here")
+				result.current = visible;
+			}
+		}
+
+		console.log(result)
+	}, [visible]);
 
 
 	const addToDeck = card => {
@@ -76,41 +87,63 @@ const DeckEditor = () => {
 		return true
 	}
 
-	const  toggleCheck =  (type) => {
+	const toggleCheck = (type, e) => {
 
-		setTag({ ...tags, [type]: !tags[type] })
-		const filteredCards = []; // [...Water , ...Grass , ...]
-		 _.forIn(tags, (value, key) => {
-			//filter 
-			
-			if (value) {
-				let additional = _.filter(cards, { types: [key]} )
-				console.log(key);
-				console.log(additional);
-				
-				filteredCards.push(additional)
-			}
-		})
-		console.log(tags)
+		console.log(e.target.checked)
+		setTag({ ...tags, [type]: e.target.checked });
+		if (updating === true) {
+			filterCards()
+			setUpdating(false)
+		}
 
 
 		// let Energy = _.filter(cards, { name: `${type} Energy` })
 		// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
 		// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
 		// let update = [...filteredCards, ...Energy, ...ColorlessEnergy, ...SpecialEnergy]
-		console.log(filteredCards);
-		setCards(filteredCards);
+		// console.log(filteredCards)
+	}
+
+	const filterCards = () => {
+		console.log(tags);
+		console.log(cards);
+		console.log(visible);
+		let filteredCards = {}; // [...Water , ...Grass , ...]
+
+		_.forIn(tags, (value, key) => {
+			//filter 
+			console.log(value)
+			if (value === true) {
+
+				let additional = _.filter(cards, { types: [key] })
+				console.log(key);
+				console.log(additional);
+
+				filteredCards[key] = additional;
+			} else {
+				console.log("hit else statement")
+				filteredCards = { ...filteredCards, [key]: [] }
+				delete filteredCards[key]
+				console.log(filteredCards);
+
+			}
+			console.log("filteredCards", filteredCards);
+		})
+		// filteredCards.forEach(type {
+		// 	type.forEach(card {
+		// 		console.log(card)
+		// 	})})
+		// }
+		setVisible(filteredCards);
 
 
 	}
-
-
 	return (
 		<DeckWrapper>
 			<form>
-				<input type="checkbox" defaultChecked={tags.Water} value="Water" label="Water" onChange={() => toggleCheck("Water")} />
-				<input type="checkbox" defaultChecked={tags.Grass} value="Grass" label="Grass" onChange={() => toggleCheck("Grass")} />
-				<input type="checkbox" defaultChecked={tags.Fire} value="Fire" label="Fire" onChange={() => toggleCheck("Fire")} />
+				<input type="checkbox" value="Water" label="Water" onChange={(e) => toggleCheck("Water", e)} />
+				<input type="checkbox" name="Grass" value={tags.Grass} label="Grass" onChange={(e) => toggleCheck("Grass", e)} />
+				<input type="checkbox" value="Fire" label="Fire" onChange={(e) => toggleCheck("Fire", e)} />
 			</form>
 			<button onClick={() => toggleCheck("Water")}></button>
 			<StyledMyDeck>
@@ -130,8 +163,8 @@ const DeckEditor = () => {
 			<StyledDeckEditor>
 				<h3>available cards</h3>
 				<div>
-					{_
-						.sortBy(cards, 'nationalPokedexNumber', 'supertype')
+					{(_
+						.sortBy(result, 'nationalPokedexNumber', 'supertype')
 						.map(card => {
 							return (
 								<div key={card.id} className='container'>
@@ -145,7 +178,7 @@ const DeckEditor = () => {
 									</div>
 								</div>
 							);
-						})}
+						}))}
 				</div>
 			</StyledDeckEditor>
 		</DeckWrapper>
@@ -213,7 +246,6 @@ flex-direction: column;
 	flex-wrap: wrap;
 	width: 100%;
 	:hover {
-		z-index: 100;
 	}
 	div {
 		width: 20%;
