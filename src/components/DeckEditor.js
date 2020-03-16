@@ -6,9 +6,8 @@ import * as _ from 'lodash'; /* sorts our get request <--------->https://masteri
 const DeckEditor = () => {
 	//state
 	const [cards, setCards] = useState([]);
-	const [visible, setVisible] = useState(false)
+	const [visible, setVisible] = useState([])
 	const [myDeck, setMyDeck] = useState([]);
-	const [updating, setUpdating] = useState(false)
 	const [tags, setTag] = useState({
 
 	});
@@ -20,31 +19,24 @@ const DeckEditor = () => {
 		axios
 			.get('https://api.pokemontcg.io/v1/cards?pageSize=1000?&setCode=base1|base2|base3|base4|base5|basep|gym1|gym2') // for sure figure out how to get more than one of the sets in one get
 			.then(res => {
-				console.log(res)
 				setCards(res.data.cards);
+				setVisible(res.data.cards)
 			})
-			.catch(err => console.log(err, '100% error'));
 	}, []);
 
-	const result = useRef(cards)
-
 	useEffect(() => {
-		setUpdating(true);
+		console.log(tags)
+		filterCards()
+		_.values(tags).map((tag) => {
+			if (tag === true) {
+			console.log("true tag")
+		} else {
+			setVisible(cards)
+		}
+		})
+
 	}, [tags]);
 
-	useEffect(() => {
-		if (result) {
-
-			if (visible === {}) {
-				result.current = cards;
-			} else {
-				console.log("idk how we got here")
-				result.current = visible;
-			}
-		}
-
-		console.log(result)
-	}, [visible]);
 
 
 	const addToDeck = card => {
@@ -87,14 +79,12 @@ const DeckEditor = () => {
 		return true
 	}
 
-	const toggleCheck = (type, e) => {
+	const toggleCheck = (e) => {
+		const type = e.target.name;
+		console.log(tags)
+		setTag({ ...tags, [type]: !e.target.value });
+	
 
-		console.log(e.target.checked)
-		setTag({ ...tags, [type]: e.target.checked });
-		if (updating === true) {
-			filterCards()
-			setUpdating(false)
-		}
 
 
 		// let Energy = _.filter(cards, { name: `${type} Energy` })
@@ -105,14 +95,12 @@ const DeckEditor = () => {
 	}
 
 	const filterCards = () => {
-		console.log(tags);
-		console.log(cards);
-		console.log(visible);
+
 		let filteredCards = {}; // [...Water , ...Grass , ...]
 
 		_.forIn(tags, (value, key) => {
+			console.log(key, value)
 			//filter 
-			console.log(value)
 			if (value === true) {
 
 				let additional = _.filter(cards, { types: [key] })
@@ -120,15 +108,20 @@ const DeckEditor = () => {
 				console.log(additional);
 
 				filteredCards[key] = additional;
+				_.merge(filteredCards, filteredCards[key])
+				delete filteredCards[key]
+
 			} else {
 				console.log("hit else statement")
 				filteredCards = { ...filteredCards, [key]: [] }
+				_.merge(filteredCards, filteredCards[key])
 				delete filteredCards[key]
 				console.log(filteredCards);
 
 			}
-			console.log("filteredCards", filteredCards);
 		})
+
+
 		// filteredCards.forEach(type {
 		// 	type.forEach(card {
 		// 		console.log(card)
@@ -141,9 +134,9 @@ const DeckEditor = () => {
 	return (
 		<DeckWrapper>
 			<form>
-				<input type="checkbox" value="Water" label="Water" onChange={(e) => toggleCheck("Water", e)} />
-				<input type="checkbox" name="Grass" value={tags.Grass} label="Grass" onChange={(e) => toggleCheck("Grass", e)} />
-				<input type="checkbox" value="Fire" label="Fire" onChange={(e) => toggleCheck("Fire", e)} />
+				<input type="checkbox" value={tags.Water } name="Water" label="Water" onChange={(e) => toggleCheck(e)} />
+				<input type="checkbox" value={tags.Grass} name="Grass" label="Grass" onChange={(e) => toggleCheck(e)} />
+				<input type="checkbox" value={tags.Fire } name="Fire" label="Fire" onChange={(e) => toggleCheck(e)} />
 			</form>
 			<button onClick={() => toggleCheck("Water")}></button>
 			<StyledMyDeck>
@@ -164,7 +157,7 @@ const DeckEditor = () => {
 				<h3>available cards</h3>
 				<div>
 					{(_
-						.sortBy(result, 'nationalPokedexNumber', 'supertype')
+						.sortBy(visible, 'nationalPokedexNumber', 'supertype')
 						.map(card => {
 							return (
 								<div key={card.id} className='container'>
@@ -180,6 +173,7 @@ const DeckEditor = () => {
 							);
 						}))}
 				</div>
+
 			</StyledDeckEditor>
 		</DeckWrapper>
 	);
