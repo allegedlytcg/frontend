@@ -21,8 +21,8 @@ const DeckEditor = () => {
 		"Psychic": false,
 		"Water": false
 	});
-
-
+let keys = Object.keys(tags)
+console.log(keys);
 
 	//get request on load
 	useEffect(() => {
@@ -35,15 +35,19 @@ const DeckEditor = () => {
 	}, []);
 
 	useEffect(() => {
-		
+		let count = 0;	
 	
 		filterCards()
 		_.values(tags).map((tag) => {
 			if (tag === true) {
+				count++
 			} else {
+				
 			}
 		})
-
+		if (count === 0) {
+			setVisible(cards);
+		}
 	}, [tags]);
 
 
@@ -93,9 +97,7 @@ const DeckEditor = () => {
 		setTag({ ...tags, [type]: !tags[type] });
 
 
-		// let Energy = _.filter(cards, { name: `${type} Energy` })
-		// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
-		// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
+
 		// let update = [...filteredCards, ...Energy, ...ColorlessEnergy, ...SpecialEnergy]
 		// console.log(filteredCards)
 	}
@@ -103,13 +105,19 @@ const DeckEditor = () => {
 	const filterCards = () => {
 
 		let filteredCards = {}; // [...Water , ...Grass , ...]
+		let fixed= [];
+		let newTest;
 
 		_.forIn(tags, (value, key) => {
+			// console.log(value, key)
 			//filter 
 			if (value === true) {
-				let additional = _.filter(cards, { types: [key] })
-				filteredCards[key] = additional;
-				_.merge(filteredCards, filteredCards[key])
+				let test =  _.filter(cards, _.matches({ types: [key] }))
+				// let Energy = _.filter(cards, { name: `${key} Energy` })
+				// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
+				// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
+				// [...Energy], ...[ColorlessEnergy], ...[SpecialEnergy]
+				fixed.push(test);
 				delete filteredCards[key]
 
 			} else {
@@ -120,16 +128,23 @@ const DeckEditor = () => {
 			}
 		})
 		
-		console.log(filteredCards)
-		setVisible(filteredCards);
+		// console.log(fixed)
+		newTest = _.flattenDeep(fixed)
+		console.log(newTest);
+
+		setVisible(newTest);
 
 	}
 	return (
 		<DeckWrapper>
-			<button value={tags.Water} className={tags.Water ? "enabled" : null} name="Water" label="Water" onClick={(e) => toggleCheck(e)}>Water</button>
-			<button value={tags.Grass} className={tags.Grass ? "enabled" : null} name="Grass" label="Grass" onClick={(e) => toggleCheck(e)}>Grass</button>
-			<button value={tags.Fire} className={tags.Fire ? "enabled" : null} name="Fire" label="Fire" onClick={(e) => toggleCheck(e)}>Fire</button>
+		<div className="filters">
+			{keys.map(key => {
+				return (
 
+			<button value={tags.key} className={`filter ${tags[key] ? "enabled" : null}`} name={key} label={key} onClick={(e) => toggleCheck(e)}>{key}</button>
+				)
+			})}
+</div>
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>
@@ -223,7 +238,7 @@ const StyledMyDeck = styled.div`
 display:flex;
 width: 40%;
 flex-wrap: wrap;
-order: 2;
+order: 1;
 flex-direction: column;
 
 .deck-container {
@@ -249,6 +264,16 @@ flex-direction: column;
 const DeckWrapper = styled.div`
 display:flex;
 width: 100%;
+flex-direction: column;
+.filters{
+	display: flex;
+	flex-wrap: nowrap;
+	height: 50px;
+	
+}
+.filter {
+	height: 50px;
+}
 .enabled {
 	background-color: red;
 }
