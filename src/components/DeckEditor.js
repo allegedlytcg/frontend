@@ -9,7 +9,17 @@ const DeckEditor = () => {
 	const [visible, setVisible] = useState([])
 	const [myDeck, setMyDeck] = useState([]);
 	const [tags, setTag] = useState({
-
+		"Colorless": false,
+		"Darkness": false,
+		"Dragon": false,
+		"Fairy": false,
+		"Fighting": false,
+		"Fire": false,
+		"Grass": false,
+		"Lightning": false,
+		"Metal": false,
+		"Psychic": false,
+		"Water": false
 	});
 
 
@@ -25,14 +35,13 @@ const DeckEditor = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(tags)
+		
+	
 		filterCards()
 		_.values(tags).map((tag) => {
 			if (tag === true) {
-			console.log("true tag")
-		} else {
-			setVisible(cards)
-		}
+			} else {
+			}
 		})
 
 	}, [tags]);
@@ -81,10 +90,7 @@ const DeckEditor = () => {
 
 	const toggleCheck = (e) => {
 		const type = e.target.name;
-		console.log(tags)
-		setTag({ ...tags, [type]: !e.target.value });
-	
-
+		setTag({ ...tags, [type]: !tags[type] });
 
 
 		// let Energy = _.filter(cards, { name: `${type} Energy` })
@@ -99,46 +105,31 @@ const DeckEditor = () => {
 		let filteredCards = {}; // [...Water , ...Grass , ...]
 
 		_.forIn(tags, (value, key) => {
-			console.log(key, value)
 			//filter 
 			if (value === true) {
-
 				let additional = _.filter(cards, { types: [key] })
-				console.log(key);
-				console.log(additional);
-
 				filteredCards[key] = additional;
 				_.merge(filteredCards, filteredCards[key])
 				delete filteredCards[key]
 
 			} else {
-				console.log("hit else statement")
 				filteredCards = { ...filteredCards, [key]: [] }
 				_.merge(filteredCards, filteredCards[key])
 				delete filteredCards[key]
-				console.log(filteredCards);
 
 			}
 		})
-
-
-		// filteredCards.forEach(type {
-		// 	type.forEach(card {
-		// 		console.log(card)
-		// 	})})
-		// }
+		
+		console.log(filteredCards)
 		setVisible(filteredCards);
-
 
 	}
 	return (
 		<DeckWrapper>
-			<form>
-				<input type="checkbox" value={tags.Water } name="Water" label="Water" onChange={(e) => toggleCheck(e)} />
-				<input type="checkbox" value={tags.Grass} name="Grass" label="Grass" onChange={(e) => toggleCheck(e)} />
-				<input type="checkbox" value={tags.Fire } name="Fire" label="Fire" onChange={(e) => toggleCheck(e)} />
-			</form>
-			<button onClick={() => toggleCheck("Water")}></button>
+			<button value={tags.Water} className={tags.Water ? "enabled" : null} name="Water" label="Water" onClick={(e) => toggleCheck(e)}>Water</button>
+			<button value={tags.Grass} className={tags.Grass ? "enabled" : null} name="Grass" label="Grass" onClick={(e) => toggleCheck(e)}>Grass</button>
+			<button value={tags.Fire} className={tags.Fire ? "enabled" : null} name="Fire" label="Fire" onClick={(e) => toggleCheck(e)}>Fire</button>
+
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>
@@ -159,7 +150,8 @@ const DeckEditor = () => {
 					{(_
 						.sortBy(visible, 'nationalPokedexNumber', 'supertype')
 						.map(card => {
-							return (
+						
+								return (
 								<div key={card.id} className='container'>
 									<img
 										src={card.imageUrl}
@@ -171,7 +163,9 @@ const DeckEditor = () => {
 									</div>
 								</div>
 							);
-						}))}
+							}
+
+						))}
 				</div>
 
 			</StyledDeckEditor>
@@ -255,6 +249,9 @@ flex-direction: column;
 const DeckWrapper = styled.div`
 display:flex;
 width: 100%;
+.enabled {
+	background-color: red;
+}
 
 `
 export default DeckEditor;
