@@ -21,13 +21,15 @@ const DeckEditor = () => {
 		"Psychic": false,
 		"Water": false
 	});
-let keys = Object.keys(tags)
-console.log(keys);
+	let keys = Object.keys(tags)
+	console.log(keys);
 
 	//get request on load
 	useEffect(() => {
 		axios
-			.get('https://api.pokemontcg.io/v1/cards?pageSize=1000?&setCode=base1|base2|base3|base4|base5|basep|gym1|gym2') // for sure figure out how to get more than one of the sets in one get
+			.get(
+				'https://api.pokemontcg.io/v1/cards?pageSize=1000?&setCode=base1|base2|base3|base4|base5|basep|gym1|gym2',
+			) // for sure figure out how to get more than one of the sets in one get
 			.then(res => {
 				setCards(res.data.cards);
 				setVisible(res.data.cards)
@@ -35,14 +37,14 @@ console.log(keys);
 	}, []);
 
 	useEffect(() => {
-		let count = 0;	
-	
+		let count = 0;
+
 		filterCards()
 		_.values(tags).map((tag) => {
 			if (tag === true) {
 				count++
 			} else {
-				
+
 			}
 		})
 		if (count === 0) {
@@ -54,39 +56,40 @@ console.log(keys);
 
 	const addToDeck = card => {
 		if (card.supertype !== 'Energy') {
-			let check = checkNumInDeck(card)
+			let check = checkNumInDeck(card);
 			if (check === false) {
-				console.log("error: Can not have more than 4 of the same non-elemental card.")
-				return
+				console.log(
+					'error: Can not have more than 4 of the same non-elemental card.',
+				);
+				return;
 			}
 		}
 		if (myDeck.length === 60) {
-			console.log("Too many cards!")
-			return
+			console.log('Too many cards!');
+			return;
 		}
 
-		const newDeck = [...myDeck, card]
+		const newDeck = [...myDeck, card];
 		if (!card.quantity) card.quantity = 0;
 		card.quantity = card.quantity += 1;
 		setMyDeck(newDeck);
 	};
 
 	const removeCard = card => {
-		const newDeck = [...myDeck]
+		const newDeck = [...myDeck];
 		card.quantity = card.quantity -= 1;
-		const cardIndex = _.indexOf(newDeck, card)
+		const cardIndex = _.indexOf(newDeck, card);
 		_.pullAt(newDeck, cardIndex);
 		setMyDeck(newDeck);
-	}
+	};
 
-	const checkNumInDeck = (card) => {
-		let duplicate = 0
+	const checkNumInDeck = card => {
+		let duplicate = 0;
 		for (let i = 0; i < myDeck.length; i++) {
 			if (myDeck[i].name === card.name && duplicate < 3) {
-				duplicate = duplicate + 1
-			}
-			else if (duplicate === 3) {
-				return false
+				duplicate = duplicate + 1;
+			} else if (duplicate === 3) {
+				return false;
 			}
 		}
 		return true
@@ -96,23 +99,19 @@ console.log(keys);
 		const type = e.target.name;
 		setTag({ ...tags, [type]: !tags[type] });
 
-
-
-		// let update = [...filteredCards, ...Energy, ...ColorlessEnergy, ...SpecialEnergy]
-		// console.log(filteredCards)
 	}
 
 	const filterCards = () => {
 
 		let filteredCards = {}; // [...Water , ...Grass , ...]
-		let fixed= [];
+		let fixed = [];
 		let newTest;
 
 		_.forIn(tags, (value, key) => {
 			// console.log(value, key)
 			//filter 
 			if (value === true) {
-				let test =  _.filter(cards, _.matches({ types: [key] }))
+				let test = _.filter(cards, _.matches({ types: [key] }))
 				// let Energy = _.filter(cards, { name: `${key} Energy` })
 				// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
 				// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
@@ -127,7 +126,7 @@ console.log(keys);
 
 			}
 		})
-		
+
 		// console.log(fixed)
 		newTest = _.flattenDeep(fixed)
 		console.log(newTest);
@@ -137,26 +136,33 @@ console.log(keys);
 	}
 	return (
 		<DeckWrapper>
-		<div className="filters">
-			{keys.map(key => {
-				return (
+			<div className="filters">
+				{keys.map(key => {
+					return (
 
-			<button value={tags.key} className={`filter ${tags[key] ? "enabled" : null}`} name={key} label={key} onClick={(e) => toggleCheck(e)}>{key}</button>
-				)
-			})}
-</div>
+						<button value={tags.key} className={`filter ${tags[key] ? "enabled" : null}`} name={key} label={key} onClick={(e) => toggleCheck(e)}>{key}</button>
+					)
+				})}
+			</div>
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>
-				<div className="deck-container">
-					{myDeck.length === 0 ? <p>There are no cards in your deck</p> : myDeck.map(card => {
-						console.log("Updated Deck: ", myDeck)
-						return (
-							<div key={Math.random()} onClick={() => removeCard(card)} >
-								<img src={card.imageUrl} alt='card' />
-							</div>
-						)
-					})}
+				<div className='deck-container'>
+					{myDeck.length === 0 ? (
+						<p>There are no cards in your deck</p>
+					) : (
+							myDeck.map(card => {
+								console.log('Updated Deck: ', myDeck);
+								return (
+									<div
+										key={Math.random()}
+										onClick={() => removeCard(card)}
+									>
+										<img src={card.imageUrl} alt='card' />
+									</div>
+								);
+							})
+						)}
 				</div>
 			</StyledMyDeck>
 			<StyledDeckEditor>
@@ -165,20 +171,26 @@ console.log(keys);
 					{(_
 						.sortBy(visible, 'nationalPokedexNumber', 'supertype')
 						.map(card => {
-						
-								return (
+
+							return (
 								<div key={card.id} className='container'>
-									<img
-										src={card.imageUrl}
-										alt='card'
-									/>
-									<div className="buttons">
-										<h1>{card.quantity ? card.quantity : '0'}</h1>
-										<div onClick={() => addToDeck(card)} className="button add">+</div>
+									<img src={card.imageUrl} alt='card' />
+									<div className='buttons'>
+										<h1>
+											{card.quantity
+												? card.quantity
+												: '0'}
+										</h1>
+										<div
+											onClick={() => addToDeck(card)}
+											className='button add'
+										>
+											+
+										</div>
 									</div>
 								</div>
 							);
-							}
+						}
 
 						))}
 				</div>
@@ -208,28 +220,24 @@ const StyledDeckEditor = styled.div`
 			width: 100%;
 			display: flex;
 			height: 60px;
-		.button {
-			width: 50%;
-			align-items: center;
-			justify-content: center;
-			display: flex;
-
-		}
-		.add {
-			background-color: green;
-			font-weight: 800;
-			font-size: 30px;
-			color: white;
-
-		}
-		.remove {
-			background-color: red;
-			font-weight: 800;
-			font-size: 30px;
-			color: white;
-		}
-		}
-
+			.button {
+				width: 50%;
+				align-items: center;
+				justify-content: center;
+				display: flex;
+			}
+			.add {
+				background-color: green;
+				font-weight: 800;
+				font-size: 30px;
+				color: white;
+			}
+			.remove {
+				background-color: red;
+				font-weight: 800;
+				font-size: 30px;
+				color: white;
+			}
 		}
 	}
 `;
@@ -245,7 +253,7 @@ flex-direction: column;
 	margin: 0px;
 	padding:  0px;
 	display: flex;
-	flex-direction: row;
+	width: 40%;
 	flex-wrap: wrap;
 	width: 100%;
 	:hover {
@@ -254,12 +262,26 @@ flex-direction: column;
 		width: 20%;
 		margin:4px;
 
-		img {
-			width: 100%;
+	.deck-container {
+		margin: 0px;
+		padding: 0px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		width: 100%;
+		:hover {
+			z-index: 100;
+		}
+		div {
+			width: 20%;
+			margin: 4px;
+
+			img {
+				width: 100%;
+			}
 		}
 	}
-}
-`
+`;
 
 const DeckWrapper = styled.div`
 display:flex;
