@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Register = props => {
-	console.log(props);
+const Register = (props) => {
+	// console.log(props);
 	const [user, setUser] = useState({
-		username: '',
+		name: '',
 		password: '',
 	});
 
-	const userInput = e => {
+	const userInput = (e) => {
 		setUser({
 			...user,
 			[e.target.name]: e.target.value,
@@ -16,16 +16,20 @@ const Register = props => {
 		console.log(user);
 	};
 
-	const userRegistration = e => {
+	const userRegistration = (e) => {
 		e.preventDefault();
 		axios
-			.post(`https://alleged-backend.herokuapp.com/api/auth/register`, user)
-			.then(res => {
-				console.log(res, 'res dont you see halo 3');
-				// localStorage.setItem('token', res.data.token);
-				props.history.push('/login');
+			.post(
+				`https://alleged-mongo-backend.herokuapp.com/api/v1/user/register`,
+				user,
+			)
+			.then((res) => {
+				console.log(res);
+				localStorage.setItem('currentUser', res.data.name);
+				localStorage.setItem('token', res.data.token);
+				props.history.push('');
 			})
-			.catch(err => console.log(err, 'for sure error'));
+			.catch((err) => console.log(err, 'for sure error'));
 	};
 
 	return (
@@ -33,11 +37,11 @@ const Register = props => {
 			<form onSubmit={userRegistration}>
 				<label>username</label> <br />
 				<input
-					name='username'
+					name='name'
 					placeholder='username'
 					type='text'
 					onChange={userInput}
-					value={user.username}
+					value={user.name}
 					autoComplete='off'
 				/>
 				<br />

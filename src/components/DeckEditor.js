@@ -22,20 +22,17 @@ const DeckEditor = () => {
 		Water: true,
 	});
 
-	//get request on load
 	useEffect(() => {
 		axios
-			.get(
-				'https://api.pokemontcg.io/v1/cards?pageSize=1000?&setCode=base1|base2|base3|base4|base5|basep|gym1|gym2',
-			) // for sure figure out how to get more than one of the sets in one get
-			.then(res => {
-				console.log(res);
-				setCards(res.data.cards);
+			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
+			.then((res) => {
+				setCards(res.data);
 			})
-			.catch(err => console.log(err, '100% error'));
+			.catch((err) => console.log(err));
+		return () => {};
 	}, []);
 
-	const addToDeck = card => {
+	const addToDeck = (card) => {
 		if (card.supertype !== 'Energy') {
 			let check = checkNumInDeck(card);
 			if (check === false) {
@@ -56,7 +53,7 @@ const DeckEditor = () => {
 		setMyDeck(newDeck);
 	};
 
-	const removeCard = card => {
+	const removeCard = (card) => {
 		const newDeck = [...myDeck];
 		card.quantity = card.quantity -= 1;
 		const cardIndex = _.indexOf(newDeck, card);
@@ -64,7 +61,7 @@ const DeckEditor = () => {
 		setMyDeck(newDeck);
 	};
 
-	const checkNumInDeck = card => {
+	const checkNumInDeck = (card) => {
 		let duplicate = 0;
 		for (let i = 0; i < myDeck.length; i++) {
 			if (myDeck[i].name === card.name && duplicate < 3) {
@@ -76,7 +73,7 @@ const DeckEditor = () => {
 		return true;
 	};
 
-	const toggleCheck = type => {
+	const toggleCheck = (type) => {
 		setTag({ ...tags, [type]: !tags[type] });
 		const filteredCards = []; // [...Water , ...Grass , ...]
 		_.forIn(tags, (value, key) => {
@@ -136,7 +133,7 @@ const DeckEditor = () => {
 					{myDeck.length === 0 ? (
 						<p>There are no cards in your deck</p>
 					) : (
-						myDeck.map(card => {
+						myDeck.map((card) => {
 							console.log('Updated Deck: ', myDeck);
 							return (
 								<div
@@ -154,7 +151,7 @@ const DeckEditor = () => {
 				<h3>available cards</h3>
 				<div>
 					{_.sortBy(cards, 'nationalPokedexNumber', 'supertype').map(
-						card => {
+						(card) => {
 							return (
 								<div key={card.id} className='container'>
 									<img src={card.imageUrl} alt='card' />
