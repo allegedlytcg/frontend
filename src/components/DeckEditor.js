@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import * as _ from 'lodash'; /* sorts our get request <--------->https://masteringjs.io/tutorials/lodash/sortby  <--------->  https://lodash.com/docs/4.17.15  */
@@ -6,33 +6,57 @@ import * as _ from 'lodash'; /* sorts our get request <--------->https://masteri
 const DeckEditor = () => {
 	//state
 	const [cards, setCards] = useState([]);
-
+	const [visible, setVisible] = useState([])
 	const [myDeck, setMyDeck] = useState([]);
 	const [tags, setTag] = useState({
-		Colorless: true,
-		Darkness: true,
-		Dragon: true,
-		Fairy: true,
-		Fighting: true,
-		Fire: true,
-		Grass: true,
-		Lightning: true,
-		Metal: true,
-		Psychic: true,
-		Water: true,
+		"Colorless": false,
+		"Darkness": false,
+		"Dragon": false,
+		"Fairy": false,
+		"Fighting": false,
+		"Fire": false,
+		"Grass": false,
+		"Lightning": false,
+		"Metal": false,
+		"Psychic": false,
+		"Water": false
 	});
+	let keys = Object.keys(tags)
+	console.log(keys);
 
 	useEffect(() => {
 		axios
+
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
 				setCards(res.data);
+        setVisible(res.data.cards)
 			})
 			.catch((err) => console.log(err));
 		return () => {};
 	}, []);
 
-	const addToDeck = (card) => {
+
+
+	useEffect(() => {
+		let count = 0;
+
+		filterCards()
+		_.values(tags).map((tag) => {
+			if (tag === true) {
+				count++
+			} else {
+
+			}
+		})
+		if (count === 0) {
+			setVisible(cards);
+		}
+	}, [tags]);
+
+
+
+	const addToDeck = card => {
 		if (card.supertype !== 'Energy') {
 			let check = checkNumInDeck(card);
 			if (check === false) {
@@ -70,62 +94,60 @@ const DeckEditor = () => {
 				return false;
 			}
 		}
-		return true;
-	};
+		return true
+	}
 
-	const toggleCheck = (type) => {
+
+	const toggleCheck = (e) => {
+		const type = e.target.name;
+
 		setTag({ ...tags, [type]: !tags[type] });
-		const filteredCards = []; // [...Water , ...Grass , ...]
+
+	}
+
+	const filterCards = () => {
+
+		let filteredCards = {}; // [...Water , ...Grass , ...]
+		let fixed = [];
+		let newTest;
+
 		_.forIn(tags, (value, key) => {
-			//filter
+			// console.log(value, key)
+			//filter 
+			if (value === true) {
+				let test = _.filter(cards, _.matches({ types: [key] }))
+				// let Energy = _.filter(cards, { name: `${key} Energy` })
+				// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
+				// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
+				// [...Energy], ...[ColorlessEnergy], ...[SpecialEnergy]
+				fixed.push(test);
+				delete filteredCards[key]
 
-			if (value) {
-				let additional = _.filter(cards, { types: [key] });
-				console.log(key);
-				console.log(additional);
+			} else {
+				filteredCards = { ...filteredCards, [key]: [] }
+				_.merge(filteredCards, filteredCards[key])
+				delete filteredCards[key]
 
-				filteredCards.push(additional);
 			}
-		});
-		console.log(tags);
+		})
 
-		// let Energy = _.filter(cards, { name: `${type} Energy` })
-		// let ColorlessEnergy = _.filter(cards, { name: `Double Colorless Energy` })
-		// let SpecialEnergy = _.filter(cards, { supertype: `Energy`, subtype: "Special" })
-		// let update = [...filteredCards, ...Energy, ...ColorlessEnergy, ...SpecialEnergy]
-		console.log(filteredCards);
-		setCards(filteredCards);
-	};
+		// console.log(fixed)
+		newTest = _.flattenDeep(fixed)
+		console.log(newTest);
 
+		setVisible(newTest);
+
+	}
 	return (
 		<DeckWrapper>
-			<form>
-				Water
-				<input
-					type='checkbox'
-					defaultChecked={tags.Water}
-					value='Water'
-					label='Water'
-					onChange={() => toggleCheck('Water')}
-				/>
-				Grass
-				<input
-					type='checkbox'
-					defaultChecked={tags.Grass}
-					value='Grass'
-					label='Grass'
-					onChange={() => toggleCheck('Grass')}
-				/>
-				Fire
-				<input
-					type='checkbox'
-					defaultChecked={tags.Fire}
-					value='Fire'
-					label='Fire'
-					onChange={() => toggleCheck('Fire')}
-				/>
-			</form>
-			{/* <button onClick={() => toggleCheck('Water')}></button> */}
+			<div className="filters">
+				{keys.map(key => {
+					return (
+
+						<button value={tags.key} className={`filter ${tags[key] ? "enabled" : null}`} name={key} label={key} onClick={(e) => toggleCheck(e)}>{key}</button>
+					)
+				})}
+			</div>
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>
@@ -133,25 +155,29 @@ const DeckEditor = () => {
 					{myDeck.length === 0 ? (
 						<p>There are no cards in your deck</p>
 					) : (
-						myDeck.map((card) => {
-							console.log('Updated Deck: ', myDeck);
-							return (
-								<div
-									key={Math.random()}
-									onClick={() => removeCard(card)}
-								>
-									<img src={card.imageUrl} alt='card' />
-								</div>
-							);
-						})
-					)}
+
+							myDeck.map(card => {
+								console.log('Updated Deck: ', myDeck);
+								return (
+									<div
+										key={Math.random()}
+										onClick={() => removeCard(card)}
+									>
+										<img src={card.imageUrl} alt='card' />
+									</div>
+								);
+							})
+						)}
+
 				</div>
 			</StyledMyDeck>
 			<StyledDeckEditor>
 				<h3>available cards</h3>
 				<div>
-					{_.sortBy(cards, 'nationalPokedexNumber', 'supertype').map(
-						(card) => {
+					{(_
+						.sortBy(visible, 'nationalPokedexNumber', 'supertype')
+						.map(card => {
+
 							return (
 								<div key={card.id} className='container'>
 									<img src={card.imageUrl} alt='card' />
@@ -170,9 +196,11 @@ const DeckEditor = () => {
 									</div>
 								</div>
 							);
-						},
-					)}
+						}
+
+						))}
 				</div>
+
 			</StyledDeckEditor>
 		</DeckWrapper>
 	);
@@ -221,11 +249,24 @@ const StyledDeckEditor = styled.div`
 `;
 
 const StyledMyDeck = styled.div`
+display:flex;
+width: 40%;
+flex-wrap: wrap;
+order: 1;
+flex-direction: column;
+
+.deck-container {
+	margin: 0px;
+	padding:  0px;
 	display: flex;
 	width: 40%;
 	flex-wrap: wrap;
-	order: 2;
-	flex-direction: column;
+	width: 100%;
+	:hover {
+	}
+	div {
+		width: 20%;
+		margin:4px;
 
 	.deck-container {
 		margin: 0px;
@@ -249,7 +290,21 @@ const StyledMyDeck = styled.div`
 `;
 
 const DeckWrapper = styled.div`
+display:flex;
+width: 100%;
+flex-direction: column;
+.filters{
 	display: flex;
-	width: 100%;
-`;
+	flex-wrap: nowrap;
+	height: 50px;
+	
+}
+.filter {
+	height: 50px;
+}
+.enabled {
+	background-color: red;
+}
+
+`
 export default DeckEditor;
