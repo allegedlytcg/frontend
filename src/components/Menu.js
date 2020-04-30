@@ -7,16 +7,18 @@ const Menu = () => {
 		localStorage.removeItem('token');
 	};
 	const token = localStorage.getItem('token');
-	const username = localStorage.getItem('user').slice(8, 250);
-	console.log(username);
+	const name = localStorage.getItem('currentUser');
+
 	return (
 		<StyledMenu>
-			<h1>Allegedly TCG</h1>
+			<NavLink to='/'>
+				<h3>Allegedly TCG</h3>
+			</NavLink>
 			<div className='links'>
 				<NavLink to='/'>Home</NavLink>
 				{token ? (
 					<>
-						logged in as {username}
+						logged in as {name}
 						<NavLink to='/' onClick={logOut}>
 							(log out)
 						</NavLink>
@@ -24,8 +26,6 @@ const Menu = () => {
 				) : (
 					<NavLink to='/login'>log in</NavLink>
 				)}
-				{/* <NavLink to='/dashboard'>dashboard</NavLink>
-				<NavLink to='/lobby'>lobby</NavLink> */}
 			</div>
 		</StyledMenu>
 	);
@@ -35,13 +35,18 @@ const StyledMenu = styled.div`
 	background-color: lavender;
 	justify-content: space-between;
 	align-items: center;
-	h1 {
+
+	h3,
+	a {
 		padding: 0 1rem;
+		color: black;
+		text-decoration: none;
 	}
 	.links {
+		margin-right: 1rem;
 		a {
 			padding: 0 0.5rem;
-			text-decoration: none;
+			/* text-decoration: none; */
 		}
 	}
 `;

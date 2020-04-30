@@ -10,8 +10,10 @@ import Login from './components/Login';
 import Register from './components/Register';
 import DeckEditor from './components/DeckEditor';
 
-function App(props) {
-	// console.log(props, 'props');
+// will begin implementing global state like this is think
+// https://www.freecodecamp.org/news/state-management-with-react-hooks/
+
+function App() {
 	return (
 		<StyledApp>
 			<Menu />
@@ -25,10 +27,8 @@ function App(props) {
 	);
 }
 
-export default App;
-
 const StyledApp = styled.div`
 	display: flex;
 	flex-direction: column;
-	/* margin: 0; */
 `;
+export default App;

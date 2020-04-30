@@ -24,17 +24,19 @@ const DeckEditor = () => {
 	let keys = Object.keys(tags)
 	console.log(keys);
 
-	//get request on load
 	useEffect(() => {
 		axios
-			.get(
-				'https://api.pokemontcg.io/v1/cards?pageSize=1000?&setCode=base1|base2|base3|base4|base5|basep|gym1|gym2',
-			) // for sure figure out how to get more than one of the sets in one get
-			.then(res => {
-				setCards(res.data.cards);
-				setVisible(res.data.cards)
+
+			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
+			.then((res) => {
+				setCards(res.data);
+        setVisible(res.data.cards)
 			})
+			.catch((err) => console.log(err));
+		return () => {};
 	}, []);
+
+
 
 	useEffect(() => {
 		let count = 0;
@@ -75,7 +77,7 @@ const DeckEditor = () => {
 		setMyDeck(newDeck);
 	};
 
-	const removeCard = card => {
+	const removeCard = (card) => {
 		const newDeck = [...myDeck];
 		card.quantity = card.quantity -= 1;
 		const cardIndex = _.indexOf(newDeck, card);
@@ -83,7 +85,7 @@ const DeckEditor = () => {
 		setMyDeck(newDeck);
 	};
 
-	const checkNumInDeck = card => {
+	const checkNumInDeck = (card) => {
 		let duplicate = 0;
 		for (let i = 0; i < myDeck.length; i++) {
 			if (myDeck[i].name === card.name && duplicate < 3) {
@@ -95,8 +97,10 @@ const DeckEditor = () => {
 		return true
 	}
 
+
 	const toggleCheck = (e) => {
 		const type = e.target.name;
+
 		setTag({ ...tags, [type]: !tags[type] });
 
 	}
@@ -151,6 +155,7 @@ const DeckEditor = () => {
 					{myDeck.length === 0 ? (
 						<p>There are no cards in your deck</p>
 					) : (
+
 							myDeck.map(card => {
 								console.log('Updated Deck: ', myDeck);
 								return (
@@ -163,6 +168,7 @@ const DeckEditor = () => {
 								);
 							})
 						)}
+
 				</div>
 			</StyledMyDeck>
 			<StyledDeckEditor>
