@@ -28,6 +28,7 @@ const DeckEditor = () => {
 
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
+				console.log(res);
 				setCards(res.data);
 				setVisible(res.data);
 			})
@@ -121,22 +122,6 @@ const DeckEditor = () => {
 	};
 	return (
 		<DeckWrapper>
-			<div className='filters'>
-				{keys.map((key) => {
-					return (
-						<button
-							value={tags.key}
-							className={`filter ${tags[key] ? 'enabled' : null}`}
-							name={key}
-							label={key}
-							onClick={(e) => toggleCheck(e)}
-							key={Math.random()}
-						>
-							{key}
-						</button>
-					);
-				})}
-			</div>
 			<StyledMyDeck>
 				<h1>Deck Editor</h1>
 				<h3>my deck</h3>
@@ -157,6 +142,22 @@ const DeckEditor = () => {
 					)}
 				</div>
 			</StyledMyDeck>
+			<div className='filters'>
+				{keys.map((key) => {
+					return (
+						<button
+							value={tags.key}
+							className={`filter ${tags[key] ? 'enabled' : null}`}
+							name={key}
+							label={key}
+							onClick={(e) => toggleCheck(e)}
+							key={Math.random()}
+						>
+							{key}
+						</button>
+					);
+				})}
+			</div>
 			<StyledDeckEditor>
 				<h3>available cards</h3>
 				<div>
@@ -169,15 +170,15 @@ const DeckEditor = () => {
 							<div key={card.id} className='container'>
 								<img src={card.imageUrl} alt='card' />
 								<div className='buttons'>
-									<h1>
+									{/* <h1>
 										{card.quantity ? card.quantity : '0'}
-									</h1>
-									<div
+									</h1> */}
+									{/* <div
 										onClick={() => addToDeck(card)}
 										className='button add'
 									>
 										+
-									</div>
+									</div> */}
 								</div>
 							</div>
 						);
@@ -194,14 +195,17 @@ const StyledDeckEditor = styled.div`
 	text-align: center;
 	flex-wrap: wrap;
 	width: 80%;
-	flex-direction: column;
+	flex-direction: row;
+	img {
+		cursor: pointer;
+	}
 	div {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
 	.container {
-		display: flex;
+		/* display: flex; */
 		flex-direction: column;
 		margin: 1rem;
 		.buttons {
@@ -258,14 +262,17 @@ const StyledMyDeck = styled.div`
 const DeckWrapper = styled.div`
 	display: flex;
 	width: 100%;
-	flex-direction: column;
+	flex-direction: row;
 	.filters {
 		display: flex;
-		flex-wrap: nowrap;
-		height: 50px;
+		flex-wrap: wrap;
+		height: 25rem;
+		width: 25rem;
+		justify-content: space-evenly;
 	}
 	.filter {
-		height: 50px;
+		margin: 1rem 0;
+		width: 5rem;
 	}
 	.enabled {
 		background-color: red;
