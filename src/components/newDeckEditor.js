@@ -74,19 +74,22 @@ const NewDeckEditor = () => {
 			</div>
 			<Editor>
 				<AvailableCards>
-					{_.sortBy(cards, 'nationalPokedexNumber', 'supertype').map(
-						(card) => {
-							return (
-								<div key={card.id} className='cards'>
-									<img
-										src={card.imageUrl}
-										alt='card'
-										onClick={() => focused(card)}
-									/>
-								</div>
-							);
-						},
-					)}
+					{_.sortBy(
+						cards,
+						'nationalPokedexNumber',
+						'supertype',
+						'name',
+					).map((card) => {
+						return (
+							<div key={card.id} className='cards'>
+								<img
+									src={card.imageUrl}
+									alt='card'
+									onClick={() => focused(card)}
+								/>
+							</div>
+						);
+					})}
 				</AvailableCards>
 				<div>
 					{selectedCard.map((card) => {
