@@ -58,6 +58,31 @@ const CardPool = styled.div`
 	max-height: 80vh;
 	overflow: scroll;
 	overflow-x: hidden;
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		border-radius: 10px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 10px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+	img {
+		width: 11rem;
+		margin: 0 1rem 1rem 0;
+	}
 `;
 
 export default AvailableCards;

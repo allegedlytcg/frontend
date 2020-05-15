@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import AvaiableCards from '../components/DeckEditor/AvailableCards';
 import SingleCard from '../components/DeckEditor/SingleCard';
 import EditingCards from '../components/DeckEditor/EditingCards';
+import * as _ from 'lodash';
 
 const DeckEditor = () => {
 	const [cards, setCards] = useState([]);
@@ -50,8 +51,19 @@ const DeckEditor = () => {
 	const cardClick = (card) => {
 		const singleCard = [...selectedCard, card];
 		if (singleCard.length > 1) singleCard.shift();
-
 		setSelectedCard(singleCard);
+	};
+
+	const checkNumInDeck = (card) => {
+		let duplicate = 0;
+		for (let i = 0; i < edit.length; i++) {
+			if (edit[i].name === card.name && duplicate < 3) {
+				duplicate = duplicate + 1;
+			} else if (duplicate === 3) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	const addToEdit = (card) => {
@@ -65,16 +77,11 @@ const DeckEditor = () => {
 		setEdit(temp);
 	};
 
-	const checkNumInDeck = (card) => {
-		let duplicate = 0;
-		for (let i = 0; i < edit.length; i++) {
-			if (edit[i].name === card.name && duplicate < 3) {
-				duplicate = duplicate + 1;
-			} else if (duplicate === 3) {
-				return false;
-			}
-		}
-		return true;
+	const removeFromEdit = (card) => {
+		const newDeck = [...edit];
+		const cardIndex = _.indexOf(newDeck, card);
+		_.pullAt(newDeck, cardIndex);
+		setEdit(newDeck);
 	};
 
 	return (
@@ -93,7 +100,10 @@ const DeckEditor = () => {
 							addToEdit={addToEdit}
 						/>
 						<EditingStyles>
-							<EditingCards edit={edit} />
+							<EditingCards
+								edit={edit}
+								removeFromEdit={removeFromEdit}
+							/>
 						</EditingStyles>
 					</div>
 				</RightContainer>
@@ -116,7 +126,6 @@ const RightContainer = styled.div`
 `;
 
 const EditingStyles = styled.div`
-	display: flex;
 	flex-direction: row;
 `;
 

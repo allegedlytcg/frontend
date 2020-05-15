@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 const Login = (props) => {
 	console.log(props);
@@ -33,7 +34,7 @@ const Login = (props) => {
 	};
 
 	return (
-		<div>
+		<LoginStyles>
 			<form onSubmit={userLogin}>
 				<label>username</label> <br />
 				<input
@@ -57,8 +58,12 @@ const Login = (props) => {
 				<br />
 				<button>log in</button>
 			</form>
-		</div>
+		</LoginStyles>
 	);
 };
+
+const LoginStyles = styled.div`
+	text-align: center;
+`;
 
 export default Login;

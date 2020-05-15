@@ -23,14 +23,14 @@ const SingleCardStyles = styled.div`
 	margin-top: 6.7rem;
 
 	img {
-		width: 20rem;
+		width: 25rem;
 		align-self: center;
 	}
 
 	button {
 		margin-top: 2rem;
 		align-self: center;
-		padding: 1rem 2.5rem;
+		padding: 0.5rem 1.5rem;
 	}
 `;
 
