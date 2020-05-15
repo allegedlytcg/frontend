@@ -7,10 +7,12 @@ import EditingCards from '../components/DeckEditor/EditingCards';
 import * as _ from 'lodash';
 
 const DeckEditor = () => {
+	// states yo
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState([]);
 	const [edit, setEdit] = useState([]);
 
+	// on load fills available cards array and sends bulbasaur to the singlecard component
 	useEffect(() => {
 		axios
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
@@ -23,6 +25,7 @@ const DeckEditor = () => {
 		return () => {};
 	}, []);
 
+	// get this out of this file later
 	let buttons = [
 		'all',
 		'colorless',
@@ -36,6 +39,7 @@ const DeckEditor = () => {
 		'energy',
 	];
 
+	// adds sends the button text to the request endpoint
 	const requestBytype = (buttonText) => {
 		if (buttonText === 'all') buttonText = '';
 		axios
@@ -48,12 +52,14 @@ const DeckEditor = () => {
 			.catch((err) => console.log(err));
 	};
 
+	// sends this to the singlecard component
 	const cardClick = (card) => {
 		const singleCard = [...selectedCard, card];
 		if (singleCard.length > 1) singleCard.shift();
 		setSelectedCard(singleCard);
 	};
 
+	// limits pokemon and trainer cards to 4
 	const checkNumInDeck = (card) => {
 		let duplicate = 0;
 		for (let i = 0; i < edit.length; i++) {
@@ -66,6 +72,7 @@ const DeckEditor = () => {
 		return true;
 	};
 
+	// add to editing array
 	const addToEdit = (card) => {
 		if (card.supertype !== 'Energy') {
 			let check = checkNumInDeck(card);
@@ -77,6 +84,7 @@ const DeckEditor = () => {
 		setEdit(temp);
 	};
 
+	// remove from editing state array
 	const removeFromEdit = (card) => {
 		const newDeck = [...edit];
 		const cardIndex = _.indexOf(newDeck, card);
@@ -112,6 +120,7 @@ const DeckEditor = () => {
 	);
 };
 
+// css yo
 const Container = styled.div`
 	display: flex;
 `;
