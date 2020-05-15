@@ -21,6 +21,12 @@ const SingleCardStyles = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 6.7rem;
+
+	img {
+		width: 20rem;
+		align-self: center;
+	}
+
 	button {
 		margin-top: 2rem;
 		align-self: center;

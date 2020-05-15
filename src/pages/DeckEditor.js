@@ -14,11 +14,8 @@ const DeckEditor = () => {
 		axios
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
-				// console.log(res);
 				setCards(res.data);
-				console.log(res.data);
 				let first = res.data[43];
-				console.log(first, 'fuck you');
 				setSelectedCard([first]);
 			})
 			.catch((err) => console.log(err));
@@ -90,11 +87,15 @@ const DeckEditor = () => {
 					cardClick={cardClick}
 				/>
 				<RightContainer>
-					<SingleCard
-						selectedCard={selectedCard}
-						addToEdit={addToEdit}
-					/>
-					<EditingCards edit={edit} />
+					<div>
+						<SingleCard
+							selectedCard={selectedCard}
+							addToEdit={addToEdit}
+						/>
+						<EditingStyles>
+							<EditingCards edit={edit} />
+						</EditingStyles>
+					</div>
 				</RightContainer>
 			</Container>
 		</>
@@ -105,6 +106,18 @@ const Container = styled.div`
 	display: flex;
 `;
 
-const RightContainer = styled.div``;
+const RightContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	div {
+		width: 60rem;
+		flex-direction: column;
+	}
+`;
+
+const EditingStyles = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
 
 export default DeckEditor;

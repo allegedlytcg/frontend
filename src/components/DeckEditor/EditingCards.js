@@ -20,6 +20,10 @@ const EditingCards = (props) => {
 	);
 };
 
-const EditingStyles = styled.div``;
+const EditingStyles = styled.div`
+	img {
+		width: 8rem;
+	}
+`;
 
 export default EditingCards;

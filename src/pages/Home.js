@@ -21,6 +21,9 @@ const Home = () => {
 
 const StyledHome = styled.div`
 	margin: 0 auto;
+	h1 {
+		text-align: center;
+	}
 	.buttons {
 		display: flex;
 		flex-direction: column;
