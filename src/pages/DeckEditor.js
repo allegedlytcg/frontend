@@ -16,6 +16,10 @@ const DeckEditor = () => {
 			.then((res) => {
 				// console.log(res);
 				setCards(res.data);
+				console.log(res.data);
+				let first = res.data[43];
+				console.log(first, 'fuck you');
+				setSelectedCard([first]);
 			})
 			.catch((err) => console.log(err));
 		return () => {};

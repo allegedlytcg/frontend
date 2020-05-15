@@ -10,9 +10,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DeckEditor from './pages/DeckEditor';
 
-// will begin implementing global state like this is think
-// https://www.freecodecamp.org/news/state-management-with-react-hooks/
-
 function App() {
 	return (
 		<StyledApp>
