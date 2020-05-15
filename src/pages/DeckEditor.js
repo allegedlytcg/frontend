@@ -48,26 +48,17 @@ const DeckEditor = () => {
 
 	const cardClick = (card) => {
 		const singleCard = [...selectedCard, card];
-		if (singleCard.length > 1) {
-			singleCard.shift();
-		}
+		if (singleCard.length > 1) singleCard.shift();
+
 		setSelectedCard(singleCard);
 	};
 
 	const addToEdit = (card) => {
 		if (card.supertype !== 'Energy') {
 			let check = checkNumInDeck(card);
-			if (check === false) {
-				console.log(
-					'error: Can not have more than 4 of the same non-elemental card.',
-				);
-				return;
-			}
+			if (check === false) return;
 		}
-		if (edit.length === 60) {
-			console.log('Too many cards!');
-			return;
-		}
+		if (edit.length === 60) return;
 
 		const temp = [...edit, card];
 		setEdit(temp);

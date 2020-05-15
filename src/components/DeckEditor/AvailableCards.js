@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as _ from 'lodash';
 
 const AvailableCards = (props) => {
-	const { buttons, cards, requestBytype, focused } = props;
+	const { buttons, cards, requestBytype, cardClick } = props;
 	return (
 		<>
 			<AvailableCardsStyles>
@@ -30,7 +30,7 @@ const AvailableCards = (props) => {
 								<img
 									src={card.imageUrl}
 									alt='card'
-									onClick={() => focused(card)}
+									onClick={() => cardClick(card)}
 								/>
 							</div>
 						);
