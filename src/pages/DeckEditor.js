@@ -118,9 +118,7 @@ const Container = styled.div`
 
 const RightContainer = styled.div`
 	display: flex;
-	justify-content: center;
 	div {
-		width: 60rem;
 		flex-direction: column;
 	}
 `;
