@@ -6,18 +6,20 @@ import styled from 'styled-components';
 //components
 import Menu from './components/Menu';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import RegisterAndLogin from './pages/ResisterAndLogin';
 import DeckEditor from './pages/DeckEditor';
 
-function App() {
+function App(props) {
 	return (
 		<StyledApp>
 			<Menu />
 			<Switch>
 				<Route exact path='/' component={Home} />
-				<Route path='/register' component={Register} />
-				<Route path='/login' component={Login} />
+				<Route
+					path='/registerandlogin'
+					component={RegisterAndLogin}
+					{...props}
+				/>
 				<Route path='/deckeditor' component={DeckEditor} />
 			</Switch>
 		</StyledApp>

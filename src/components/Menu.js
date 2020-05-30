@@ -24,7 +24,7 @@ const Menu = () => {
 						</NavLink>
 					</>
 				) : (
-					<NavLink to='/login'>log in</NavLink>
+					<NavLink to='/registerandlogin'>log in</NavLink>
 				)}
 			</div>
 		</StyledMenu>
