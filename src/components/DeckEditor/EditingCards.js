@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 
 const EditingCards = (props) => {
 	const { edit, removeFromEdit } = props;

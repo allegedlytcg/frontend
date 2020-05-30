@@ -7,7 +7,7 @@ const Home = () => {
 		<StyledHome>
 			<h1>Welcome to Allegedly TCG</h1>
 			<div className='buttons'>
-				<Link to='register'>
+				<Link to='registerandlogin'>
 					<button>Create New Account</button>
 				</Link>
 				<Link to='deckeditor'>
