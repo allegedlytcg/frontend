@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
-const Register = (props) => {
-	console.log(props);
+const Register = () => {
+	const history = useHistory();
 	const [user, setUser] = useState({
 		name: '',
 		password: '',
@@ -14,7 +15,6 @@ const Register = (props) => {
 			...user,
 			[e.target.name]: e.target.value,
 		});
-		// console.log(user);
 	};
 
 	const userRegistration = (e) => {
@@ -25,10 +25,9 @@ const Register = (props) => {
 				user,
 			)
 			.then((res) => {
-				// console.log(res);
 				localStorage.setItem('currentUser', res.data.name);
 				localStorage.setItem('token', res.data.token);
-				props.history.push('');
+				history.push('/');
 			})
 			.catch((err) => console.log(err, 'for sure error'));
 	};
@@ -85,14 +84,6 @@ const RegisterStyles = styled.div`
 			border-radius: 0.25rem;
 			border-style: none;
 			padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-			&:focus {
-				border-style: none;
-				transition: ease-in-out, width 0.35s ease-in-out;
-				text-decoration: none;
-			}
-			&:active {
-				border-style: none;
-			}
 		}
 	}
 	.buttonDiv {

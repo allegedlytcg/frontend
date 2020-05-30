@@ -3,11 +3,11 @@ import Register from '../components/RegisterAndLogin/Register';
 import Login from '../components/RegisterAndLogin/Login';
 import styled from 'styled-components';
 
-const RegisterAndLogin = () => {
+const RegisterAndLogin = (props) => {
 	return (
 		<RegisterAndLoginStyles>
 			<Register />
-			<span classname='border'></span>
+			<span className='border'></span>
 			<Login />
 		</RegisterAndLoginStyles>
 	);

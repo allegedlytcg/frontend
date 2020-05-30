@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
-const Login = (props) => {
-	console.log(props);
+const Login = () => {
+	const history = useHistory();
 	const [user, setUser] = useState({
 		name: '',
 		password: '',
@@ -14,7 +15,6 @@ const Login = (props) => {
 			...user,
 			[e.target.name]: e.target.value,
 		});
-		// console.log(user);
 	};
 
 	const userLogin = (e) => {
@@ -25,10 +25,9 @@ const Login = (props) => {
 				user,
 			)
 			.then((res) => {
-				// console.log(res, 'res dont you see halo 3');
 				localStorage.setItem('currentUser', res.data.name);
 				localStorage.setItem('token', res.data.token);
-				props.history.push('');
+				history.push('/');
 			})
 			.catch((err) => console.log(err, 'for sure error'));
 	};

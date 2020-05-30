@@ -9,13 +9,17 @@ import Home from './pages/Home';
 import RegisterAndLogin from './pages/ResisterAndLogin';
 import DeckEditor from './pages/DeckEditor';
 
-function App() {
+function App(props) {
 	return (
 		<StyledApp>
 			<Menu />
 			<Switch>
 				<Route exact path='/' component={Home} />
-				<Route path='/registerandlogin' component={RegisterAndLogin} />
+				<Route
+					path='/registerandlogin'
+					component={RegisterAndLogin}
+					{...props}
+				/>
 				<Route path='/deckeditor' component={DeckEditor} />
 			</Switch>
 		</StyledApp>
