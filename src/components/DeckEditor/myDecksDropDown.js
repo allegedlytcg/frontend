@@ -9,30 +9,29 @@ const MyDeckDropDown = (props) => {
 		axiosWithAuth()
 			.get('/deck/me')
 			.then((res) => {
-				// console.log(res.data);
 				setUserDecks(res.data);
 			})
-			.catch((err) => console.log('no decks fuck face'));
+			.catch((err) =>
+				console.log('no decks for this use or not logged in'),
+			);
 		return () => {};
 	}, []);
 
 	const addAllToEdit = (e) => {
-		let poop = JSON.parse(e);
-		console.log(poop);
-		setEdit(poop);
+		let deckArr = JSON.parse(e);
+		setEdit(deckArr);
 	};
 	return (
 		<>
 			<select onChange={(e) => addAllToEdit(e.target.value)}>
 				<option></option>
-				{userDecks.map((names) => {
-					// console.log(names.cards);
+				{userDecks.map((deckObj) => {
 					return (
 						<option
-							value={JSON.stringify(names.cards)}
-							key={names._id}
+							value={JSON.stringify(deckObj.cards)}
+							key={deckObj._id}
 						>
-							{names.name}
+							{deckObj.name}
 						</option>
 					);
 				})}

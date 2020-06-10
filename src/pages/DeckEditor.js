@@ -107,11 +107,7 @@ const DeckEditor = () => {
 				/>
 				<RightContainer>
 					<div>
-						<MyDeckDropDown
-							addToEdit={addToEdit}
-							edit={edit}
-							setEdit={setEdit}
-						/>
+						<MyDeckDropDown setEdit={setEdit} />
 						<SingleCard
 							selectedCard={selectedCard}
 							addToEdit={addToEdit}
