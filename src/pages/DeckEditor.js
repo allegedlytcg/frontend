@@ -12,6 +12,8 @@ const DeckEditor = () => {
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState([]);
 	const [edit, setEdit] = useState([]);
+	const [existing, setExisting] = useState(false);
+	const [deckId, setDeckId] = useState('');
 
 	// on load fills available cards array and sends bulbasaur to the singlecard component
 	useEffect(() => {
@@ -107,15 +109,21 @@ const DeckEditor = () => {
 				/>
 				<RightContainer>
 					<div>
-						<MyDeckDropDown setEdit={setEdit} />
+						<MyDeckDropDown
+							setEdit={setEdit}
+							setExisting={setExisting}
+							setDeckId={setDeckId}
+						/>
 						<SingleCard
 							selectedCard={selectedCard}
 							addToEdit={addToEdit}
 						/>
 						<EditingStyles>
 							<EditingCards
+								deckId={deckId}
 								edit={edit}
 								removeFromEdit={removeFromEdit}
+								existing={existing}
 							/>
 						</EditingStyles>
 					</div>
