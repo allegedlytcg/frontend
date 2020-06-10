@@ -27,7 +27,6 @@ const EditingCards = (props) => {
 
 	// put req to api/v1/deck/deckId
 	const updateDeck = () => {
-		console.log();
 		const deckObj = {};
 		deckObj.name = deckName;
 		deckObj.cards = edit;
@@ -36,8 +35,6 @@ const EditingCards = (props) => {
 			.then(console.log('for sure updated'))
 			.catch((err) => console.log(err, 'for sure error'));
 	};
-	console.log(deckId);
-	console.log(existing);
 
 	// delete req to api/v1/deck/deckId
 	const deleteDeck = () => {
@@ -67,7 +64,7 @@ const EditingCards = (props) => {
 						<img
 							src={editing.imageUrl}
 							alt='cards to be added'
-							key={Math.random()}
+							key={index}
 							onClick={() => removeFromEdit(editing)}
 						/>
 					);
