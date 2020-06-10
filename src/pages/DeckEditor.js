@@ -75,7 +75,10 @@ const DeckEditor = () => {
 
 	// add to editing array
 	const addToEdit = (card) => {
-		if (card.supertype !== 'Energy') {
+		if (
+			card.supertype !== 'Energy' ||
+			card.name === 'Double Colorless Energy'
+		) {
 			let check = checkNumInDeck(card);
 			if (check === false) return;
 		}
