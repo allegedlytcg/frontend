@@ -12,8 +12,7 @@ const MyDeckDropDown = (props) => {
 				setUserDecks(res.data);
 			})
 			.catch((err) =>
-				console.log('no decks for this use or not logged in'),
-			);
+				console.log('no decks for this use or not logged in'),			);
 		return () => {};
 	}, []);
 
