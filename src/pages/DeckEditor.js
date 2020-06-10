@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import AvaiableCards from '../components/DeckEditor/AvailableCards';
 import SingleCard from '../components/DeckEditor/SingleCard';
 import EditingCards from '../components/DeckEditor/EditingCards';
+import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
 import * as _ from 'lodash';
 
 const DeckEditor = () => {
@@ -74,7 +75,10 @@ const DeckEditor = () => {
 
 	// add to editing array
 	const addToEdit = (card) => {
-		if (card.supertype !== 'Energy') {
+		if (
+			card.supertype !== 'Energy' ||
+			card.name === 'Double Colorless Energy'
+		) {
 			let check = checkNumInDeck(card);
 			if (check === false) return;
 		}
@@ -103,6 +107,7 @@ const DeckEditor = () => {
 				/>
 				<RightContainer>
 					<div>
+						<MyDeckDropDown setEdit={setEdit} />
 						<SingleCard
 							selectedCard={selectedCard}
 							addToEdit={addToEdit}
@@ -126,14 +131,15 @@ const Container = styled.div`
 `;
 
 const RightContainer = styled.div`
-	display: flex;
+	/* display: flex;
 	div {
 		flex-direction: column;
-	}
+	} */
 `;
 
 const EditingStyles = styled.div`
 	flex-direction: row;
+	flex-wrap: wrap;
 `;
 
 export default DeckEditor;

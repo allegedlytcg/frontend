@@ -3,7 +3,7 @@ import Register from '../components/RegisterAndLogin/Register';
 import Login from '../components/RegisterAndLogin/Login';
 import styled from 'styled-components';
 
-const RegisterAndLogin = (props) => {
+const RegisterAndLogin = () => {
 	return (
 		<RegisterAndLoginStyles>
 			<Register />

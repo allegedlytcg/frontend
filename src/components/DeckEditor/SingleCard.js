@@ -6,10 +6,14 @@ const SingleCard = (props) => {
 	return (
 		<>
 			{selectedCard.map((card) => {
+				// console.log(card);
 				return (
-					<SingleCardStyles key={Math.random()}>
+					<SingleCardStyles key={card.imageUrlHiRes}>
 						<img src={card.imageUrlHiRes} alt='selected card' />
-						<button onClick={() => addToEdit(card)}>+</button>
+						<p>{card.name}</p>
+						<div>
+							<button onClick={() => addToEdit(card)}>+</button>
+						</div>
 					</SingleCardStyles>
 				);
 			})}
@@ -18,19 +22,15 @@ const SingleCard = (props) => {
 };
 
 const SingleCardStyles = styled.div`
+	min-width: 50rem;
 	display: flex;
-	flex-direction: column;
-	margin-top: 6.7rem;
-
+	flex-direction: row;
 	img {
-		width: 25rem;
-		align-self: center;
+		width: 22rem;
 	}
-
 	button {
-		margin-top: 2rem;
-		align-self: center;
-		padding: 0.5rem 1.5rem;
+		max-width: 2rem;
+		max-height: 2rem;
 	}
 `;
 
