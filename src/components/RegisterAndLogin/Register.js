@@ -59,7 +59,6 @@ const Register = () => {
 						autoComplete='off'
 					/>
 				</div>
-
 				<br />
 				<div className='buttonDiv'>
 					<button>Register</button>
