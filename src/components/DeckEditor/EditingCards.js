@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
-import { useHistory } from 'react-router-dom';
 
 const EditingCards = (props) => {
 	const {
@@ -17,8 +16,6 @@ const EditingCards = (props) => {
 	const [updated, setUpdated] = useState(false);
 	const [deleted, setDeleted] = useState(false);
 	const [created, setCreated] = useState(false);
-
-	const history = useHistory();
 
 	const userInput = (e) => {
 		setDeckName(e.target.value);
