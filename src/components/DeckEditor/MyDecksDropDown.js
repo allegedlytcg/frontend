@@ -13,6 +13,7 @@ const MyDeckDropDown = (props) => {
 	// const [userDecks, setUserDecks] = useState([]);
 
 	// when rendered grab all user decks
+
 	useEffect(() => {
 		getDecks();
 	}, [getDecks]);
@@ -38,6 +39,7 @@ const MyDeckDropDown = (props) => {
 					return (
 						<option
 							value={JSON.stringify(deckObj)}
+
 							key={deckObj._id}
 						>
 							{deckObj.name}
