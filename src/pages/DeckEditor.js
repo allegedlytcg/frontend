@@ -7,6 +7,7 @@ import EditingCards from '../components/DeckEditor/EditingCards';
 import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
 import * as _ from 'lodash';
 import axiosWithAuth from '../utils/axiosWithAuth';
+
 const DeckEditor = () => {
 	// states yo
 	const [cards, setCards] = useState([]);
@@ -14,6 +15,8 @@ const DeckEditor = () => {
 	const [edit, setEdit] = useState([]);
 	const [existing, setExisting] = useState(false);
 	const [deckId, setDeckId] = useState('');
+	const [userDecks, setUserDecks] = useState([]);
+	const [deckName, setDeckName] = useState('');
 
 	// on load fills available cards array and sends bulbasaur to the singlecard component
 	useEffect(() => {
@@ -89,6 +92,19 @@ const DeckEditor = () => {
 		setEdit(temp);
 	};
 
+	// get user decks
+	const getDecks = () => {
+		axiosWithAuth()
+			.get('/deck/me')
+			.then((res) => {
+				setUserDecks(res.data);
+			})
+			.catch((err) =>
+				console.log('no decks for this use or not logged in'),
+			);
+		return () => {};
+	};
+
 	// remove from editing state array
 	const removeFromEdit = (card) => {
 		const newDeck = [...edit];
@@ -109,9 +125,12 @@ const DeckEditor = () => {
 				<RightContainer>
 					<div>
 						<MyDeckDropDown
+							setDeckName={setDeckName}
 							setEdit={setEdit}
 							setExisting={setExisting}
 							setDeckId={setDeckId}
+							getDecks={getDecks}
+							userDecks={userDecks}
 						/>
 						<SingleCard
 							selectedCard={selectedCard}
@@ -119,10 +138,13 @@ const DeckEditor = () => {
 						/>
 						<EditingStyles>
 							<EditingCards
+								getDecks={getDecks}
 								deckId={deckId}
 								edit={edit}
 								removeFromEdit={removeFromEdit}
 								existing={existing}
+								deckName={deckName}
+								setDeckName={setDeckName}
 							/>
 						</EditingStyles>
 					</div>

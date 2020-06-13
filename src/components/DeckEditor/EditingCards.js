@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
-// import * as _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 
 const EditingCards = (props) => {
-	const { edit, removeFromEdit, existing, deckId } = props;
+	const {
+		edit,
+		removeFromEdit,
+		existing,
+		deckId,
+		getDecks,
+		deckName,
+		setDeckName,
+	} = props;
 
-	const [deckName, setDeckName] = useState('');
 	const [updated, setUpdated] = useState(false);
 	const [deleted, setDeleted] = useState(false);
 	const [created, setCreated] = useState(false);
+
+	const history = useHistory();
 
 	const userInput = (e) => {
 		setDeckName(e.target.value);
@@ -25,9 +34,16 @@ const EditingCards = (props) => {
 			axiosWithAuth()
 				.post('/deck', deckObj)
 				// # TODO redirect to somewhere makes sense after saving or maybe not
-				.then(setCreated(true))
+				.then((created) => {
+					setCreated(true);
+					getDecks();
+					setInterval(function () {
+						setCreated(false);
+					}, 2000);
+				})
 				.catch((err) => console.log(err, 'error saving deck'));
 		}
+		// forceUpdate();
 	};
 
 	// put req to api/v1/deck/deckId
@@ -38,7 +54,13 @@ const EditingCards = (props) => {
 		if (deckName.length >= 4) {
 			axiosWithAuth()
 				.put(`/deck/${deckId}`, deckObj)
-				.then(setUpdated(true))
+				.then((update) => {
+					setUpdated(true);
+					getDecks();
+					setInterval(function () {
+						setUpdated(false);
+					}, 2000);
+				})
 				.catch((err) => console.log(err, 'for sure error'));
 		}
 	};
@@ -47,7 +69,13 @@ const EditingCards = (props) => {
 	const deleteDeck = () => {
 		axiosWithAuth()
 			.delete(`/deck/${deckId}`)
-			.then(setDeleted(true))
+			.then((del) => {
+				setDeleted(true);
+				getDecks();
+				setInterval(function () {
+					setDeleted(false);
+				}, 2000);
+			})
 			.catch((err) => console.log(err, 'error on dlete'));
 	};
 

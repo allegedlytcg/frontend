@@ -3,21 +3,21 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 
 const MyDeckDropDown = (props) => {
-	const { setEdit, setExisting, setDeckId } = props;
-	const [userDecks, setUserDecks] = useState([]);
+	const {
+		setEdit,
+		setExisting,
+		setDeckId,
+		getDecks,
+		userDecks,
+		setDeckName,
+	} = props;
+	// const [userDecks, setUserDecks] = useState([]);
 
 	// when rendered grab all user decks
+
 	useEffect(() => {
-		axiosWithAuth()
-			.get('/deck/me')
-			.then((res) => {
-				setUserDecks(res.data);
-			})
-			.catch((err) =>
-				console.log('no decks for this use or not logged in'),
-			);
-		return () => {};
-	}, []);
+		getDecks();
+	}, [getDecks]);
 
 	// if deck selected from dropdown update the edit state array
 	const addAllToEdit = (deckObj) => {
@@ -26,6 +26,7 @@ const MyDeckDropDown = (props) => {
 		setEdit([]);
 		let newDeckObj = JSON.parse(deckObj);
 		setExisting(true);
+		setDeckName(newDeckObj.name);
 		setDeckId(newDeckObj._id);
 		setEdit(newDeckObj.cards);
 	};
