@@ -13,7 +13,8 @@ const Home = () => {
 				<Link to='deckeditor'>
 					<button>Deck Editor</button>
 				</Link>
-				<button>Play</button>
+				<p>coming soon</p>
+				<button disabled>Play</button>
 			</div>
 		</StyledHome>
 	);

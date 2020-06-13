@@ -6,6 +6,7 @@ import SingleCard from '../components/DeckEditor/SingleCard';
 import EditingCards from '../components/DeckEditor/EditingCards';
 import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
 import * as _ from 'lodash';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const DeckEditor = () => {
 	// states yo
@@ -14,6 +15,8 @@ const DeckEditor = () => {
 	const [edit, setEdit] = useState([]);
 	const [existing, setExisting] = useState(false);
 	const [deckId, setDeckId] = useState('');
+	const [userDecks, setUserDecks] = useState([]);
+	const [deckName, setDeckName] = useState('');
 
 	// on load fills available cards array and sends bulbasaur to the singlecard component
 	useEffect(() => {
@@ -21,8 +24,7 @@ const DeckEditor = () => {
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
 				setCards(res.data);
-				let first = res.data[43];
-				setSelectedCard([first]);
+				setSelectedCard([res.data[70]]);
 			})
 			.catch((err) => console.log(err));
 		return () => {};
@@ -42,7 +44,7 @@ const DeckEditor = () => {
 		'energy',
 	];
 
-	// adds sends the button text to the request endpoint
+	// adds the button text to the end of request endpoint
 	const requestBytype = (buttonText) => {
 		if (buttonText === 'all') buttonText = '';
 		axios
@@ -90,6 +92,19 @@ const DeckEditor = () => {
 		setEdit(temp);
 	};
 
+	// get user decks
+	const getDecks = () => {
+		axiosWithAuth()
+			.get('/deck/me')
+			.then((res) => {
+				setUserDecks(res.data);
+			})
+			.catch((err) =>
+				console.log('no decks for this use or not logged in'),
+			);
+		return () => {};
+	};
+
 	// remove from editing state array
 	const removeFromEdit = (card) => {
 		const newDeck = [...edit];
@@ -110,9 +125,12 @@ const DeckEditor = () => {
 				<RightContainer>
 					<div>
 						<MyDeckDropDown
+							setDeckName={setDeckName}
 							setEdit={setEdit}
 							setExisting={setExisting}
 							setDeckId={setDeckId}
+							getDecks={getDecks}
+							userDecks={userDecks}
 						/>
 						<SingleCard
 							selectedCard={selectedCard}
@@ -120,10 +138,13 @@ const DeckEditor = () => {
 						/>
 						<EditingStyles>
 							<EditingCards
+								getDecks={getDecks}
 								deckId={deckId}
 								edit={edit}
 								removeFromEdit={removeFromEdit}
 								existing={existing}
+								deckName={deckName}
+								setDeckName={setDeckName}
 							/>
 						</EditingStyles>
 					</div>
@@ -139,10 +160,8 @@ const Container = styled.div`
 `;
 
 const RightContainer = styled.div`
-	/* display: flex;
-	div {
-		flex-direction: column;
-	} */
+	width: 100%;
+	margin: 1rem 1rem 0rem 0.4rem;
 `;
 
 const EditingStyles = styled.div`
