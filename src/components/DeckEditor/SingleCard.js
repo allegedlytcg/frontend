@@ -6,7 +6,6 @@ const SingleCard = (props) => {
 	return (
 		<>
 			{selectedCard.map((card) => {
-				console.log(card);
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
@@ -71,7 +70,7 @@ const SingleCard = (props) => {
 
 								{card.weaknesses
 									? card.weaknesses.map((weakness) => {
-											console.log(weakness);
+											// console.log(weakness);
 											return (
 												<p>
 													<h4>Weakenesses:</h4>

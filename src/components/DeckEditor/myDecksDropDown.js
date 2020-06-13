@@ -13,7 +13,6 @@ const MyDeckDropDown = (props) => {
 	// const [userDecks, setUserDecks] = useState([]);
 
 	// when rendered grab all user decks
-
 	useEffect(() => {
 		getDecks();
 	}, [getDecks]);
