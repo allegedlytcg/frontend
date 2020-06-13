@@ -7,6 +7,9 @@ const EditingCards = (props) => {
 	const { edit, removeFromEdit, existing, deckId } = props;
 
 	const [deckName, setDeckName] = useState('');
+	const [updated, setUpdated] = useState(false);
+	const [deleted, setDeleted] = useState(false);
+	const [created, setCreated] = useState(false);
 
 	const userInput = (e) => {
 		setDeckName(e.target.value);
@@ -18,11 +21,13 @@ const EditingCards = (props) => {
 		deckObj.name = deckName;
 		deckObj.cards = edit;
 
-		axiosWithAuth()
-			.post('/deck', deckObj)
-			// # TODO redirect to somewhere makes sense after saving or maybe not
-			.then(console.log('cool'))
-			.catch((err) => console.log(err, 'fuck you'));
+		if (deckName.length >= 4) {
+			axiosWithAuth()
+				.post('/deck', deckObj)
+				// # TODO redirect to somewhere makes sense after saving or maybe not
+				.then(setCreated(true))
+				.catch((err) => console.log(err, 'error saving deck'));
+		}
 	};
 
 	// put req to api/v1/deck/deckId
@@ -30,59 +35,138 @@ const EditingCards = (props) => {
 		const deckObj = {};
 		deckObj.name = deckName;
 		deckObj.cards = edit;
-		axiosWithAuth()
-			.put(`/deck/${deckId}`, deckObj)
-			.then(console.log('for sure updated'))
-			.catch((err) => console.log(err, 'for sure error'));
+		if (deckName.length >= 4) {
+			axiosWithAuth()
+				.put(`/deck/${deckId}`, deckObj)
+				.then(setUpdated(true))
+				.catch((err) => console.log(err, 'for sure error'));
+		}
 	};
 
 	// delete req to api/v1/deck/deckId
 	const deleteDeck = () => {
 		axiosWithAuth()
 			.delete(`/deck/${deckId}`)
-			.then(console.log('for sure deleted'))
+			.then(setDeleted(true))
 			.catch((err) => console.log(err, 'error on dlete'));
 	};
+
 	return (
 		<EditingDeckStyles>
-			<label>Deck Name</label>
-			<input name='name' value={deckName} onChange={userInput}></input>
-			{existing === false ? (
-				<button onClick={saveDeck}>Save Deck</button>
-			) : (
-				<>
-					<button onClick={updateDeck}>Update Deck</button>
-					<button onClick={deleteDeck}>Delete Deck</button>
-				</>
-			)}
-			{edit.length} / 60
-			{edit.length === 0 ? (
-				<p>There are no cards in your deck</p>
-			) : (
-				edit.map((editing, index) => {
-					return (
-						<img
-							src={editing.imageUrl}
-							alt='cards to be added'
-							key={index}
-							onClick={() => removeFromEdit(editing)}
-						/>
-					);
-				})
-			)}
+			<EditingInfo>
+				<div>
+					<label>Deck Name</label>
+					<br />
+					<input
+						name='name'
+						value={deckName}
+						onChange={userInput}
+					></input>
+					{deckName.length < 4 ? (
+						<p>Deck names bust be 4 or more characters</p>
+					) : null}
+					<p>Card quantity {edit.length} / 60</p>
+				</div>
+				{existing === false ? (
+					<>
+						{/* <form onSubmit={saveDeck}> */}
+						<button onClick={saveDeck}>Save Deck</button>
+						<br></br>
+						{/* </form> */}
+						{created ? <p>Deck Succesfully Created!</p> : null}
+					</>
+				) : (
+					<ButtonCont>
+						{/* <form> */}
+						<button onClick={updateDeck}>Save Deck</button>
+						<button onClick={deleteDeck}>Delete Deck</button>
+						{updated ? <p>Deck Succesfully Updated!</p> : null}
+						{deleted ? <p>Deck Succesfully Deleted!</p> : null}
+						{/* </form> */}
+					</ButtonCont>
+				)}
+			</EditingInfo>
+			<EditingArr>
+				{edit.length === 0 ? null : <p>Click cards to remove them</p>}
+				{edit.length === 0 ? (
+					<>
+						<p>There are no cards in your deck</p>
+						<br></br>
+					</>
+				) : (
+					edit.map((editing, index) => {
+						return (
+							<img
+								src={editing.imageUrl}
+								alt='cards to be added'
+								key={index}
+								onClick={() => removeFromEdit(editing)}
+							/>
+						);
+					})
+				)}
+			</EditingArr>
 		</EditingDeckStyles>
 	);
 };
 
-const EditingDeckStyles = styled.div`
-	img {
+const ButtonCont = styled.div`
+	flex-direction: row;
+	button {
+		margin: 0rem 1rem 0rem 0rem;
 		width: 8rem;
 	}
+`;
 
+const EditingDeckStyles = styled.div`
+	margin-top: 2rem;
+	flex-direction: column;
+	img {
+		width: 7rem;
+	}
+	p {
+		margin: 0;
+	}
 	button {
-		margin-top: 2rem;
-		align-self: center;
+		margin-top: 1rem;
+		/* align-self: center; */
+		width: 8rem;
 		padding: 0.5rem 1.5rem;
+	}
+`;
+
+const EditingInfo = styled.div`
+	display: flex;
+	flex-direction: column;
+	input {
+		width: 10rem;
+	}
+`;
+
+const EditingArr = styled.div`
+	max-height: 15rem;
+	overflow: scroll;
+	overflow-x: hidden;
+	margin-right: 1rem;
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		border-radius: 10px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 10px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
 	}
 `;
 

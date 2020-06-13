@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../utils/axiosWithAuth';
+import styled from 'styled-components';
 
 const MyDeckDropDown = (props) => {
 	const { setEdit, setExisting, setDeckId } = props;
@@ -30,7 +31,7 @@ const MyDeckDropDown = (props) => {
 	};
 
 	return (
-		<>
+		<StyledDropdown>
 			<select onChange={(e) => addAllToEdit(e.target.value)}>
 				<option>Create New Deck</option>
 				{userDecks.map((deckObj) => {
@@ -44,8 +45,13 @@ const MyDeckDropDown = (props) => {
 					);
 				})}
 			</select>
-		</>
+		</StyledDropdown>
 	);
 };
+
+const StyledDropdown = styled.div`
+	width: 8rem;
+	margin: 0rem 0rem;
+`;
 
 export default MyDeckDropDown;

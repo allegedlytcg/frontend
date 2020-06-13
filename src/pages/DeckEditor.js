@@ -6,7 +6,7 @@ import SingleCard from '../components/DeckEditor/SingleCard';
 import EditingCards from '../components/DeckEditor/EditingCards';
 import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
 import * as _ from 'lodash';
-
+import axiosWithAuth from '../utils/axiosWithAuth';
 const DeckEditor = () => {
 	// states yo
 	const [cards, setCards] = useState([]);
@@ -21,8 +21,7 @@ const DeckEditor = () => {
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
 				setCards(res.data);
-				let first = res.data[43];
-				setSelectedCard([first]);
+				setSelectedCard([res.data[70]]);
 			})
 			.catch((err) => console.log(err));
 		return () => {};
@@ -42,7 +41,7 @@ const DeckEditor = () => {
 		'energy',
 	];
 
-	// adds sends the button text to the request endpoint
+	// adds the button text to the end of request endpoint
 	const requestBytype = (buttonText) => {
 		if (buttonText === 'all') buttonText = '';
 		axios
@@ -139,10 +138,8 @@ const Container = styled.div`
 `;
 
 const RightContainer = styled.div`
-	/* display: flex;
-	div {
-		flex-direction: column;
-	} */
+	width: 100%;
+	margin: 1rem 1rem 0rem 0.4rem;
 `;
 
 const EditingStyles = styled.div`

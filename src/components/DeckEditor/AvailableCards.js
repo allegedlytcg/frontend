@@ -42,20 +42,23 @@ const AvailableCards = (props) => {
 };
 
 const AvailableCardsStyles = styled.div`
-	margin: 1rem;
+	margin: 0.5rem 1rem;
 	cursor: pointer;
 	button {
 		margin: 0 1rem 1rem 0;
 		margin-right: 1rem;
 		cursor: pointer;
 	}
+	p {
+		margin: 0.5rem 0rem;
+	}
 `;
 
 const CardPool = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	min-width: 61rem;
-	max-width: 61rem;
+	min-width: 56rem;
+	max-width: 56rem;
 	max-height: 80vh;
 	overflow: scroll;
 	overflow-x: hidden;
@@ -81,7 +84,7 @@ const CardPool = styled.div`
 		background: #555;
 	}
 	img {
-		width: 11rem;
+		width: 10rem;
 		margin: 0 1rem 1rem 0;
 	}
 `;

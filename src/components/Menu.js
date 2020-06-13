@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Menu = () => {
 	const logOut = () => {
-		localStorage.removeItem('token');
+		localStorage.clear();
 	};
 	const token = localStorage.getItem('token');
 	const name = localStorage.getItem('currentUser');
