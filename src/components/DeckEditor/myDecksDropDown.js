@@ -24,6 +24,7 @@ const MyDeckDropDown = (props) => {
 		// next two lines clear those states when the click the create new option
 		setExisting(false);
 		setEdit([]);
+		setDeckName('');
 		let newDeckObj = JSON.parse(deckObj);
 		setExisting(true);
 		setDeckName(newDeckObj.name);
