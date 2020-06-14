@@ -18,7 +18,6 @@ const MyDeckDropDown = (props) => {
 		getDecks();
 	}, [getDecks]);
 
-
 	// if deck selected from dropdown update the edit state array
 	const addAllToEdit = (deckObj) => {
 		// next two lines clear those states when the click the create new option
@@ -26,9 +25,7 @@ const MyDeckDropDown = (props) => {
 		setEdit([]);
 		setDeckName('');
 		let newDeckObj = JSON.parse(deckObj);
-		setExisting(true);
 		setDeckName(newDeckObj.name);
-		let newDeckObj = JSON.parse(deckObj);
 		setExisting(true);
 		setDeckId(newDeckObj._id);
 		setEdit(newDeckObj.cards);
