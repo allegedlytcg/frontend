@@ -141,8 +141,10 @@ const DeckEditor = () => {
 								getDecks={getDecks}
 								deckId={deckId}
 								edit={edit}
+								setEdit={setEdit}
 								removeFromEdit={removeFromEdit}
 								existing={existing}
+								setExisting={setExisting}
 								deckName={deckName}
 								setDeckName={setDeckName}
 							/>

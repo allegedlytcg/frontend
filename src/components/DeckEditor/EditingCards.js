@@ -5,8 +5,10 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 const EditingCards = (props) => {
 	const {
 		edit,
+		setEdit,
 		removeFromEdit,
 		existing,
+		setExisting,
 		deckId,
 		getDecks,
 		deckName,
@@ -69,6 +71,9 @@ const EditingCards = (props) => {
 			.then((del) => {
 				setDeleted(true);
 				getDecks();
+				setEdit([]);
+				setExisting(false);
+				setDeckName('');
 				setInterval(function () {
 					setDeleted(false);
 				}, 2000);
