@@ -179,12 +179,12 @@ ul {
 	.navbar {
 		background-color: #1f2022;
 		border: none;
-	}
-	.dropdown {
-		background-color: #1f2022;
-		color: #fff;
-		a {
+		.dropdown {
+			background-color: #1f2022;
 			color: #fff;
+			a {
+				color: #fff;
+			}
 		}
 	}
 }
