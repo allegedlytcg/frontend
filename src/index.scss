@@ -179,6 +179,11 @@ ul {
 	.navbar {
 		background-color: #1f2022;
 		border: none;
+		h3 {
+			a {
+				color: #fff;
+			}
+		}
 		.dropdown {
 			background-color: #1f2022;
 			color: #fff;

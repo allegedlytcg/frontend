@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 //components
-// import Menu from './components/menu/Navbar';
 import Menu from './components/menu/Menu';
 import MenuItem from './components/menu/MenuItem';
 import Dropdown from './components/menu/Dropdown';

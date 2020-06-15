@@ -7,13 +7,14 @@ import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
 import { ReactComponent as BoltIcon } from '../../icons/bolt.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faHome, faTh } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function DropdownMenu(props) {
 	const { darkMode, toggleMode, logout, open, setOpen } = props;
 	const [activeMenu, setActiveMenu] = useState('main');
 	const [menuHeight, setMenuHeight] = useState(null);
 	const dropdownRef = useRef(null);
+	const history = useHistory();
 
 	const token = localStorage.getItem('token');
 	const username = localStorage.getItem('currentUser');
@@ -38,21 +39,30 @@ function DropdownMenu(props) {
 			</DropdownItemStyles>
 		);
 	}
+	console.log(history);
 
 	useEffect(() => {
-		function handleOutsideClick(e) {
+		const handleOutsideClick = (e) => {
 			if (dropdownRef.current !== null) {
-				if (dropdownRef.current.contains(e.target)) return;
-				setOpen(false);
+				if (dropdownRef.current.contains(e.target)) {
+					return;
+				} else {
+					setOpen(false);
+				}
 			}
+		};
+		// for now have to turn this off on the sign in page or you can login
+		if (open && history.location.pathname !== '/registerandlogin') {
+			document.addEventListener('mousedown', handleOutsideClick, false);
 		}
-		if (open) {
-			document.addEventListener('mousedown', handleOutsideClick);
-		} else {
-			document.removeEventListener('mousedown', handleOutsideClick);
-		}
-		return () => {};
-	}, [open, setOpen]);
+		return () => {
+			document.removeEventListener(
+				'mousedown',
+				handleOutsideClick,
+				false,
+			);
+		};
+	}, [open, setOpen, history.location.pathname]);
 
 	return (
 		<DropDownStyles

@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function Menu(props) {
 	return (
 		<MenuStyles>
 			<nav className='navbar'>
-				<h3>Allgedly TCG</h3>
+				<h3>
+					<Link>Allgedly TCG</Link>
+				</h3>
 				<ul className='navbar-nav'>{props.children}</ul>
 			</nav>
 		</MenuStyles>
@@ -20,6 +23,10 @@ const MenuStyles = styled.div`
 		border-bottom: 1px #6e6b6b;
 		h3 {
 			position: absolute;
+			a {
+				text-decoration: none;
+				color: black;
+			}
 		}
 	}
 
