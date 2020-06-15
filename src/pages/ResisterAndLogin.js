@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Register from '../components/RegisterAndLogin/Register';
 import Login from '../components/RegisterAndLogin/Login';
 import styled from 'styled-components';
 
-const RegisterAndLogin = () => {
+const RegisterAndLogin = (props) => {
+	// console.log(props);
+	const token = localStorage.getItem('token');
+	const { setOpen } = props;
+	useEffect(() => {
+		setOpen(!false);
+	}, [setOpen, token]);
 	return (
 		<RegisterAndLoginStyles>
-			<div>
-				<p>New user? Sign up here</p>
-				<Register />
-			</div>
+			<Register />
 			<span className='border'></span>
-			<div>
-				<p>Already have an account? Sign in here</p>
-				<Login />
-			</div>
+			<Login />
 		</RegisterAndLoginStyles>
 	);
 };
@@ -22,10 +22,6 @@ const RegisterAndLogin = () => {
 const RegisterAndLoginStyles = styled.div`
 	display: flex;
 	justify-content: center;
-	/* align-items: center; */
-	div {
-		text-align: center;
-	}
 	span {
 		margin: 3rem 1rem -1rem 1rem;
 		border: 1px solid lightgray;
