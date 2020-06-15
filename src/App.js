@@ -38,6 +38,8 @@ function App() {
 						toggleMode={toggleMode}
 						darkMode={darkMode}
 						logout={logout}
+						open={open}
+						setOpen={setOpen}
 					/>
 				</MenuItem>
 			</Menu>

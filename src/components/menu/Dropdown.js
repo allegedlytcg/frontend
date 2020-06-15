@@ -10,7 +10,7 @@ import { faUser, faHome, faTh } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 function DropdownMenu(props) {
-	const { darkMode, toggleMode, logout } = props;
+	const { darkMode, toggleMode, logout, open, setOpen } = props;
 	const [activeMenu, setActiveMenu] = useState('main');
 	const [menuHeight, setMenuHeight] = useState(null);
 	const dropdownRef = useRef(null);
@@ -38,6 +38,21 @@ function DropdownMenu(props) {
 			</DropdownItemStyles>
 		);
 	}
+
+	useEffect(() => {
+		function handleOutsideClick(e) {
+			if (dropdownRef.current !== null) {
+				if (dropdownRef.current.contains(e.target)) return;
+				setOpen(false);
+			}
+		}
+		if (open) {
+			document.addEventListener('mousedown', handleOutsideClick);
+		} else {
+			document.removeEventListener('mousedown', handleOutsideClick);
+		}
+		return () => {};
+	}, [open, setOpen]);
 
 	return (
 		<DropDownStyles
