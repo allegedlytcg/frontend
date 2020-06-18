@@ -26,10 +26,6 @@ const MenuStyles = styled.div`
 		h3 {
 			position: absolute;
 			margin-left: 1rem;
-			a {
-				text-decoration: none;
-				color: black;
-			}
 		}
 	}
 
