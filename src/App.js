@@ -10,7 +10,8 @@ import Home from './pages/Home';
 import RegisterAndLogin from './pages/ResisterAndLogin';
 import DeckEditor from './pages/DeckEditor';
 import './index.scss';
-import { ReactComponent as CaretIcon } from './icons/caret.svg';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //custom hooks
 import useDarkMode from './utils/useDarkMode';
@@ -33,7 +34,11 @@ function App() {
 		<>
 			{/* this might be terrible */}
 			<Menu>
-				<MenuItem open={open} setOpen={setOpen} icon={<CaretIcon />}>
+				<MenuItem
+					open={open}
+					setOpen={setOpen}
+					icon={<FontAwesomeIcon icon={faCaretDown} />}
+				>
 					<Dropdown
 						toggleMode={toggleMode}
 						darkMode={darkMode}

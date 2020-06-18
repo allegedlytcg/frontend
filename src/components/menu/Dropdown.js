@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
-import { ReactComponent as CogIcon } from '../../icons/cog.svg';
-import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
-import { ReactComponent as BoltIcon } from '../../icons/bolt.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faUser,
@@ -164,7 +161,7 @@ function DropdownMenu(props) {
 
 			{/* potential new menu leaving this example here commented out
 			 */}
-			<CSSTransition
+			{/* <CSSTransition
 				in={activeMenu === 'animals'}
 				timeout={500}
 				classNames='menu-secondary'
@@ -180,7 +177,7 @@ function DropdownMenu(props) {
 					<DropdownItem leftIcon='🦋'>Horse?</DropdownItem>
 					<DropdownItem leftIcon='🦔'>Hedgehog</DropdownItem>
 				</div>
-			</CSSTransition>
+			</CSSTransition> */}
 		</DropDownStyles>
 	);
 }
