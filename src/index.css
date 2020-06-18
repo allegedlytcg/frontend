@@ -32,6 +32,22 @@ ul {
 	padding: 0;
 }
 
+.navbar {
+	height: 4rem;
+	background-color: lavender;
+	padding: 0 1rem;
+	border-bottom: 1px #6e6b6b;
+	box-shadow: 3px 3px 8px 2px #ccc;
+}
+
+/* <ul> */
+.navbar-nav {
+	max-width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
 /* <li> */
 .nav-item {
 	display: flex;
