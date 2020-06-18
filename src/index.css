@@ -193,7 +193,7 @@ ul {
 .dark-mode .navbar {
 	background-color: #1f2022 !important;
 	border: none;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2) !important;
 	color: #fff;
 }
 
