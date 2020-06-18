@@ -24,7 +24,8 @@ function App() {
 	};
 
 	const logout = () => {
-		window.localStorage.clear();
+		window.localStorage.removeItem('token');
+		window.localStorage.removeItem('currentUser');
 		setOpen(!open);
 	};
 
