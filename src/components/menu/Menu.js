@@ -7,7 +7,7 @@ function Menu(props) {
 		<MenuStyles>
 			<nav className='navbar'>
 				<h3>
-					<Link>Allgedly TCG</Link>
+					<Link to='/'>Allgedly TCG</Link>
 				</h3>
 				<ul className='navbar-nav'>{props.children}</ul>
 			</nav>
@@ -25,6 +25,7 @@ const MenuStyles = styled.div`
 
 		h3 {
 			position: absolute;
+			margin-left: 1rem;
 			a {
 				text-decoration: none;
 				color: black;

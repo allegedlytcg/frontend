@@ -2,11 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { ReactComponent as CogIcon } from '../../icons/cog.svg';
-import { ReactComponent as ChevronIcon } from '../../icons/chevron.svg';
 import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
 import { ReactComponent as BoltIcon } from '../../icons/bolt.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faHome, faTh } from '@fortawesome/free-solid-svg-icons';
+import {
+	faUser,
+	faHome,
+	faTh,
+	faSignOutAlt,
+	faArrowLeft,
+	faCog,
+	faMoon,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link, useHistory } from 'react-router-dom';
 
 function DropdownMenu(props) {
@@ -39,7 +46,6 @@ function DropdownMenu(props) {
 			</DropdownItemStyles>
 		);
 	}
-	console.log(history);
 
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
@@ -80,6 +86,7 @@ function DropdownMenu(props) {
 			>
 				<div className='menu'>
 					<h2>Main Menu</h2>
+					{/* Someday this might link to password reset form  or maybe that goes into settings but so maybe avatars or sprites or something kewl*/}
 					{token ? (
 						<DropdownItem
 							leftIcon={<FontAwesomeIcon icon={faUser} />}
@@ -110,18 +117,14 @@ function DropdownMenu(props) {
 						</DropdownItem>
 					</Link>
 					<DropdownItem
-						leftIcon={<CogIcon />}
-						rightIcon={<ChevronIcon />}
+						leftIcon={<FontAwesomeIcon icon={faCog} />}
 						goToMenu='settings'
 					>
 						<Link>Settings</Link>
 					</DropdownItem>
 					{token ? (
 						<DropdownItem
-							leftIcon='🦧'
-							// rightIcon={<ChevronIcon />}
-							// goToMenu='animals'
-							// onClick={logout}
+							leftIcon={<FontAwesomeIcon icon={faSignOutAlt} />}
 							goToMenu={logout}
 						>
 							Logout
@@ -140,10 +143,13 @@ function DropdownMenu(props) {
 				onEnter={calcHeight}
 			>
 				<div className='menu'>
-					<DropdownItem goToMenu='main' leftIcon={<ArrowIcon />}>
+					<DropdownItem
+						goToMenu='main'
+						leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
+					>
 						<h2>Main Menu</h2>
 					</DropdownItem>
-					<DropdownItem leftIcon={<BoltIcon />}>
+					<DropdownItem leftIcon={<FontAwesomeIcon icon={faMoon} />}>
 						Dark Mode{' '}
 						<div onClick={toggleMode} className='dark-mode__toggle'>
 							<div
@@ -153,21 +159,12 @@ function DropdownMenu(props) {
 							/>
 						</div>
 					</DropdownItem>
-					{/* <DropdownItem leftIcon={<BoltIcon />}>CSS</DropdownItem>
-					<DropdownItem leftIcon={<BoltIcon />}>
-						JavaScript
-					</DropdownItem>
-					<DropdownItem leftIcon={<BoltIcon />}>
-						Awesome!
-					</DropdownItem> */}
 				</div>
 			</CSSTransition>
 
-			{/* potential neew menu leaving this example here commented out 
-            
-            
-            */}
-			{/* <CSSTransition
+			{/* potential new menu leaving this example here commented out
+			 */}
+			<CSSTransition
 				in={activeMenu === 'animals'}
 				timeout={500}
 				classNames='menu-secondary'
@@ -183,7 +180,7 @@ function DropdownMenu(props) {
 					<DropdownItem leftIcon='🦋'>Horse?</DropdownItem>
 					<DropdownItem leftIcon='🦔'>Hedgehog</DropdownItem>
 				</div>
-			</CSSTransition> */}
+			</CSSTransition>
 		</DropDownStyles>
 	);
 }

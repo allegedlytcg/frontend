@@ -1,11 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function MenuItem(props) {
 	const { open, setOpen } = props;
-
+	const user = localStorage.getItem('currentUser');
 	return (
-		<StyledMenuItem className='nav-item'>
+		<StyledMenuItem>
+			{user ? (
+				<div className='user'>
+					<FontAwesomeIcon icon={faUser} />
+					{user}
+				</div>
+			) : null}
 			<div
 				href='#'
 				className='icon-button'
@@ -19,12 +27,18 @@ function MenuItem(props) {
 }
 
 const StyledMenuItem = styled.li`
-	/* .nav-item {
-		width: calc(var(--nav-size) * 0.8);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	} */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* cursor: pointer; */
+
+	.user {
+		svg {
+			margin: 0 1rem;
+			color: rgb(120, 122, 128);
+		}
+		margin: 1rem;
+	}
 `;
 
 export default MenuItem;

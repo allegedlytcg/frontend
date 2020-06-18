@@ -14,10 +14,9 @@ code {
 
 :root {
 	--bg: lavender;
-	/* --bg-accent: red; */
 	--text-color: #dadce1;
 	--nav-size: 60px;
-	--border: 1px solid rgb(88, 12, 88);
+	--border: 1px solid rgb(136, 136, 136);
 	--border-radius: 8px;
 	--speed: 500ms;
 }
@@ -28,22 +27,16 @@ ul {
 	padding: 0;
 }
 
-/* a {
-	color: var(--text-color);
-	text-decoration: none;
-} */
-
 /* <li> */
 .nav-item {
-	width: calc(var(--nav-size) * 0.8);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	cursor: pointer;
 }
 
 /* Icon Button */
 .icon-button {
+	cursor: pointer;
 	--button-size: calc(var(--nav-size) * 0.5);
 	width: var(--button-size);
 	height: var(--button-size);
@@ -73,6 +66,7 @@ ul {
 .dropdown {
 	position: absolute;
 	top: 58px;
+	right: -93px; // bad but i think this works
 	width: 300px;
 	transform: translateX(-45%);
 	background-color: var(--bg);
@@ -85,7 +79,6 @@ ul {
 
 .menu {
 	width: 100%;
-	/* color: #dadce1; */
 }
 
 .menu-item {
@@ -195,5 +188,3 @@ ul {
 		}
 	}
 }
-
-/* this needs to go in dark-mode above once i move to nesting*/
