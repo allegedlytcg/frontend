@@ -191,14 +191,14 @@ ul {
 	background-color: #313843;
 }
 .dark-mode .navbar {
-	background-color: #1f2022;
+	background-color: #1f2022 !important;
 	border: none;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	color: #fff;
 }
 
 .dark-mode a {
-	color: #fff;
+	color: #fff !important;
 }
 
 .dark-mode .dropdown {
