@@ -21,6 +21,8 @@ const MenuStyles = styled.div`
 		background-color: lavender;
 		padding: 0 1rem;
 		border-bottom: 1px #6e6b6b;
+		box-shadow: 3px 3px 8px 2px #ccc;
+
 		h3 {
 			position: absolute;
 			a {
