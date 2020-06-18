@@ -30,7 +30,6 @@ const StyledMenuItem = styled.li`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	/* cursor: pointer; */
 
 	.user {
 		svg {
