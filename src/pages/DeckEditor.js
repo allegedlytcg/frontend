@@ -116,12 +116,6 @@ const DeckEditor = () => {
 	return (
 		<>
 			<Container>
-				<AvaiableCards
-					buttons={buttons}
-					cards={cards}
-					requestBytype={requestBytype}
-					cardClick={cardClick}
-				/>
 				<RightContainer>
 					<div>
 						<MyDeckDropDown
@@ -131,10 +125,6 @@ const DeckEditor = () => {
 							setDeckId={setDeckId}
 							getDecks={getDecks}
 							userDecks={userDecks}
-						/>
-						<SingleCard
-							selectedCard={selectedCard}
-							addToEdit={addToEdit}
 						/>
 						<EditingStyles>
 							<EditingCards
@@ -149,8 +139,18 @@ const DeckEditor = () => {
 								setDeckName={setDeckName}
 							/>
 						</EditingStyles>
+						<SingleCard
+							selectedCard={selectedCard}
+							addToEdit={addToEdit}
+						/>
 					</div>
 				</RightContainer>
+				<AvaiableCards
+					buttons={buttons}
+					cards={cards}
+					requestBytype={requestBytype}
+					cardClick={cardClick}
+				/>
 			</Container>
 		</>
 	);
