@@ -149,7 +149,6 @@ const ButtonCont = styled.div`
 `;
 
 const EditingDeckStyles = styled.div`
-	margin-top: 2rem;
 	flex-direction: column;
 	img {
 		width: 7rem;

@@ -116,6 +116,8 @@ const SingleCardStyles = styled.div`
 	min-width: 50rem;
 	display: flex;
 	flex-direction: row;
+	position: absolute;
+	top: 35rem;
 	p {
 		margin: 0;
 	}
@@ -129,7 +131,7 @@ const SingleCardStyles = styled.div`
 		max-height: 23rem;
 		overflow: scroll;
 		overflow-x: hidden;
-		width: 100%;
+		width: 40.8rem;
 		/* display: flex; */
 		h5 {
 			margin: 0rem 0rem;
@@ -162,6 +164,8 @@ const SingleCardStyles = styled.div`
 		}
 	}
 	button {
+		position: absolute;
+		top: 9rem;
 		max-width: 2rem;
 		max-height: 2rem;
 	}
@@ -175,9 +179,9 @@ const ButtonContainer = styled.div`
 
 	button {
 		padding: 0.5rem 1rem;
-		position: relative;
-		top: 1rem;
-		margin: 0 0 0 4.5rem;
+		position: absolute;
+		top: 33rem;
+		left: 5rem;
 		max-width: 8rem;
 	}
 `;
