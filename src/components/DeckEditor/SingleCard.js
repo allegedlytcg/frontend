@@ -13,7 +13,10 @@ const SingleCard = (props) => {
 							<div className='card-info'>
 								<h2>{card.name}</h2>
 								{card.text ? (
-									<p>Description: {card.text}</p>
+									<p>
+										Description: <br></br>
+										{card.text}
+									</p>
 								) : null}
 								{card.hp ? <p>Hitpoints: {card.hp}</p> : null}
 								{card.types ? (
@@ -59,6 +62,7 @@ const SingleCard = (props) => {
 														{attack.text ? (
 															<p>
 																Description:{' '}
+																<br></br>
 																{attack.text}
 															</p>
 														) : null}
@@ -116,8 +120,8 @@ const SingleCardStyles = styled.div`
 	min-width: 50rem;
 	display: flex;
 	flex-direction: row;
-	position: absolute;
-	top: 35rem;
+	position: fixed;
+	top: 34rem;
 	p {
 		margin: 0;
 	}
@@ -129,10 +133,11 @@ const SingleCardStyles = styled.div`
 	.card-info {
 		margin: 0rem 1rem;
 		max-height: 23rem;
-		overflow: scroll;
+		overflow: auto;
 		overflow-x: hidden;
-		width: 40.8rem;
-		/* display: flex; */
+		p {
+			width: 20rem;
+		}
 		h5 {
 			margin: 0rem 0rem;
 		}
@@ -142,30 +147,9 @@ const SingleCardStyles = styled.div`
 		h4 {
 			margin-bottom: 0;
 		}
-		::-webkit-scrollbar {
-			width: 10px;
-		}
-
-		/* Track */
-		::-webkit-scrollbar-track {
-			background: #f1f1f1;
-			border-radius: 10px;
-		}
-
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-			background: #888;
-			border-radius: 10px;
-		}
-
-		/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-			background: #555;
-		}
 	}
 	button {
-		position: absolute;
-		top: 9rem;
+		margin-bottom: 1rem;
 		max-width: 2rem;
 		max-height: 2rem;
 	}
@@ -180,7 +164,7 @@ const ButtonContainer = styled.div`
 	button {
 		padding: 0.5rem 1rem;
 		position: absolute;
-		top: 33rem;
+		top: 32rem;
 		left: 5rem;
 		max-width: 8rem;
 	}

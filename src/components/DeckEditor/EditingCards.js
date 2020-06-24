@@ -158,7 +158,6 @@ const EditingDeckStyles = styled.div`
 	}
 	button {
 		margin-top: 1rem;
-		/* align-self: center; */
 		width: 8rem;
 		padding: 0.5rem 1.5rem;
 	}
@@ -174,7 +173,7 @@ const EditingInfo = styled.div`
 
 const EditingArr = styled.div`
 	max-height: 15rem;
-	overflow: scroll;
+	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
 	::-webkit-scrollbar {
