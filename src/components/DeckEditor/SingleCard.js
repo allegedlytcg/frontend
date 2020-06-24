@@ -18,6 +18,7 @@ const SingleCard = (props) => {
 										{card.text}
 									</p>
 								) : null}
+
 								{card.hp ? <p>Hitpoints: {card.hp}</p> : null}
 								{card.types ? (
 									<p>
@@ -31,6 +32,7 @@ const SingleCard = (props) => {
 								{card.evolvesFrom ? (
 									<p>Evolves from: {card.evolvesFrom}</p>
 								) : null}
+
 								{card.ability ? (
 									<>
 										<h4>Pokemon Powers:</h4>
@@ -40,14 +42,12 @@ const SingleCard = (props) => {
 								) : null}
 								{card.attacks ? <h4>Attacks:</h4> : null}
 								{card.attacks
-									? card.attacks.map((attack) => {
+									? card.attacks.map((attack, index) => {
 											// will need to map over cost later
 											return (
-												<>
-													<div>
-														<h5 key={Math.random()}>
-															{attack.name}
-														</h5>
+												<div key={index}>
+													<div key={index}>
+														<h5>{attack.name}</h5>
 														<p>
 															Cost:{' '}
 															{
@@ -67,19 +67,18 @@ const SingleCard = (props) => {
 															</p>
 														) : null}
 													</div>
-												</>
+												</div>
 											);
 									  })
 									: null}
 
 								{card.weaknesses
-									? card.weaknesses.map((weakness) => {
+									? card.weaknesses.map((weakness, index) => {
 											return (
-												<p>
-													<h4>Weakenesses:</h4>
-													{weakness.type}{' '}
+												<h4 key={index}>
+													Weakeness: {weakness.type}{' '}
 													{weakness.value}
-												</p>
+												</h4>
 											);
 									  })
 									: null}
@@ -91,14 +90,16 @@ const SingleCard = (props) => {
 								) : null}
 
 								{card.resistances
-									? card.resistances.map((resistance) => {
-											return (
-												<h4>
-													Resistance:{' '}
-													{resistance.type}
-												</h4>
-											);
-									  })
+									? card.resistances.map(
+											(resistance, index) => {
+												return (
+													<h4 key={index}>
+														Resistance:{' '}
+														{resistance.type}
+													</h4>
+												);
+											},
+									  )
 									: null}
 							</div>
 						</SingleCardStyles>
@@ -120,6 +121,7 @@ const SingleCardStyles = styled.div`
 	flex-direction: row;
 	position: fixed;
 	top: 34rem;
+	width: 100%;
 	p {
 		margin: 0;
 	}
@@ -133,8 +135,10 @@ const SingleCardStyles = styled.div`
 		max-height: 23rem;
 		overflow: auto;
 		overflow-x: hidden;
+		width: 100%;
+		/* width: 40rem; */
 		p {
-			width: 20rem;
+			/* width: 20rem; */
 		}
 		h5 {
 			margin: 0rem 0rem;
