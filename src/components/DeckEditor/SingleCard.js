@@ -6,97 +6,132 @@ const SingleCard = (props) => {
 	return (
 		<>
 			{selectedCard.map((card) => {
+				console.log(card);
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
 							<img src={card.imageUrlHiRes} alt='selected card' />
 							<div className='card-info'>
-								<h2>{card.name}</h2>
+								<div className='card-title'>
+									<h2>
+										{card.name}
+										<span> {card.hp} HP</span>
+									</h2>
+								</div>
 								{card.text ? (
 									<p>
 										Description: <br></br>
 										{card.text}
 									</p>
 								) : null}
-								{card.hp ? <p>Hitpoints: {card.hp}</p> : null}
-								{card.types ? (
-									<p>
-										Type:{' '}
-										{card.types ? card.types[0] : null}
-									</p>
-								) : null}
-								{card.subtype ? (
-									<p>Subtype: {card.subtype}</p>
-								) : null}
-								{card.evolvesFrom ? (
-									<p>Evolves from: {card.evolvesFrom}</p>
-								) : null}
+								<div className='basic-info'>
+									<div className='primary-info'>
+										{card.types ? (
+											<p>
+												Type:{' '}
+												{card.types
+													? card.types[0]
+													: null}
+											</p>
+										) : null}
+										{card.subtype ? (
+											<p>Subtype: {card.subtype}</p>
+										) : null}
+										{card.evolvesFrom ? (
+											<p>
+												Evolves from: {card.evolvesFrom}
+											</p>
+										) : null}
+									</div>
+									<div className='secondary-info'>
+										{card.weaknesses
+											? card.weaknesses.map(
+													(weakness, index) => {
+														return (
+															<p key={index}>
+																Weakeness:{' '}
+																{weakness.type}{' '}
+																{weakness.value}
+															</p>
+														);
+													},
+											  )
+											: null}
+										{card.convertedRetreatCost ? (
+											<p>
+												Retreat Cost:{' '}
+												{card.convertedRetreatCost}
+											</p>
+										) : null}
+
+										{card.resistances
+											? card.resistances.map(
+													(resistance, index) => {
+														return (
+															<p key={index}>
+																Resistance:{' '}
+																{
+																	resistance.type
+																}
+															</p>
+														);
+													},
+											  )
+											: null}
+									</div>
+								</div>
+
 								{card.ability ? (
 									<>
-										<h4>Pokemon Powers:</h4>
-										<p>{card.ability.name}:</p>{' '}
-										<p>{card.ability.text}</p>
+										<br></br>
+										<h5>Pokemon Power:</h5>
+										<p>
+											{card.ability.name}:{' '}
+											{card.ability.text}
+										</p>
 									</>
 								) : null}
-								{card.attacks ? <h4>Attacks:</h4> : null}
 								{card.attacks
-									? card.attacks.map((attack) => {
+									? card.attacks.map((attack, index) => {
 											// will need to map over cost later
 											return (
-												<>
-													<div>
-														<h5 key={Math.random()}>
-															{attack.name}
-														</h5>
-														<p>
-															Cost:{' '}
-															{
-																attack.convertedEnergyCost
-															}{' '}
-															{attack.cost[0]}
-														</p>
-														<p>
-															Damage:{' '}
-															{attack.damage}
-														</p>
-														{attack.text ? (
+												<div key={index}>
+													<div
+														key={index}
+														className='attack-info'
+													>
+														<div className='primary-attack'>
+															<h5>
+																{attack.name}
+															</h5>
 															<p>
-																Description:{' '}
-																<br></br>
-																{attack.text}
+																Cost:{' '}
+																{
+																	attack.convertedEnergyCost
+																}{' '}
+																{attack.cost[0]}
 															</p>
-														) : null}
+															{attack.damage ? (
+																<p>
+																	Damage:{' '}
+																	{
+																		attack.damage
+																	}
+																</p>
+															) : null}
+														</div>
+														<div className='secondary-attack'>
+															{attack.text ? (
+																<p>
+																	Description:{' '}
+																	{
+																		attack.text
+																	}
+																</p>
+															) : null}
+														</div>
 													</div>
-												</>
-											);
-									  })
-									: null}
-
-								{card.weaknesses
-									? card.weaknesses.map((weakness) => {
-											return (
-												<p>
-													<h4>Weakenesses:</h4>
-													{weakness.type}{' '}
-													{weakness.value}
-												</p>
-											);
-									  })
-									: null}
-								{card.convertedRetreatCost ? (
-									<h4>
-										Retreat Cost:{' '}
-										{card.convertedRetreatCost}
-									</h4>
-								) : null}
-
-								{card.resistances
-									? card.resistances.map((resistance) => {
-											return (
-												<h4>
-													Resistance:{' '}
-													{resistance.type}
-												</h4>
+												</div>
 											);
 									  })
 									: null}
@@ -120,6 +155,7 @@ const SingleCardStyles = styled.div`
 	flex-direction: row;
 	position: fixed;
 	top: 34rem;
+
 	p {
 		margin: 0;
 	}
@@ -133,8 +169,29 @@ const SingleCardStyles = styled.div`
 		max-height: 23rem;
 		overflow: auto;
 		overflow-x: hidden;
+		.card-title {
+			span {
+				font-size: 1rem;
+			}
+		}
+		.basic-info {
+			display: flex;
+			.secondary-info {
+				margin: 0 4rem;
+			}
+		}
+		.attack-info {
+			display: flex;
+			justify-content: space-between;
+			width: 30rem;
+			margin-top: 1rem;
+
+			p {
+				max-width: 20rem;
+			}
+		}
 		p {
-			width: 20rem;
+			max-width: 35rem;
 		}
 		h5 {
 			margin: 0rem 0rem;
