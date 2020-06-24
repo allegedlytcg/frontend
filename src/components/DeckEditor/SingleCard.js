@@ -74,7 +74,6 @@ const SingleCard = (props) => {
 
 								{card.weaknesses
 									? card.weaknesses.map((weakness) => {
-											// console.log(weakness);
 											return (
 												<p>
 													<h4>Weakenesses:</h4>
@@ -93,7 +92,6 @@ const SingleCard = (props) => {
 
 								{card.resistances
 									? card.resistances.map((resistance) => {
-											console.log(resistance);
 											return (
 												<h4>
 													Resistance:{' '}
