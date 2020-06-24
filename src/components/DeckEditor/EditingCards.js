@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 
@@ -14,6 +14,22 @@ const EditingCards = (props) => {
 		deckName,
 		setDeckName,
 	} = props;
+	useEffect(() => {
+		// scrollToBottom();
+		return () => {};
+	}, []);
+	// scroll to bottom adding to editing array
+	// not using yet
+	const scrollToBottom = () => {
+		let elem = document.getElementById('editing-arr');
+		// allow 1px inaccuracy by adding 1
+		var isScrolledToBottom =
+			elem.scrollHeight - elem.clientHeight <= elem.scrollTop + 1;
+
+		// scroll to bottom if isScrolledToBotto
+		if (isScrolledToBottom)
+			elem.scrollTop = elem.scrollHeight - elem.clientHeight;
+	};
 
 	const [updated, setUpdated] = useState(false);
 	const [deleted, setDeleted] = useState(false);
@@ -115,7 +131,7 @@ const EditingCards = (props) => {
 					</ButtonCont>
 				)}
 			</EditingInfo>
-			<EditingArr>
+			<EditingArr id='editing-arr'>
 				{edit.length === 0 ? (
 					<>
 						<p>There are no cards in your deck</p>
@@ -180,6 +196,9 @@ const EditingArr = styled.div`
 	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
+	flex-direction: row;
+	.editing {
+	}
 `;
 
 export default EditingCards;

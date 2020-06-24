@@ -6,7 +6,6 @@ const SingleCard = (props) => {
 	return (
 		<>
 			{selectedCard.map((card) => {
-				console.log(card);
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
@@ -15,7 +14,9 @@ const SingleCard = (props) => {
 								<div className='card-title'>
 									<h2>
 										{card.name}
-										<span> {card.hp} HP</span>
+										{card.hp ? (
+											<span> {card.hp} HP </span>
+										) : null}
 									</h2>
 								</div>
 								{card.text ? (
@@ -183,11 +184,11 @@ const SingleCardStyles = styled.div`
 		.attack-info {
 			display: flex;
 			justify-content: space-between;
-			width: 30rem;
+			width: 35rem;
 			margin-top: 1rem;
 
 			p {
-				max-width: 20rem;
+				max-width: 25rem;
 			}
 		}
 		p {
