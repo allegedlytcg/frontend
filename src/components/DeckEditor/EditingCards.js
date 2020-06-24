@@ -85,24 +85,25 @@ const EditingCards = (props) => {
 		<EditingDeckStyles>
 			<EditingInfo>
 				<div>
-					<label>Deck Name</label>
+					<label>
+						Deck Name{' '}
+						{deckName.length < 4 ? (
+							<p> * (deck names must be 4 or more characters)</p>
+						) : null}
+					</label>
 					<br />
 					<input
 						name='name'
 						value={deckName}
 						onChange={userInput}
 					></input>
-					{deckName.length < 4 ? (
-						<p>Deck names bust be 4 or more characters</p>
-					) : null}
 					<p>Card quantity {edit.length} / 60</p>
 				</div>
 				{existing === false ? (
 					<>
-						{/* <form onSubmit={saveDeck}> */}
 						<button onClick={saveDeck}>Save Deck</button>
 						<br></br>
-						{/* </form> */}
+
 						{created ? <p>Deck Succesfully Created!</p> : null}
 					</>
 				) : (
@@ -115,7 +116,6 @@ const EditingCards = (props) => {
 				)}
 			</EditingInfo>
 			<EditingArr>
-				{/* {edit.length === 0 ? null : <p>Click cards to remove them</p>} */}
 				{edit.length === 0 ? (
 					<>
 						<p>There are no cards in your deck</p>
@@ -170,6 +170,9 @@ const EditingInfo = styled.div`
 	input {
 		width: 10rem;
 	}
+	label {
+		display: flex;
+	}
 `;
 
 const EditingArr = styled.div`
@@ -177,26 +180,6 @@ const EditingArr = styled.div`
 	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
-	/* ::-webkit-scrollbar {
-		width: 10px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #f1f1f1;
-		border-radius: 10px;
-	}
-
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: #888;
-		border-radius: 10px;
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: #555;
-	} */
 `;
 
 export default EditingCards;
