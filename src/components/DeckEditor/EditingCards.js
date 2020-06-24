@@ -107,33 +107,34 @@ const EditingCards = (props) => {
 					</>
 				) : (
 					<ButtonCont>
-						{/* <form> */}
 						<button onClick={updateDeck}>Save Deck</button>
 						<button onClick={deleteDeck}>Delete Deck</button>
 						{updated ? <p>Deck Succesfully Updated!</p> : null}
 						{deleted ? <p>Deck Succesfully Deleted!</p> : null}
-						{/* </form> */}
 					</ButtonCont>
 				)}
 			</EditingInfo>
 			<EditingArr>
-				{edit.length === 0 ? null : <p>Click cards to remove them</p>}
+				{/* {edit.length === 0 ? null : <p>Click cards to remove them</p>} */}
 				{edit.length === 0 ? (
 					<>
 						<p>There are no cards in your deck</p>
 						<br></br>
 					</>
 				) : (
-					edit.map((editing, index) => {
-						return (
-							<img
-								src={editing.imageUrl}
-								alt='cards to be added'
-								key={index}
-								onClick={() => removeFromEdit(editing)}
-							/>
-						);
-					})
+					<>
+						<p>Click cards to remove them</p>
+						{edit.map((editing, index) => {
+							return (
+								<img
+									src={editing.imageUrl}
+									alt='cards to be added'
+									key={index}
+									onClick={() => removeFromEdit(editing)}
+								/>
+							);
+						})}
+					</>
 				)}
 			</EditingArr>
 		</EditingDeckStyles>
@@ -176,7 +177,7 @@ const EditingArr = styled.div`
 	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
-	::-webkit-scrollbar {
+	/* ::-webkit-scrollbar {
 		width: 10px;
 	}
 
@@ -195,7 +196,7 @@ const EditingArr = styled.div`
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: #555;
-	}
+	} */
 `;
 
 export default EditingCards;
