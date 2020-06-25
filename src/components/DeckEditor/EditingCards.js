@@ -104,7 +104,7 @@ const EditingCards = (props) => {
 					<br></br>
 					<label>
 						Deck Name{' '}
-						{deckName.length < 4 ? (
+						{deckName.length > 0 && deckName.length < 4 ? (
 							<p> * (deck names must be 4 or more characters)</p>
 						) : null}
 					</label>
@@ -123,15 +123,17 @@ const EditingCards = (props) => {
 						{edit.length >= 1 ? (
 							<p>click cards to remove them</p>
 						) : null}
-						{created ? <p>Deck Succesfully Created!</p> : null}
+						{created ? <p> Deck Succesfully Created!</p> : null}
 					</>
 				) : (
 					<ButtonCont>
 						<button onClick={updateDeck}>Save Deck</button>
 						<button onClick={deleteDeck}>Delete Deck</button>
-						<p>click cards to remove them</p>
-						{updated ? <p>Deck Succesfully Updated!</p> : null}
-						{deleted ? <p>Deck Succesfully Deleted!</p> : null}
+						<p>click cards to remove them </p> <br></br>
+						{updated ? (
+							<p> Deck Succesfully Updated!</p>
+						) : null}{' '}
+						{deleted ? <p> Deck Succesfully Deleted!</p> : null}
 					</ButtonCont>
 				)}
 			</EditingInfo>
@@ -170,6 +172,7 @@ const ButtonCont = styled.div`
 	button {
 		margin: 0rem 1rem 0rem 0rem;
 		width: 8rem;
+		cursor: pointer;
 	}
 `;
 

@@ -220,8 +220,8 @@ const ButtonContainer = styled.div`
 	button {
 		padding: 0.5rem 1rem;
 		position: absolute;
-		top: 32rem;
-		left: 5rem;
+		top: 35rem;
+		left: 55rem;
 		max-width: 8rem;
 	}
 `;
