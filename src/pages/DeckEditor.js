@@ -91,13 +91,6 @@ const DeckEditor = () => {
 		const temp = [...edit, card];
 
 		setEdit(temp);
-		scrollToBottom();
-	};
-
-	// scroll to bottom on click when adding to editing array
-	const scrollToBottom = () => {
-		let elem = document.getElementById('editing-arr');
-		elem.scrollTop = elem.scrollHeight;
 	};
 
 	// get user decks
