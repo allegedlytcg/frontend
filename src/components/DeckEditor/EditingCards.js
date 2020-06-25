@@ -14,12 +14,13 @@ const EditingCards = (props) => {
 		deckName,
 		setDeckName,
 	} = props;
+
 	useEffect(() => {
-		// scrollToBottom();
+		scrollToBottom();
 		return () => {};
 	}, []);
+
 	// scroll to bottom adding to editing array
-	// not using yet
 	const scrollToBottom = () => {
 		let elem = document.getElementById('editing-arr');
 		// allow 1px inaccuracy by adding 1
@@ -58,7 +59,6 @@ const EditingCards = (props) => {
 				})
 				.catch((err) => console.log(err, 'error saving deck'));
 		}
-		// forceUpdate();
 	};
 
 	// put req to api/v1/deck/deckId
@@ -101,13 +101,14 @@ const EditingCards = (props) => {
 		<EditingDeckStyles>
 			<EditingInfo>
 				<div>
+					<br></br>
 					<label>
 						Deck Name{' '}
 						{deckName.length < 4 ? (
 							<p> * (deck names must be 4 or more characters)</p>
 						) : null}
 					</label>
-					<br />
+
 					<input
 						name='name'
 						value={deckName}
@@ -119,13 +120,16 @@ const EditingCards = (props) => {
 					<>
 						<button onClick={saveDeck}>Save Deck</button>
 						<br></br>
-
+						{edit.length >= 1 ? (
+							<p>click cards to remove them</p>
+						) : null}
 						{created ? <p>Deck Succesfully Created!</p> : null}
 					</>
 				) : (
 					<ButtonCont>
 						<button onClick={updateDeck}>Save Deck</button>
 						<button onClick={deleteDeck}>Delete Deck</button>
+						<p>click cards to remove them</p>
 						{updated ? <p>Deck Succesfully Updated!</p> : null}
 						{deleted ? <p>Deck Succesfully Deleted!</p> : null}
 					</ButtonCont>
@@ -133,13 +137,12 @@ const EditingCards = (props) => {
 			</EditingInfo>
 			<EditingArr id='editing-arr'>
 				{edit.length === 0 ? (
-					<>
+					<div className='no-cards'>
 						<p>There are no cards in your deck</p>
 						<br></br>
-					</>
+					</div>
 				) : (
 					<>
-						<p>Click cards to remove them</p>
 						{edit.map((editing, index) => {
 							return (
 								<img
@@ -158,7 +161,12 @@ const EditingCards = (props) => {
 };
 
 const ButtonCont = styled.div`
-	flex-direction: row;
+	display: flex;
+	align-items: center;
+	p {
+		position: relative;
+		top: 0.5rem;
+	}
 	button {
 		margin: 0rem 1rem 0rem 0rem;
 		width: 8rem;
@@ -167,8 +175,14 @@ const ButtonCont = styled.div`
 
 const EditingDeckStyles = styled.div`
 	flex-direction: column;
+	cursor: pointer;
 	img {
 		width: 7rem;
+		margin-right: -4rem;
+		&:hover {
+			transform: scale(1.2);
+			z-index: 2;
+		}
 	}
 	p {
 		margin: 0;
@@ -197,6 +211,10 @@ const EditingArr = styled.div`
 	overflow-x: hidden;
 	margin-right: 1rem;
 	flex-direction: row;
+	padding: 0 4rem 0 0;
+
+	&:first-child {
+	}
 	.editing {
 	}
 `;
