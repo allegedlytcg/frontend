@@ -57,8 +57,8 @@ const AvailableCardsStyles = styled.div`
 const CardPool = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	min-width: 45rem;
-	max-width: 45rem;
+	min-width: 56rem;
+	max-width: 56rem;
 	max-height: 80vh;
 	overflow: scroll;
 	overflow-x: hidden;

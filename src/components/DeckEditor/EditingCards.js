@@ -36,10 +36,10 @@ const EditingDeckStyles = styled.div`
 	cursor: pointer;
 	img {
 		width: 7rem;
-		margin-right: -4rem;
+		margin-right: -2.6rem;
 		&:hover {
-			transform: scale(1.2);
-			z-index: 2;
+				transform: scale(1.2);
+
 		}
 	}
 	p {
@@ -53,12 +53,13 @@ const EditingDeckStyles = styled.div`
 `;
 
 const EditingArr = styled.div`
-	/* max-height: 15rem; */
+	margin-left: -1rem;
+	max-height: 44rem; 
 	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
 	flex-direction: row;
-	padding: 0 4rem 0 0;
+	padding: 2rem 2rem 2rem 1rem;
 
 	&:first-child {
 	}

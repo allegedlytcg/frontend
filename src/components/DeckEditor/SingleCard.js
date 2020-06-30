@@ -12,10 +12,10 @@ const SingleCard = (props) => {
 							<img src={card.imageUrlHiRes} alt='selected card' />
 							<ButtonContainer>
 								<button onClick={() => addToEdit(card)}>
-									Add To Deck
+									Add
 								</button>
 								<button onClick={() => removeFromEdit(card)}>
-									Remove From Deck
+									Remove
 								</button>
 							</ButtonContainer>
 							<div className='card-info'>
@@ -157,6 +157,8 @@ const SingleCardStyles = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 1rem 1rem;
+	max-width: 20rem;
+	padding: 1rem 1.3rem;
 
 	p {
 		margin: 0;
@@ -214,7 +216,6 @@ const SingleCardStyles = styled.div`
 
 const ButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	/* margin: 0 auto; */
 
