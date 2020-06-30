@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import AvaiableCards from '../components/DeckEditor/AvailableCards';
 import SingleCard from '../components/DeckEditor/SingleCard';
+import EditingInfo from '../components/DeckEditor/EditingInfo';
 import EditingCards from '../components/DeckEditor/EditingCards';
 import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
 import StarterDeckDropDown from '../components/DeckEditor/StarterDeckDropDown';
@@ -110,7 +111,13 @@ const DeckEditor = () => {
 	// remove from editing state array
 	const removeFromEdit = (card) => {
 		const newDeck = [...edit];
-		const cardIndex = _.indexOf(newDeck, card);
+		let cardIndex = _.indexOf(newDeck, card);
+		for (let index = 0; index < newDeck.length; index++) {
+			const element = newDeck[index];
+			newDeck.filter(cards => {
+				if(cards !== element)
+			})
+		}
 		_.pullAt(newDeck, cardIndex);
 		setEdit(newDeck);
 	};
@@ -118,51 +125,52 @@ const DeckEditor = () => {
 	return (
 		<>
 			<Container>
-				<RightContainer>
-					<div>
-						<DropdownContainer>
-							<StarterDeckDropDown
-								className='starterDecks'
-								setEdit={setEdit}
-								setExisting={setExisting}
-								setDeckName={setDeckName}
-							/>
-							<MyDeckDropDown
-								className='myDecks'
-								setDeckName={setDeckName}
-								setEdit={setEdit}
-								setExisting={setExisting}
-								setDeckId={setDeckId}
-								getDecks={getDecks}
-								userDecks={userDecks}
-							/>
-						</DropdownContainer>
-
-						<EditingStyles>
-							<EditingCards
-								getDecks={getDecks}
-								deckId={deckId}
-								edit={edit}
-								setEdit={setEdit}
-								removeFromEdit={removeFromEdit}
-								existing={existing}
-								setExisting={setExisting}
-								deckName={deckName}
-								setDeckName={setDeckName}
-							/>
-						</EditingStyles>
-						<SingleCard
-							selectedCard={selectedCard}
-							addToEdit={addToEdit}
-						/>
-					</div>
-				</RightContainer>
 				<AvaiableCards
 					buttons={buttons}
 					cards={cards}
 					requestBytype={requestBytype}
 					cardClick={cardClick}
 				/>
+				<div>
+					<SingleCard
+						selectedCard={selectedCard}
+						addToEdit={addToEdit}
+						removeFromEdit={removeFromEdit}
+					/>
+				</div>
+				<RightContainer>
+					<DropdownContainer>
+						<StarterDeckDropDown
+							className='starterDecks'
+							setEdit={setEdit}
+							setExisting={setExisting}
+							setDeckName={setDeckName}
+						/>
+						<MyDeckDropDown
+							className='myDecks'
+							setDeckName={setDeckName}
+							setEdit={setEdit}
+							setExisting={setExisting}
+							setDeckId={setDeckId}
+							getDecks={getDecks}
+							userDecks={userDecks}
+						/>
+					</DropdownContainer>
+					<EditingInfo
+						edit={edit}
+						addToEdit={addToEdit}
+						setEdit={setEdit}
+						existing={existing}
+						setExisting={setExisting}
+						deckName={deckName}
+						deckId={deckId}
+						getDecks={getDecks}
+						setDeckName={setDeckName}
+					/>
+					<EditingStyles>
+						<EditingCards edit={edit} cardClick={cardClick} />
+					</EditingStyles>
+				</RightContainer>
 			</Container>
 		</>
 	);
@@ -174,6 +182,8 @@ const Container = styled.div`
 `;
 
 const RightContainer = styled.div`
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	margin: 1rem 1rem 0rem 0.4rem;
 `;
@@ -185,9 +195,7 @@ const EditingStyles = styled.div`
 
 const DropdownContainer = styled.div`
 	display: flex;
-	.myDecks {
-		margin: 0 0 0 1rem;
-	}
+	margin: 0.9rem 0 0 0;
 `;
 
 export default DeckEditor;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StarterDeckDropDown = (props) => {
 	const { setEdit, setExisting, setDeckName } = props;
-	const user = localStorage.getItem('currentUser');
+	let user = localStorage.getItem('currentUser');
 
 	const getStarterDeck = (starterDeckName) => {
 		setEdit([]);
@@ -16,9 +16,10 @@ const StarterDeckDropDown = (props) => {
 				`https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon/${name}`,
 			)
 			.then((starter) => {
-				console.log(starter);
+				let placeholder = '';
+				if (user) placeholder = user + "'s ";
 				setEdit(starter.data);
-				setDeckName(`${user}'s ${starterDeckName} Deck`);
+				setDeckName(`${placeholder}${starterDeckName} Deck`);
 			})
 			.catch((err) => console.log(err));
 	};

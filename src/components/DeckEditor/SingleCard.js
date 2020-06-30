@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SingleCard = (props) => {
-	const { selectedCard, addToEdit } = props;
+	const { selectedCard, addToEdit, removeFromEdit } = props;
 	return (
 		<>
 			{selectedCard.map((card) => {
@@ -10,6 +10,14 @@ const SingleCard = (props) => {
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
 							<img src={card.imageUrlHiRes} alt='selected card' />
+							<ButtonContainer>
+								<button onClick={() => addToEdit(card)}>
+									Add To Deck
+								</button>
+								<button onClick={() => removeFromEdit(card)}>
+									Remove From Deck
+								</button>
+							</ButtonContainer>
 							<div className='card-info'>
 								<div className='card-title'>
 									<h2>
@@ -138,11 +146,6 @@ const SingleCard = (props) => {
 									: null}
 							</div>
 						</SingleCardStyles>
-						<ButtonContainer>
-							<button onClick={() => addToEdit(card)}>
-								Add To Deck
-							</button>
-						</ButtonContainer>
 					</div>
 				);
 			})}
@@ -151,19 +154,17 @@ const SingleCard = (props) => {
 };
 
 const SingleCardStyles = styled.div`
-	min-width: 50rem;
 	display: flex;
-	flex-direction: row;
-	position: fixed;
-	top: 34rem;
+	flex-direction: column;
+	margin: 1rem 1rem;
 
 	p {
 		margin: 0;
 	}
 	img {
 		margin-top: 1.1rem;
-		max-height: 23rem;
-		max-width: 23rem;
+		/* max-height: 20rem; */
+		max-width: 20rem;
 	}
 	.card-info {
 		margin: 0rem 1rem;
@@ -178,21 +179,21 @@ const SingleCardStyles = styled.div`
 		.basic-info {
 			display: flex;
 			.secondary-info {
-				margin: 0 4rem;
+				margin: 0 2rem;
 			}
 		}
 		.attack-info {
 			display: flex;
 			justify-content: space-between;
-			width: 35rem;
+			width: 25rem;
 			margin-top: 1rem;
 
 			p {
-				max-width: 25rem;
+				max-width: 15rem;
 			}
 		}
 		p {
-			max-width: 35rem;
+			max-width: 25rem;
 		}
 		h5 {
 			margin: 0rem 0rem;
@@ -215,13 +216,13 @@ const ButtonContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 
 	button {
 		padding: 0.5rem 1rem;
-		position: absolute;
+		/* position: absolute;
 		top: 35rem;
-		left: 55rem;
+		left: 55rem; */
 		max-width: 8rem;
 	}
 `;
