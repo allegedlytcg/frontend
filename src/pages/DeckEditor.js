@@ -112,6 +112,13 @@ const DeckEditor = () => {
 	const removeFromEdit = (card) => {
 		const newDeck = [...edit];
 		let cardIndex = _.indexOf(newDeck, card);
+		if (cardIndex === -1) {
+			for (let c in newDeck) {
+				if (newDeck[c].name === card.name) {
+					cardIndex = _.indexOf(newDeck, newDeck[c])
+				}
+			}
+		}
 		_.pullAt(newDeck, cardIndex);
 		setEdit(newDeck);
 	};
