@@ -5,6 +5,7 @@ import AvaiableCards from '../components/DeckEditor/AvailableCards';
 import SingleCard from '../components/DeckEditor/SingleCard';
 import EditingCards from '../components/DeckEditor/EditingCards';
 import MyDeckDropDown from '../components/DeckEditor/MyDecksDropDown';
+import StarterDeckDropDown from '../components/DeckEditor/StarterDeckDropDown';
 import * as _ from 'lodash';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
@@ -119,14 +120,24 @@ const DeckEditor = () => {
 			<Container>
 				<RightContainer>
 					<div>
-						<MyDeckDropDown
-							setDeckName={setDeckName}
-							setEdit={setEdit}
-							setExisting={setExisting}
-							setDeckId={setDeckId}
-							getDecks={getDecks}
-							userDecks={userDecks}
-						/>
+						<DropdownContainer>
+							<StarterDeckDropDown
+								className='starterDecks'
+								setEdit={setEdit}
+								setExisting={setExisting}
+								setDeckName={setDeckName}
+							/>
+							<MyDeckDropDown
+								className='myDecks'
+								setDeckName={setDeckName}
+								setEdit={setEdit}
+								setExisting={setExisting}
+								setDeckId={setDeckId}
+								getDecks={getDecks}
+								userDecks={userDecks}
+							/>
+						</DropdownContainer>
+
 						<EditingStyles>
 							<EditingCards
 								getDecks={getDecks}
@@ -170,6 +181,13 @@ const RightContainer = styled.div`
 const EditingStyles = styled.div`
 	flex-direction: row;
 	flex-wrap: wrap;
+`;
+
+const DropdownContainer = styled.div`
+	display: flex;
+	.myDecks {
+		margin: 0 0 0 1rem;
+	}
 `;
 
 export default DeckEditor;

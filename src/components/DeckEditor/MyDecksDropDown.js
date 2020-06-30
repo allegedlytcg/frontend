@@ -10,7 +10,6 @@ const MyDeckDropDown = (props) => {
 		userDecks,
 		setDeckName,
 	} = props;
-	// const [userDecks, setUserDecks] = useState([]);
 
 	// when rendered grab all user decks
 
@@ -32,7 +31,7 @@ const MyDeckDropDown = (props) => {
 	};
 
 	return (
-		<StyledDropdown>
+		<StyledDropdown className='select'>
 			<select onChange={(e) => addAllToEdit(e.target.value)}>
 				<option>Create New Deck</option>
 				{userDecks.map((deckObj) => {
@@ -50,9 +49,6 @@ const MyDeckDropDown = (props) => {
 	);
 };
 
-const StyledDropdown = styled.div`
-	width: 8rem;
-	margin: 0rem 0rem;
-`;
+const StyledDropdown = styled.div``;
 
 export default MyDeckDropDown;
