@@ -54,18 +54,9 @@ select {
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow:ellipsis;
-	option {
-		color: red;
-		max-width:30px; 
-    overflow:hidden; 
-    white-space:nowrap; 
-    text-overflow:ellipsis;	}
-}
-
-
-
 
 }
+
 `;
 
 export default MyDeckDropDown;

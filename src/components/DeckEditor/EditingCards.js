@@ -34,9 +34,12 @@ const EditingCards = (props) => {
 const EditingDeckStyles = styled.div`
 	flex-direction: column;
 	cursor: pointer;
+	width: 33.5rem;
+	margin-right: -20rem;
+
 	img {
 		width: 7rem;
-		margin-right: -2.6rem;
+		margin-right: -2.3rem;
 		&:hover {
 				transform: scale(1.2);
 
@@ -54,12 +57,12 @@ const EditingDeckStyles = styled.div`
 
 const EditingArr = styled.div`
 	margin-left: -1rem;
-	max-height: 44rem; 
+	max-height: 42rem; 
 	overflow: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
 	flex-direction: row;
-	padding: 2rem 2rem 2rem 1rem;
+	padding: 2rem 1.5rem 2rem 1rem;
 
 	&:first-child {
 	}
