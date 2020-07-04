@@ -11,6 +11,7 @@ const SingleCard = (props) => {
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
+						<div className="center">
 							<img src={card.imageUrlHiRes} alt='selected card' />
 							<ButtonBar>
 								<h4>
@@ -32,6 +33,7 @@ const SingleCard = (props) => {
 									</button>
 								</ButtonContainer>
 							</ButtonBar>
+							</div>
 							<div className='card-info'>
 								<div className='card-title'>
 									<h2>
@@ -219,6 +221,11 @@ const SingleCardStyles = styled.div`
 		max-width: 2rem;
 		max-height: 2rem;
 		cursor: pointer;
+	}
+	.center {
+		display: flex;
+		flex-direction: column;
+		
 	}
 `;
 

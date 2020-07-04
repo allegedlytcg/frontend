@@ -91,20 +91,24 @@ const DeckEditor = () => {
 	};
 
 	// add to editing array
+
 	const addToEdit = (card) => {
 		if (
 			card.supertype !== 'Energy' ||
 			card.name === 'Double Colorless Energy'
 		) {
 			let check = checkNumInDeck(card);
+			console.log(check)
 			if (check === false) return;
 		}
 		if (edit.length === 60) return;
 
-		const temp = [...edit];
-		temp.unshift(card);
-
+		let temp = [...edit, card];
+		// temp.unshift(card)
+		
+		
 		setEdit(temp);
+
 	};
 
 	// get user decks
