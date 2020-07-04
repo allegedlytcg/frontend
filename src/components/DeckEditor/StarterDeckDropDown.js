@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const StarterDeckDropDown = (props) => {
-	const { setEdit, setExisting, setDeckName } = props;
+	const { setEdit, setExisting, setDeckName, setSelectedCard } = props;
 	let user = localStorage.getItem('currentUser');
 
 	const getStarterDeck = (starterDeckName) => {
@@ -20,6 +20,7 @@ const StarterDeckDropDown = (props) => {
 				if (user) placeholder = user + "'s ";
 				setEdit(starter.data);
 				setDeckName(`${placeholder}${starterDeckName} Deck`);
+				setSelectedCard([starter.data[0]]);
 			})
 			.catch((err) => console.log(err));
 	};

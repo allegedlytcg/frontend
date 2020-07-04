@@ -2,6 +2,38 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const MyDeckDropDown = (props) => {
+	const {
+		setEdit,
+		setExisting,
+		setDeckId,
+		getDecks,
+		userDecks,
+		setDeckName,
+		setSelectedCard,
+	} = props;
+
+	// when rendered grab all user decks
+
+	useEffect(() => {
+		getDecks();
+	}, [getDecks]);
+
+	// if deck selected from dropdown update the edit state array
+	const addAllToEdit = (deckObj) => {
+		// next two lines clear those states when the click the create new option
+		setExisting(false);
+		setEdit([]);
+		setDeckName('');
+		let newDeckObj = JSON.parse(deckObj);
+		setDeckName(newDeckObj.name);
+		setExisting(true);
+		setDeckId(newDeckObj._id);
+		// console.log(newDeckObj.cards[0]);
+		setSelectedCard([newDeckObj.cards[0]]);
+		setEdit(newDeckObj.cards);
+	};
+
+
   const {
     setEdit,
     setExisting,
@@ -11,24 +43,8 @@ const MyDeckDropDown = (props) => {
     setDeckName,
   } = props;
 
-  // when rendered grab all user decks
+ ;
 
-  useEffect(() => {
-    getDecks();
-  }, [getDecks]);
-
-  // if deck selected from dropdown update the edit state array
-  const addAllToEdit = (deckObj) => {
-    // next two lines clear those states when the click the create new option
-    setExisting(false);
-    setEdit([]);
-    setDeckName("");
-    let newDeckObj = JSON.parse(deckObj);
-    setDeckName(newDeckObj.name);
-    setExisting(true);
-    setDeckId(newDeckObj._id);
-    setEdit(newDeckObj.cards);
-  };
 
   return (
     <StyledDropdown className="select">
@@ -56,6 +72,7 @@ select {
     text-overflow:ellipsis;
 
 }
+
 
 `;
 

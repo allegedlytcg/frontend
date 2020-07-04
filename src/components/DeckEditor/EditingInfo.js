@@ -14,14 +14,15 @@ const EditingInfo = (props) => {
     setDeckName,
   } = props;
 
-  const [updated, setUpdated] = useState(false);
-  const [deleted, setDeleted] = useState(false);
-  const [created, setCreated] = useState(false);
+	const [updated, setUpdated] = useState(false);
+	const [deleted, setDeleted] = useState(false);
+	const [created, setCreated] = useState(false);
+	const [err, setErr] = useState('');
 
-  const userInput = (e) => {
-    console.log(e);
-    setDeckName(e.target.value);
-  };
+	const userInput = (e) => {
+		setDeckName(e.target.value);
+	};
+
 
   // post request to api/v1/deck
   const saveDeck = () => {
@@ -29,20 +30,27 @@ const EditingInfo = (props) => {
     deckObj.name = deckName;
     deckObj.cards = edit;
 
-    if (deckName.length >= 4) {
-      axiosWithAuth()
-        .post("/deck", deckObj)
-        // # TODO redirect to somewhere makes sense after saving or maybe not
-        .then((created) => {
-          setCreated(true);
-          getDecks();
-          setInterval(function () {
-            setCreated(false);
-          }, 2000);
-        })
-        .catch((err) => console.log(err, "error saving deck"));
-    }
-  };
+	
+		axiosWithAuth()
+			.post('/deck', deckObj)
+			// # TODO redirect to somewhere makes sense after saving or maybe not
+			.then((created) => {
+				setCreated(true);
+				getDecks();
+				setInterval(function () {
+					setCreated(false);
+				}, 2000);
+			})
+			.catch((err) => {
+				console.log(err, 'error saving deck');
+				setErr('error saving deck');
+				setInterval(function () {
+					setErr('');
+				}, 2000);
+			});
+	};
+
+
 
   // put req to api/v1/deck/deckId
   const updateDeck = () => {
@@ -63,57 +71,88 @@ const EditingInfo = (props) => {
     }
   };
 
-  // delete req to api/v1/deck/deckId
-  const deleteDeck = () => {
-    axiosWithAuth()
-      .delete(`/deck/${deckId}`)
-      .then((del) => {
-        setDeleted(true);
-        getDecks();
-        setEdit([]);
-        setExisting(false);
-        setDeckName("");
-        setInterval(function () {
-          setDeleted(false);
-        }, 2000);
-      })
-      .catch((err) => console.log(err, "error on dlete"));
-  };
-  return (
-    <EditingInfoStyles>
-      <label>
-        Deck Name - Card quantity {edit.length} / 60
-        <br></br>
-        {deckName.length > 0 && deckName.length < 4 ? (
-          <p> * (deck names must be 4 or more characters)</p>
-        ) : null}
-      </label>
-      <input name="name" value={deckName} onChange={userInput}></input>
-      <button onClick={saveDeck}>Save Deck</button>
-      {existing === false ? (
-        <>
-          <br></br>
-          {created ? <p> Deck Succesfully Created!</p> : null}
-        </>
-      ) : (
-        <StyledDiv>
-          <ButtonCont>
-            <button onClick={updateDeck}>Save Deck</button>
-            <button onClick={deleteDeck}>Delete Deck</button>
-          </ButtonCont>
-          {updated ? <p> Deck Succesfully Updated!</p> : null}{" "}
-          {deleted ? <p> Deck Succesfully Deleted!</p> : null}
-        </StyledDiv>
-      )}
-    </EditingInfoStyles>
-  );
+	// delete req to api/v1/deck/deckId
+	const deleteDeck = () => {
+		axiosWithAuth()
+			.delete(`/deck/${deckId}`)
+			.then((del) => {
+				setDeleted(true);
+				getDecks();
+				setEdit([]);
+				setExisting(false);
+				setDeckName('');
+				setInterval(function () {
+					setDeleted(false);
+				}, 2000);
+			})
+			.catch((err) => console.log(err, 'error on dlete'));
+	};
+	return (
+		<EditingInfoStyles>
+			<label>Deck Name - Card quantity {edit.length} / 60</label>
+			<br></br>
+			<StyledDiv>
+				<input
+					name='name'
+					value={deckName}
+					onChange={userInput}
+				></input>
+				{existing === false ? (
+					<ButtonCont>
+						<button onClick={saveDeck}>Save</button>
+					</ButtonCont>
+				) : (
+					<ButtonCont>
+						<button onClick={updateDeck}>Save</button>
+
+						<button onClick={deleteDeck}>Delete</button>
+						{deleted ? <p> Deck Succesfully Deleted!</p> : null}
+					</ButtonCont>
+				)}
+			</StyledDiv>
+			{deckName.length < 4 ? (
+				<p className='validation'>
+					* deck names must be at least 4 characters
+				</p>
+			) : null}
+			{edit.length === 0 ? (
+				<p className='validation'>
+					* you must have at least 1 card in your deck
+				</p>
+			) : null}
+			{updated ? <p> Deck Succesfully Updated!</p> : null}
+			{deleted ? <p> Deck Succesfully Deleted!</p> : null}
+			{created ? <p> Deck Succesfully Created!</p> : null}
+			{err ? <p>{err}</p> : null}
+		</EditingInfoStyles>
+	);
 };
+
+const EditingInfoStyles = styled.div`
+	margin: 1rem 0 0 0;
+	input {
+		margin: 1rem 0;
+		height: 1rem;
+	}
+	.validation {
+		color: red;
+	}
+`;
+
+const ButtonCont = styled.div`
+	button {
+		margin: 0 0 0 1rem;
+		cursor: pointer;
+	}
 
 const EditingInfoStyles = styled.div`
   ${'' /* margin-bottom: -50px; */}
 `;
 
-const ButtonCont = styled.div``;
+const StyledDiv = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
 const StyledDiv = styled.div`
   display: flex;

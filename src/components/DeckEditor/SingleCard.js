@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const SingleCard = (props) => {
+const SingleCard = (props) =>
+	
   const { selectedCard, addToEdit, removeFromEdit, checkQuantity } = props;
+
   return (
     <>
       {selectedCard.map((card) => {
@@ -60,7 +62,6 @@ const SingleCard = (props) => {
                     {card.convertedRetreatCost ? (
                       <p>Retreat Cost: {card.convertedRetreatCost}</p>
                     ) : null}
-
                     {card.resistances
                       ? card.resistances.map((resistance, index) => {
                           return (
@@ -116,77 +117,71 @@ const SingleCard = (props) => {
 };
 
 const SingleCardStyles = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 1rem;
-  max-width: 20rem;
-  padding: 1rem 1.3rem;
 
-  p {
-    margin: 0;
-  }
-  img {
-    margin-top: 1.1rem;
-    /* max-height: 20rem; */
-    max-width: 20rem;
-  }
-  .card-info {
-    margin: 0rem 1rem;
-    max-height: 23rem;
-    overflow: auto;
-    overflow-x: hidden;
-    .card-title {
-      span {
-        font-size: 1rem;
-      }
-    }
-    .basic-info {
-      display: flex;
-      .secondary-info {
-        margin: 0 2rem;
-      }
-    }
-    .attack-info {
-      display: flex;
-      justify-content: space-between;
-      width: 25rem;
-      margin-top: 1rem;
+	display: flex;
+	flex-direction: row;
+	p {
+		margin: 0;
+	}
+	img {
+		width: 20rem;
+	}
+	.card-info {
+		margin: 0rem 1rem;
+		width: 25rem;
+		overflow: auto;
+		overflow-x: hidden;
+		.card-title {
+			span {
+				font-size: 1rem;
+			}
+		}
+		.basic-info {
+			display: flex;
+			.secondary-info {
+				margin: 0 2rem;
+			}
+		}
+		.attack-info {
+			display: flex;
+			justify-content: space-between;
+			width: 23rem;
+			margin-top: 1rem;
 
-      p {
-        max-width: 15rem;
-      }
-    }
-    p {
-      max-width: 25rem;
-    }
-    h5 {
-      margin: 0rem 0rem;
-    }
-    h2 {
-      margin-bottom: 0;
-    }
-    h4 {
-      margin-bottom: 0;
-    }
-  }
-  button {
-    margin-bottom: 1rem;
-    max-width: 2rem;
-    max-height: 2rem;
-  }
+			p {
+				max-width: 15rem;
+			}
+		}
+		p {
+			max-width: 25rem;
+		}
+		h5 {
+			margin: 0rem 0rem;
+		}
+		h2 {
+			margin: 0;
+		}
+		h4 {
+			margin-bottom: 0;
+		}
+	}
+	button {
+		margin: 1rem 0;
+		max-width: 2rem;
+		max-height: 2rem;
+		cursor: pointer;
+	}
 `;
 
 const ButtonContainer = styled.div`
-  /* margin: 0 auto; */
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
 
-  button {
-    padding: 0.5rem 1rem;
-    /* position: absolute;
-		top: 35rem;
-		left: 55rem; */
-    max-width: 8rem;
-  }
-`;
+	button {
+		padding: 0.5rem 1rem;
+		min-width: 7rem;
+	}
 
 const ButtonBar = styled.div`
   h4 {
@@ -195,6 +190,7 @@ const ButtonBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 `;
 
 export default SingleCard;

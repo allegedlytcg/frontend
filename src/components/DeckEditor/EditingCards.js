@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const EditingCards = (props) => {
@@ -56,18 +56,11 @@ const EditingDeckStyles = styled.div`
 `;
 
 const EditingArr = styled.div`
-	margin-left: -1rem;
-	max-height: 42rem; 
+	max-height: 19rem;
 	overflow: auto;
 	overflow-x: hidden;
-	margin-right: 1rem;
 	flex-direction: row;
-	padding: 2rem 1.5rem 2rem 1rem;
-
-	&:first-child {
-	}
-	.editing {
-	}
+	padding: 0 4rem 
 `;
 
 export default EditingCards;
