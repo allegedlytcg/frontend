@@ -2,24 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SingleCard = (props) => {
-	const { selectedCard, addToEdit, removeFromEdit, checkQuantity } = props;
+	const { selectedCard, addToEdit, removeFromEdit, checkQuantity, edit } = props;
 
 	return (
 		<>
 			{selectedCard.map((card) => {
-				console.log(card);
 				return (
 					<div key={card._id}>
-						<SingleCardStyles key={card.imageUrlHiRes}>
+						<SingleCardStyles key={card.imageUrl}>
+						<div className="center">
+							<img src={card.imageUrlHiRes} alt='selected card' />
 							<ButtonBar>
-								<h4>
+								<p>
 									{card.supertype === 'Energy'
 										? card.name ===
 										  'Double Colorless Energy'
 											? `${checkQuantity(card)}/4`
 											: checkQuantity(card)
 										: `${checkQuantity(card)}/4`}
-								</h4>
+								</p>
 								<ButtonContainer>
 									<button onClick={() => addToEdit(card)}>
 										Add
@@ -30,10 +31,9 @@ const SingleCard = (props) => {
 										Remove
 									</button>
 								</ButtonContainer>
+								<p>{edit.length}/60</p>
 							</ButtonBar>
-
-							<img src={card.imageUrlHiRes} alt='selected card' />
-
+							</div>
 							<div className='card-info'>
 								<div className='card-title'>
 									<h2>
@@ -176,6 +176,8 @@ const SingleCardStyles = styled.div`
 	}
 	img {
 		width: 20rem;
+		min-height: 440px;
+		margin-left: -4px;
 	}
 	.card-info {
 		margin: 0rem 1rem;
@@ -221,6 +223,11 @@ const SingleCardStyles = styled.div`
 		max-width: 2rem;
 		max-height: 2rem;
 		cursor: pointer;
+	}
+	.center {
+		display: flex;
+		flex-direction: column;
+		
 	}
 `;
 

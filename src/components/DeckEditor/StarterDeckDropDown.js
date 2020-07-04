@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import * as _ from "lodash"
 
 const StarterDeckDropDown = (props) => {
 	const { setEdit, setExisting, setDeckName, setSelectedCard } = props;
@@ -18,9 +19,10 @@ const StarterDeckDropDown = (props) => {
 			.then((starter) => {
 				let placeholder = '';
 				if (user) placeholder = user + "'s ";
-				setEdit(starter.data);
+				let cards = _.sortBy(starter.data, "type","nationalPokedexNumber", "supertype", "name")
+				setEdit(cards);
 				setDeckName(`${placeholder}${starterDeckName} Deck`);
-				setSelectedCard([starter.data[0]]);
+				setSelectedCard([cards[0]]);
 			})
 			.catch((err) => console.log(err));
 	};
