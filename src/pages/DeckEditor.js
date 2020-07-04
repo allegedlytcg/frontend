@@ -145,6 +145,9 @@ const DeckEditor = () => {
 
   const handleAvailableSearch = (e) => {
     let filtered = [...cards];
+    if (e.target.value === "poke") {
+      e.target.value = "poké"
+    }
     filtered = cards.filter((c) => {
       if (c.name.toLowerCase().includes(e.target.value.toLowerCase())) {
         return c;
