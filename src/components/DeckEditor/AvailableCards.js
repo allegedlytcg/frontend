@@ -59,8 +59,8 @@ const CardPool = styled.div`
 	flex-wrap: wrap;
 	min-width: 45rem;
 	max-width: 45rem;
-	max-height: 80vh;
-	overflow: scroll;
+	max-height: 78vh;
+	overflow: auto;
 	overflow-x: hidden;
 
 	img {

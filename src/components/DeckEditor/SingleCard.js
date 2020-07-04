@@ -9,15 +9,19 @@ const SingleCard = (props) => {
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
-							<img src={card.imageUrlHiRes} alt='selected card' />
-							<ButtonContainer>
-								<button onClick={() => addToEdit(card)}>
-									Add To Deck
-								</button>
-								<button onClick={() => removeFromEdit(card)}>
-									Remove From Deck
-								</button>
-							</ButtonContainer>
+							<div>
+								<img src={card.imageUrl} alt='selected card' />
+								<ButtonContainer>
+									<button onClick={() => addToEdit(card)}>
+										Add
+									</button>
+									<button
+										onClick={() => removeFromEdit(card)}
+									>
+										Remove
+									</button>
+								</ButtonContainer>
+							</div>
 							<div className='card-info'>
 								<div className='card-title'>
 									<h2>
@@ -155,20 +159,16 @@ const SingleCard = (props) => {
 
 const SingleCardStyles = styled.div`
 	display: flex;
-	flex-direction: column;
-	margin: 1rem 1rem;
-
+	flex-direction: row;
 	p {
 		margin: 0;
 	}
 	img {
-		margin-top: 1.1rem;
-		/* max-height: 20rem; */
-		max-width: 20rem;
+		width: 20rem;
 	}
 	.card-info {
 		margin: 0rem 1rem;
-		max-height: 23rem;
+		width: 25rem;
 		overflow: auto;
 		overflow-x: hidden;
 		.card-title {
@@ -185,7 +185,7 @@ const SingleCardStyles = styled.div`
 		.attack-info {
 			display: flex;
 			justify-content: space-between;
-			width: 25rem;
+			width: 23rem;
 			margin-top: 1rem;
 
 			p {
@@ -199,31 +199,28 @@ const SingleCardStyles = styled.div`
 			margin: 0rem 0rem;
 		}
 		h2 {
-			margin-bottom: 0;
+			margin: 0;
 		}
 		h4 {
 			margin-bottom: 0;
 		}
 	}
 	button {
-		margin-bottom: 1rem;
+		margin: 1rem 0;
 		max-width: 2rem;
 		max-height: 2rem;
+		cursor: pointer;
 	}
 `;
 
 const ButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	/* margin: 0 auto; */
+	flex-direction: row;
+	justify-content: space-evenly;
 
 	button {
 		padding: 0.5rem 1rem;
-		/* position: absolute;
-		top: 35rem;
-		left: 55rem; */
-		max-width: 8rem;
+		min-width: 7rem;
 	}
 `;
 

@@ -17,9 +17,9 @@ const EditingInfo = (props) => {
 	const [updated, setUpdated] = useState(false);
 	const [deleted, setDeleted] = useState(false);
 	const [created, setCreated] = useState(false);
+	const [err, setErr] = useState('');
 
 	const userInput = (e) => {
-		console.log(e);
 		setDeckName(e.target.value);
 	};
 
@@ -29,20 +29,26 @@ const EditingInfo = (props) => {
 		deckObj.name = deckName;
 		deckObj.cards = edit;
 
-		if (deckName.length >= 4) {
-			axiosWithAuth()
-				.post('/deck', deckObj)
-				// # TODO redirect to somewhere makes sense after saving or maybe not
-				.then((created) => {
-					setCreated(true);
-					getDecks();
-					setInterval(function () {
-						setCreated(false);
-					}, 2000);
-				})
-				.catch((err) => console.log(err, 'error saving deck'));
-		}
+		// if (deckName.length >= 4) {
+		axiosWithAuth()
+			.post('/deck', deckObj)
+			// # TODO redirect to somewhere makes sense after saving or maybe not
+			.then((created) => {
+				setCreated(true);
+				getDecks();
+				setInterval(function () {
+					setCreated(false);
+				}, 2000);
+			})
+			.catch((err) => {
+				console.log(err, 'error saving deck');
+				setErr('error saving deck');
+				setInterval(function () {
+					setErr('');
+				}, 2000);
+			});
 	};
+	// };
 
 	// put req to api/v1/deck/deckId
 	const updateDeck = () => {
@@ -81,39 +87,66 @@ const EditingInfo = (props) => {
 	};
 	return (
 		<EditingInfoStyles>
-			<label>
-				Deck Name <br></br>
-				{deckName.length > 0 && deckName.length < 4 ? (
-					<p> * (deck names must be 4 or more characters)</p>
-				) : null}
-			</label>
-			<input name='name' value={deckName} onChange={userInput}></input>
-			<p>card quantity {edit.length} / 60</p>
+			<label>Deck Name - Card quantity {edit.length} / 60</label>
+			<br></br>
+			<StyledDiv>
+				<input
+					name='name'
+					value={deckName}
+					onChange={userInput}
+				></input>
+				{existing === false ? (
+					<ButtonCont>
+						<button onClick={saveDeck}>Save</button>
+					</ButtonCont>
+				) : (
+					<ButtonCont>
+						<button onClick={updateDeck}>Save</button>
 
-			{existing === false ? (
-				<>
-					<button onClick={saveDeck}>Save Deck</button>
-					<br></br>
-					{edit.length >= 1 ? (
-						<p>click cards to remove them</p>
-					) : null}
-					{created ? <p> Deck Succesfully Created!</p> : null}
-				</>
-			) : (
-				<ButtonCont>
-					<button onClick={updateDeck}>Save Deck</button>
-					<button onClick={deleteDeck}>Delete Deck</button>
-					<p>click cards to remove them </p> <br></br>
-					{updated ? <p> Deck Succesfully Updated!</p> : null}{' '}
-					{deleted ? <p> Deck Succesfully Deleted!</p> : null}
-				</ButtonCont>
-			)}
+						<button onClick={deleteDeck}>Delete</button>
+						{deleted ? <p> Deck Succesfully Deleted!</p> : null}
+					</ButtonCont>
+				)}
+			</StyledDiv>
+			{deckName.length < 4 ? (
+				<p className='validation'>
+					* deck names must be at least 4 characters
+				</p>
+			) : null}
+			{edit.length === 0 ? (
+				<p className='validation'>
+					* you must have at least 1 card in your deck
+				</p>
+			) : null}
+			{updated ? <p> Deck Succesfully Updated!</p> : null}
+			{deleted ? <p> Deck Succesfully Deleted!</p> : null}
+			{created ? <p> Deck Succesfully Created!</p> : null}
+			{err ? <p>{err}</p> : null}
 		</EditingInfoStyles>
 	);
 };
 
-const EditingInfoStyles = styled.div``;
+const EditingInfoStyles = styled.div`
+	margin: 1rem 0 0 0;
+	input {
+		margin: 1rem 0;
+		height: 1rem;
+	}
+	.validation {
+		color: red;
+	}
+`;
 
-const ButtonCont = styled.div``;
+const ButtonCont = styled.div`
+	button {
+		margin: 0 0 0 1rem;
+		cursor: pointer;
+	}
+`;
+
+const StyledDiv = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
 export default EditingInfo;

@@ -9,6 +9,7 @@ const MyDeckDropDown = (props) => {
 		getDecks,
 		userDecks,
 		setDeckName,
+		setSelectedCard,
 	} = props;
 
 	// when rendered grab all user decks
@@ -27,6 +28,8 @@ const MyDeckDropDown = (props) => {
 		setDeckName(newDeckObj.name);
 		setExisting(true);
 		setDeckId(newDeckObj._id);
+		// console.log(newDeckObj.cards[0]);
+		setSelectedCard([newDeckObj.cards[0]]);
 		setEdit(newDeckObj.cards);
 	};
 
@@ -49,6 +52,8 @@ const MyDeckDropDown = (props) => {
 	);
 };
 
-const StyledDropdown = styled.div``;
+const StyledDropdown = styled.div`
+	margin: 0 0 0 1rem;
+`;
 
 export default MyDeckDropDown;

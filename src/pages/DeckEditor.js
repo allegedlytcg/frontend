@@ -26,7 +26,7 @@ const DeckEditor = () => {
 			.get('https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon')
 			.then((res) => {
 				setCards(res.data);
-				setSelectedCard([res.data[70]]);
+				setSelectedCard([res.data[43]]);
 			})
 			.catch((err) => console.log(err));
 		return () => {};
@@ -90,7 +90,8 @@ const DeckEditor = () => {
 		}
 		if (edit.length === 60) return;
 
-		const temp = [...edit, card];
+		const temp = [...edit];
+		temp.unshift(card);
 
 		setEdit(temp);
 	};
@@ -115,7 +116,7 @@ const DeckEditor = () => {
 		if (cardIndex === -1) {
 			for (let c in newDeck) {
 				if (newDeck[c].name === card.name) {
-					cardIndex = _.indexOf(newDeck, newDeck[c])
+					cardIndex = _.indexOf(newDeck, newDeck[c]);
 				}
 			}
 		}
@@ -132,13 +133,7 @@ const DeckEditor = () => {
 					requestBytype={requestBytype}
 					cardClick={cardClick}
 				/>
-				<div>
-					<SingleCard
-						selectedCard={selectedCard}
-						addToEdit={addToEdit}
-						removeFromEdit={removeFromEdit}
-					/>
-				</div>
+
 				<RightContainer>
 					<DropdownContainer>
 						<StarterDeckDropDown
@@ -146,6 +141,7 @@ const DeckEditor = () => {
 							setEdit={setEdit}
 							setExisting={setExisting}
 							setDeckName={setDeckName}
+							setSelectedCard={setSelectedCard}
 						/>
 						<MyDeckDropDown
 							className='myDecks'
@@ -155,19 +151,27 @@ const DeckEditor = () => {
 							setDeckId={setDeckId}
 							getDecks={getDecks}
 							userDecks={userDecks}
+							setSelectedCard={setSelectedCard}
 						/>
 					</DropdownContainer>
-					<EditingInfo
-						edit={edit}
-						addToEdit={addToEdit}
-						setEdit={setEdit}
-						existing={existing}
-						setExisting={setExisting}
-						deckName={deckName}
-						deckId={deckId}
-						getDecks={getDecks}
-						setDeckName={setDeckName}
-					/>
+					<TopRight>
+						<EditingInfo
+							edit={edit}
+							addToEdit={addToEdit}
+							setEdit={setEdit}
+							existing={existing}
+							setExisting={setExisting}
+							deckName={deckName}
+							deckId={deckId}
+							getDecks={getDecks}
+							setDeckName={setDeckName}
+						/>
+						<SingleCard
+							selectedCard={selectedCard}
+							addToEdit={addToEdit}
+							removeFromEdit={removeFromEdit}
+						/>
+					</TopRight>
 					<EditingStyles>
 						<EditingCards edit={edit} cardClick={cardClick} />
 					</EditingStyles>
@@ -192,11 +196,16 @@ const RightContainer = styled.div`
 const EditingStyles = styled.div`
 	flex-direction: row;
 	flex-wrap: wrap;
+	justify-content: flex-end;
 `;
 
 const DropdownContainer = styled.div`
 	display: flex;
-	margin: 0.9rem 0 0 0;
+`;
+
+const TopRight = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;
 
 export default DeckEditor;
