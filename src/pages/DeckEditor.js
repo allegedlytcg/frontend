@@ -82,11 +82,10 @@ const DeckEditor = () => {
 	const checkQuantity = (card) => {
 		let duplicate = 0;
 		for (let i = 0; i < edit.length; i++) {
-			if (edit[i].name === card.name ) {
+			if (edit[i].name === card.name) {
 				duplicate = duplicate + 1;
-
+			}
 		}
-	}
 		return duplicate;
 	};
 
@@ -180,7 +179,7 @@ const DeckEditor = () => {
 							selectedCard={selectedCard}
 							addToEdit={addToEdit}
 							removeFromEdit={removeFromEdit}
-              checkQuantity={checkQuantity}
+							checkQuantity={checkQuantity}
 						/>
 					</TopRight>
 					<EditingStyles>

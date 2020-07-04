@@ -11,7 +11,6 @@ const SingleCard = (props) => {
 				return (
 					<div key={card._id}>
 						<SingleCardStyles key={card.imageUrlHiRes}>
-							<img src={card.imageUrlHiRes} alt='selected card' />
 							<ButtonBar>
 								<h4>
 									{card.supertype === 'Energy'
@@ -32,6 +31,9 @@ const SingleCard = (props) => {
 									</button>
 								</ButtonContainer>
 							</ButtonBar>
+
+							<img src={card.imageUrlHiRes} alt='selected card' />
+
 							<div className='card-info'>
 								<div className='card-title'>
 									<h2>
