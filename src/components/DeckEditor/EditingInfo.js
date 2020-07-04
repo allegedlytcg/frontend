@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import axiosWithAuth from '../../utils/axiosWithAuth';
+import React, { useState } from "react";
+import styled from "styled-components";
+import axiosWithAuth from "../../utils/axiosWithAuth";
 
 const EditingInfo = (props) => {
-	const {
-		edit,
-		setEdit,
-		existing,
-		setExisting,
-		deckName,
-		deckId,
-		getDecks,
-		setDeckName,
-	} = props;
+  const {
+    edit,
+    setEdit,
+    existing,
+    setExisting,
+    deckName,
+    deckId,
+    getDecks,
+    setDeckName,
+  } = props;
 
 	const [updated, setUpdated] = useState(false);
 	const [deleted, setDeleted] = useState(false);
@@ -23,13 +23,14 @@ const EditingInfo = (props) => {
 		setDeckName(e.target.value);
 	};
 
-	// post request to api/v1/deck
-	const saveDeck = () => {
-		const deckObj = {};
-		deckObj.name = deckName;
-		deckObj.cards = edit;
 
-		// if (deckName.length >= 4) {
+  // post request to api/v1/deck
+  const saveDeck = () => {
+    const deckObj = {};
+    deckObj.name = deckName;
+    deckObj.cards = edit;
+
+	
 		axiosWithAuth()
 			.post('/deck', deckObj)
 			// # TODO redirect to somewhere makes sense after saving or maybe not
@@ -48,26 +49,27 @@ const EditingInfo = (props) => {
 				}, 2000);
 			});
 	};
-	// };
 
-	// put req to api/v1/deck/deckId
-	const updateDeck = () => {
-		const deckObj = {};
-		deckObj.name = deckName;
-		deckObj.cards = edit;
-		if (deckName.length >= 4) {
-			axiosWithAuth()
-				.put(`/deck/${deckId}`, deckObj)
-				.then((update) => {
-					setUpdated(true);
-					getDecks();
-					setInterval(function () {
-						setUpdated(false);
-					}, 2000);
-				})
-				.catch((err) => console.log(err, 'for sure error'));
-		}
-	};
+
+
+  // put req to api/v1/deck/deckId
+  const updateDeck = () => {
+    const deckObj = {};
+    deckObj.name = deckName;
+    deckObj.cards = edit;
+    if (deckName.length >= 4) {
+      axiosWithAuth()
+        .put(`/deck/${deckId}`, deckObj)
+        .then((update) => {
+          setUpdated(true);
+          getDecks();
+          setInterval(function () {
+            setUpdated(false);
+          }, 2000);
+        })
+        .catch((err) => console.log(err, "for sure error"));
+    }
+  };
 
 	// delete req to api/v1/deck/deckId
 	const deleteDeck = () => {
@@ -142,11 +144,19 @@ const ButtonCont = styled.div`
 		margin: 0 0 0 1rem;
 		cursor: pointer;
 	}
+
+const EditingInfoStyles = styled.div`
+  ${'' /* margin-bottom: -50px; */}
 `;
 
 const StyledDiv = styled.div`
 	display: flex;
 	align-items: center;
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default EditingInfo;

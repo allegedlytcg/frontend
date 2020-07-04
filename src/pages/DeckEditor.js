@@ -79,6 +79,17 @@ const DeckEditor = () => {
 		return true;
 	};
 
+	const checkQuantity = (card) => {
+		let duplicate = 0;
+		for (let i = 0; i < edit.length; i++) {
+			if (edit[i].name === card.name ) {
+				duplicate = duplicate + 1;
+
+		}
+	}
+		return duplicate;
+	};
+
 	// add to editing array
 	const addToEdit = (card) => {
 		if (
@@ -133,7 +144,6 @@ const DeckEditor = () => {
 					requestBytype={requestBytype}
 					cardClick={cardClick}
 				/>
-
 				<RightContainer>
 					<DropdownContainer>
 						<StarterDeckDropDown
@@ -170,6 +180,7 @@ const DeckEditor = () => {
 							selectedCard={selectedCard}
 							addToEdit={addToEdit}
 							removeFromEdit={removeFromEdit}
+              checkQuantity={checkQuantity}
 						/>
 					</TopRight>
 					<EditingStyles>
