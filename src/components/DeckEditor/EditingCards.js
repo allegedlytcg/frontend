@@ -35,34 +35,32 @@ const EditingCards = (props) => {
 };
 
 const EditingDeckStyles = styled.div`
-  flex-direction: column;
-  cursor: pointer;
-  width: 33.5rem;
-  margin-right: -20rem;
+	flex-direction: column;
+	cursor: pointer;
 
-  img {
-    width: 7rem;
-    margin-right: -2.3rem;
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
-  p {
-    margin: 0;
-  }
-  button {
-    margin-top: 1rem;
-    width: 8rem;
-    padding: 0.5rem 1.5rem;
-  }
+	img {
+		width: 7rem;
+		margin-right: -2.3rem;
+		&:hover {
+			transform: scale(1.2);
+		}
+	}
+	p {
+		margin: 0;
+	}
+	button {
+		margin-top: 1rem;
+		width: 8rem;
+		padding: 0.5rem 1.5rem;
+	}
 `;
 
 const EditingArr = styled.div`
-  max-height: 19rem;
-  overflow: auto;
-  overflow-x: hidden;
-  flex-direction: row;
-  padding: 0 4rem;
+	max-height: 19.5rem;
+	overflow: auto;
+	overflow-x: hidden;
+	flex-direction: row;
+	padding: 0 2rem 0 0;
 `;
 
 export default EditingCards;
