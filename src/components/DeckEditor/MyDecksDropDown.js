@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from "react";
+import styled from "styled-components";
 
 const MyDeckDropDown = (props) => {
 	const {
@@ -9,8 +9,8 @@ const MyDeckDropDown = (props) => {
 		getDecks,
 		userDecks,
 		setDeckName,
+		setSelectedCard,
 	} = props;
-	// const [userDecks, setUserDecks] = useState([]);
 
 	// when rendered grab all user decks
 
@@ -28,31 +28,52 @@ const MyDeckDropDown = (props) => {
 		setDeckName(newDeckObj.name);
 		setExisting(true);
 		setDeckId(newDeckObj._id);
+		// console.log(newDeckObj.cards[0]);
+		setSelectedCard([newDeckObj.cards[0]]);
 		setEdit(newDeckObj.cards);
 	};
 
-	return (
-		<StyledDropdown>
-			<select onChange={(e) => addAllToEdit(e.target.value)}>
-				<option>Create New Deck</option>
-				{userDecks.map((deckObj) => {
-					return (
-						<option
-							value={JSON.stringify(deckObj)}
-							key={deckObj._id}
-						>
-							{deckObj.name}
-						</option>
-					);
-				})}
-			</select>
-		</StyledDropdown>
-	);
+
+  const {
+    setEdit,
+    setExisting,
+    setDeckId,
+    getDecks,
+    userDecks,
+    setDeckName,
+  } = props;
+
+ ;
+
+
+  return (
+    <StyledDropdown className="select">
+      <select onChange={(e) => addAllToEdit(e.target.value)}>
+        <option>Create New Deck</option>
+        {userDecks.map((deckObj) => {
+          return (
+            <option value={JSON.stringify(deckObj)} key={deckObj._id}>
+              {deckObj.name}
+            </option>
+          );
+        })}
+      </select>
+    </StyledDropdown>
+  );
 };
 
 const StyledDropdown = styled.div`
-	width: 8rem;
-	margin: 0rem 0rem;
+
+
+select {
+    width:140px; 
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow:ellipsis;
+
+}
+
+
 `;
 
 export default MyDeckDropDown;

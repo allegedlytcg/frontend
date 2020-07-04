@@ -16,6 +16,7 @@ function Menu(props) {
 }
 
 const MenuStyles = styled.div`
+	width: 100%;
 	.navbar {
 		height: 4rem;
 		background-color: lavender;
@@ -31,7 +32,6 @@ const MenuStyles = styled.div`
 
 	/* <ul> */
 	.navbar-nav {
-		max-width: 100%;
 		height: 100%;
 		display: flex;
 		justify-content: flex-end;
