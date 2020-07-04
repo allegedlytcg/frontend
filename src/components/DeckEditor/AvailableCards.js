@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as _ from 'lodash';
 
 const AvailableCards = (props) => {
-	const { buttons, cards, requestBytype, cardClick } = props;
+	const { buttons, cards, requestBytype, cardClick, handleAvailableSearch } = props;
 	return (
 		<>
 			<AvailableCardsStyles>
@@ -18,6 +18,7 @@ const AvailableCards = (props) => {
 						</button>
 					);
 				})}
+				<input onChange={handleAvailableSearch} placeholder="Search..."></input>
 				<CardPool>
 					{_.sortBy(
 						cards,
@@ -61,7 +62,7 @@ const CardPool = styled.div`
 	min-width: 45rem;
 	max-width: 45rem;
 	max-height: 78vh;
-	overflow: scroll;
+	overflow: auto;
 	overflow-x: hidden;
 
 	img {

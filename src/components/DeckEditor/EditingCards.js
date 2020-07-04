@@ -15,7 +15,7 @@ const EditingCards = (props) => {
           </div>
         ) : (
           <>
-            {_.sortBy(edit, "nationalPokedexNumber", "supertype", "name").map(
+            {_.sortBy(edit, "type","nationalPokedexNumber", "supertype", "name").map(
               (editing, index) => {
                 return (
                   <img
@@ -37,10 +37,12 @@ const EditingCards = (props) => {
 const EditingDeckStyles = styled.div`
 	flex-direction: column;
 	cursor: pointer;
+	margin-left: 0rem;
+	margin-right: -.4rem;
 
 	img {
-		width: 7rem;
-		margin-right: -2.3rem;
+		width: 9rem;
+		margin-right: -2.1rem;
 		&:hover {
 			transform: scale(1.2);
 		}
@@ -60,7 +62,7 @@ const EditingArr = styled.div`
 	overflow: auto;
 	overflow-x: hidden;
 	flex-direction: row;
-	padding: 0 2rem 0 0;
+	padding: 0 10px 0 0;
 `;
 
 export default EditingCards;
