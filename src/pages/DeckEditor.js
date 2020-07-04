@@ -55,7 +55,6 @@ const DeckEditor = () => {
         `https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon/${buttonText}`
       )
       .then((res) => {
-        setCards(res.data);
         setAvailableSearched(res.data);
       })
       .catch((err) => console.log(err));
@@ -147,7 +146,7 @@ const DeckEditor = () => {
   const handleAvailableSearch = (e) => {
     let filtered = [...cards];
     filtered = cards.filter((c) => {
-      if (c.name.toLowerCase().includes(e.target.value)) {
+      if (c.name.toLowerCase().includes(e.target.value.toLowerCase())) {
         return c;
       }
     });
@@ -233,7 +232,7 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 1rem 1rem 0rem 0.4rem;
+  margin: 0rem 1rem 0rem 0.4rem;
 `;
 
 const EditingStyles = styled.div`

@@ -105,11 +105,7 @@ const EditingInfo = (props) => {
       {deckName.length < 4 ? (
         <p className="validation">* deck names must be at least 4 characters</p>
       ) : null}
-      {edit.length === 0 ? (
-        <p className="validation">
-          * you must have at least 1 card in your deck
-        </p>
-      ) : null}
+      
       {updated ? <p> Deck Succesfully Updated!</p> : null}
       {deleted ? <p> Deck Succesfully Deleted!</p> : null}
       {created ? <p> Deck Succesfully Created!</p> : null}
@@ -125,6 +121,8 @@ const EditingInfoStyles = styled.div`
   }
   .validation {
     color: red;
+    font-size: 12px;
+    margin-top: 0px;
   }
 
 `;
