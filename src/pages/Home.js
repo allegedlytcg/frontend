@@ -1,8 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import axios from 'axios';
 const Home = () => {
+	const token = localStorage.getItem('token');
+	let angularCall = axios.create({
+		baseURL: 'https://localhost:6000/api/v1/socket/jesus',
+		headers: {
+			authorization: token,
+		},
+	});
+	const toAngular= ()=> {
+		// angularCall().then(res => console.log(res)).catch(err => console.log(err))
+		axios.get('https://localhost:6000/api/v1/socket/jesus').then(res => console.log(res)).catch(err => console.log(err))
+	}
 	return (
 		<StyledHome>
 			<h1>Welcome to Allegedly TCG</h1>
@@ -14,7 +25,7 @@ const Home = () => {
 					<button>Deck Editor</button>
 				</Link>
 				<p>coming soon</p>
-				<button disabled>Play</button>
+				<a href="http://localhost:4200"><button onClick={toAngular}>Play</button></a>
 			</div>
 		</StyledHome>
 	);
