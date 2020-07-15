@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as _ from 'lodash';
+import { Roller } from 'react-awesome-spinners';
 
 const AvailableCards = (props) => {
-	const { buttons, cards, requestBytype, cardClick, handleAvailableSearch } = props;
+	const {
+		buttons,
+		cards,
+		requestBytype,
+		cardClick,
+		handleAvailableSearch,
+		loading,
+	} = props;
 	return (
 		<>
 			<AvailableCardsStyles>
@@ -18,25 +26,35 @@ const AvailableCards = (props) => {
 						</button>
 					);
 				})}
-				<input onChange={handleAvailableSearch} placeholder="Search..."></input>
-				<CardPool>
-					{_.sortBy(
-						cards,
-						'nationalPokedexNumber',
-						'supertype',
-						'name',
-					).map((card) => {
-						return (
-							<div key={card.id} className='cards'>
-								<img
-									src={card.imageUrl}
-									alt='card'
-									onClick={() => cardClick(card)}
-								/>
-							</div>
-						);
-					})}
-				</CardPool>
+				<input
+					onChange={handleAvailableSearch}
+					placeholder='Search...'
+				></input>
+				<br />
+				{loading ? (
+					<div className='roller'>
+						<Roller />
+					</div>
+				) : (
+					<CardPool>
+						{_.sortBy(
+							cards,
+							'nationalPokedexNumber',
+							'supertype',
+							'name',
+						).map((card) => {
+							return (
+								<div key={card.id} className='cards'>
+									<img
+										src={card.imageUrl}
+										alt='card'
+										onClick={() => cardClick(card)}
+									/>
+								</div>
+							);
+						})}
+					</CardPool>
+				)}
 			</AvailableCardsStyles>
 		</>
 	);
@@ -50,7 +68,7 @@ const AvailableCardsStyles = styled.div`
 		margin-right: 1rem;
 		cursor: pointer;
 		:focus {
-			background-color: #121E7C;
+			background-color: #121e7c;
 			color: white;
 			outline: none;
 			border-style: none;
@@ -58,6 +76,12 @@ const AvailableCardsStyles = styled.div`
 	}
 	p {
 		margin: 0.5rem 0rem;
+	}
+	.roller {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 78vh;
 	}
 `;
 
