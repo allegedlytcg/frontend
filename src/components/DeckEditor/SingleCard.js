@@ -23,7 +23,7 @@ const SingleCard = (props) => {
 							<SingleCardStyles key={card.imageUrl}>
 								<div className='center'>
 									<img
-										src={card.imageUrlHiRes}
+										src={card.imageUrl}
 										alt='selected card'
 									/>
 									<ButtonBar>
