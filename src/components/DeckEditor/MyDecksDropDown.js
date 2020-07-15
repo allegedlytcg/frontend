@@ -45,7 +45,7 @@ const MyDeckDropDown = (props) => {
 						>
 							{deckObj.name}
 						</option>
-					);
+					); 
 				})}
 			</select>
 		</StyledDropdown>

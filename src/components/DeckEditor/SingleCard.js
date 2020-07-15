@@ -1,169 +1,198 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Roller } from 'react-awesome-spinners';
 
 const SingleCard = (props) => {
-	const { selectedCard, addToEdit, removeFromEdit, checkQuantity, edit } = props;
+	const {
+		selectedCard,
+		addToEdit,
+		removeFromEdit,
+		checkQuantity,
+		edit,
+		loading,
+	} = props;
 
 	return (
 		<>
-			{selectedCard.map((card) => {
-				return (
-					<div key={card._id}>
-						<SingleCardStyles key={card.imageUrl}>
-						<div className="center">
-							<img src={card.imageUrlHiRes} alt='selected card' />
-							<ButtonBar>
-								<p>
-									{card.supertype === 'Energy'
-										? card.name ===
-										  'Double Colorless Energy'
-											? `${checkQuantity(card)}/4`
-											: checkQuantity(card)
-										: `${checkQuantity(card)}/4`}
-								</p>
-								<ButtonContainer>
-									<button onClick={() => addToEdit(card)}>
-										Add
-									</button>
-									<button
-										onClick={() => removeFromEdit(card)}
-									>
-										Remove
-									</button>
-								</ButtonContainer>
-								<p>{edit.length}/60</p>
-							</ButtonBar>
-							</div>
-							<div className='card-info'>
-								<div className='card-title'>
-									<h2>
-										{card.name}
-										{card.hp ? (
-											<span> {card.hp} HP </span>
-										) : null}
-									</h2>
-								</div>
-								{card.text ? (
-									<p>
-										Description: <br></br>
-										{card.text}
-									</p>
-								) : null}
-								<div className='basic-info'>
-									<div className='primary-info'>
-										{card.types ? (
-											<p>
-												Type:{' '}
-												{card.types
-													? card.types[0]
-													: null}
-											</p>
-										) : null}
-										{card.subtype ? (
-											<p>Subtype: {card.subtype}</p>
-										) : null}
-										{card.evolvesFrom ? (
-											<p>
-												Evolves from: {card.evolvesFrom}
-											</p>
-										) : null}
-									</div>
-									<div className='secondary-info'>
-										{card.weaknesses
-											? card.weaknesses.map(
-													(weakness, index) => {
-														return (
-															<p key={index}>
-																Weakeness:{' '}
-																{weakness.type}{' '}
-																{weakness.value}
-															</p>
-														);
-													},
-											  )
-											: null}
-										{card.convertedRetreatCost ? (
-											<p>
-												Retreat Cost:{' '}
-												{card.convertedRetreatCost}
-											</p>
-										) : null}
-										{card.resistances
-											? card.resistances.map(
-													(resistance, index) => {
-														return (
-															<p key={index}>
-																Resistance:{' '}
-																{
-																	resistance.type
-																}
-															</p>
-														);
-													},
-											  )
-											: null}
-									</div>
-								</div>
-
-								{card.ability ? (
-									<>
-										<br></br>
-										<h5>Pokemon Power:</h5>
+			{loading ? (
+				<Roller size={500} />
+			) : (
+				selectedCard.map((card) => {
+					return (
+						<div key={card._id}>
+							<SingleCardStyles key={card.imageUrl}>
+								<div className='center'>
+									<img
+										src={card.imageUrlHiRes}
+										alt='selected card'
+									/>
+									<ButtonBar>
 										<p>
-											{card.ability.name}:{' '}
-											{card.ability.text}
+											{card.supertype === 'Energy'
+												? card.name ===
+												  'Double Colorless Energy'
+													? `${checkQuantity(card)}/4`
+													: checkQuantity(card)
+												: `${checkQuantity(card)}/4`}
 										</p>
-									</>
-								) : null}
-								{card.attacks
-									? card.attacks.map((attack, index) => {
-											// will need to map over cost later
-											return (
-												<div key={index}>
-													<div
-														key={index}
-														className='attack-info'
-													>
-														<div className='primary-attack'>
-															<h5>
-																{attack.name}
-															</h5>
-															<p>
-																Cost:{' '}
-																{
-																	attack.convertedEnergyCost
-																}{' '}
-																{attack.cost[0]}
-															</p>
-															{attack.damage ? (
-																<p>
-																	Damage:{' '}
+										<ButtonContainer>
+											<button
+												onClick={() => addToEdit(card)}
+											>
+												Add
+											</button>
+											<button
+												onClick={() =>
+													removeFromEdit(card)
+												}
+											>
+												Remove
+											</button>
+										</ButtonContainer>
+										<p>{edit.length}/60</p>
+									</ButtonBar>
+								</div>
+								<div className='card-info'>
+									<div className='card-title'>
+										<h2>
+											{card.name}
+											{card.hp ? (
+												<span> {card.hp} HP </span>
+											) : null}
+										</h2>
+									</div>
+									{card.text ? (
+										<p>
+											Description: <br></br>
+											{card.text}
+										</p>
+									) : null}
+									<div className='basic-info'>
+										<div className='primary-info'>
+											{card.types ? (
+												<p>
+													Type:{' '}
+													{card.types
+														? card.types[0]
+														: null}
+												</p>
+											) : null}
+											{card.subtype ? (
+												<p>Subtype: {card.subtype}</p>
+											) : null}
+											{card.evolvesFrom ? (
+												<p>
+													Evolves from:{' '}
+													{card.evolvesFrom}
+												</p>
+											) : null}
+										</div>
+										<div className='secondary-info'>
+											{card.weaknesses
+												? card.weaknesses.map(
+														(weakness, index) => {
+															return (
+																<p key={index}>
+																	Weakeness:{' '}
 																	{
-																		attack.damage
+																		weakness.type
+																	}{' '}
+																	{
+																		weakness.value
 																	}
 																</p>
-															) : null}
-														</div>
-														<div className='secondary-attack'>
-															{attack.text ? (
-																<p>
-																	Description:{' '}
+															);
+														},
+												  )
+												: null}
+											{card.convertedRetreatCost ? (
+												<p>
+													Retreat Cost:{' '}
+													{card.convertedRetreatCost}
+												</p>
+											) : null}
+											{card.resistances
+												? card.resistances.map(
+														(resistance, index) => {
+															return (
+																<p key={index}>
+																	Resistance:{' '}
 																	{
-																		attack.text
+																		resistance.type
 																	}
 																</p>
-															) : null}
+															);
+														},
+												  )
+												: null}
+										</div>
+									</div>
+
+									{card.ability ? (
+										<>
+											<br></br>
+											<h5>Pokemon Power:</h5>
+											<p>
+												{card.ability.name}:{' '}
+												{card.ability.text}
+											</p>
+										</>
+									) : null}
+									{card.attacks
+										? card.attacks.map((attack, index) => {
+												// will need to map over cost later
+												return (
+													<div key={index}>
+														<div
+															key={index}
+															className='attack-info'
+														>
+															<div className='primary-attack'>
+																<h5>
+																	{
+																		attack.name
+																	}
+																</h5>
+																<p>
+																	Cost:{' '}
+																	{
+																		attack.convertedEnergyCost
+																	}{' '}
+																	{
+																		attack
+																			.cost[0]
+																	}
+																</p>
+																{attack.damage ? (
+																	<p>
+																		Damage:{' '}
+																		{
+																			attack.damage
+																		}
+																	</p>
+																) : null}
+															</div>
+															<div className='secondary-attack'>
+																{attack.text ? (
+																	<p>
+																		Description:{' '}
+																		{
+																			attack.text
+																		}
+																	</p>
+																) : null}
+															</div>
 														</div>
 													</div>
-												</div>
-											);
-									  })
-									: null}
-							</div>
-						</SingleCardStyles>
-					</div>
-				);
-			})}
+												);
+										  })
+										: null}
+								</div>
+							</SingleCardStyles>
+						</div>
+					);
+				})
+			)}
 		</>
 	);
 };
@@ -227,7 +256,6 @@ const SingleCardStyles = styled.div`
 	.center {
 		display: flex;
 		flex-direction: column;
-		
 	}
 `;
 
