@@ -50,7 +50,7 @@ function DropdownMenu(props) {
 				if (dropdownRef.current.contains(e.target)) {
 					return;
 				} else {
-					setOpen(false);
+					setOpen(!open);
 				}
 			}
 		};
