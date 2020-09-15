@@ -55,7 +55,7 @@ function DropdownMenu(props) {
 			}
 		};
 		// for now have to turn this off on the sign in page or you can login
-		if (open && history.location.pathname !== '/registerandlogin') {
+		if (open) {
 			document.addEventListener('mousedown', handleOutsideClick, false);
 		}
 		return () => {

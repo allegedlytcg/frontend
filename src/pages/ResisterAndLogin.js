@@ -3,13 +3,7 @@ import Register from '../components/RegisterAndLogin/Register';
 import Login from '../components/RegisterAndLogin/Login';
 import styled from 'styled-components';
 
-const RegisterAndLogin = (props) => {
-	// console.log(props);
-	const token = localStorage.getItem('token');
-	const { setOpen } = props;
-	useEffect(() => {
-		setOpen(!false);
-	}, [setOpen, token]);
+const RegisterAndLogin = () => {
 	return (
 		<RegisterAndLoginStyles>
 			<Register />
