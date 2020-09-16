@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Roller } from 'react-awesome-spinners';
@@ -114,7 +114,8 @@ const DeckEditor = () => {
 	};
 
 	// get user decks
-	const getDecks = () => {
+
+	const getDecks = useCallback(() => {
 		axiosWithAuth()
 			.get('/deck/me')
 			.then((res) => {
@@ -131,8 +132,7 @@ const DeckEditor = () => {
 			.catch((err) =>
 				console.log('no decks for this use or not logged in'),
 			);
-		return () => {};
-	};
+	}, []);
 
 	// remove from editing state array
 	const removeFromEdit = (card) => {
@@ -198,6 +198,7 @@ const DeckEditor = () => {
 							setDeckId={setDeckId}
 							getDecks={getDecks}
 							userDecks={userDecks}
+							setUserDecks={setUserDecks}
 							setSelectedCard={setSelectedCard}
 						/>
 					</DropdownContainer>

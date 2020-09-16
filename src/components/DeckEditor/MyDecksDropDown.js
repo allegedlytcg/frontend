@@ -8,11 +8,10 @@ const MyDeckDropDown = (props) => {
 		setDeckId,
 		getDecks,
 		userDecks,
+		// setUserDecks,
 		setDeckName,
 		setSelectedCard,
 	} = props;
-
-	// when rendered grab all user decks
 
 	useEffect(() => {
 		getDecks();
@@ -45,7 +44,7 @@ const MyDeckDropDown = (props) => {
 						>
 							{deckObj.name}
 						</option>
-					); 
+					);
 				})}
 			</select>
 		</StyledDropdown>
