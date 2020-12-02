@@ -4,7 +4,17 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
 
+Amplify.configure({
+  Auth: {
+    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
+    identityPoolId: "us-east-2_XjY6GT3QY",
 
+    // REQUIRED - Amazon Cognito Region
+    region: "us-east-2",
+  },
+});
+
+const currentConfig = Auth.configure();
 
 const Register = () => {
   const history = useHistory();
@@ -37,6 +47,22 @@ const Register = () => {
   // 	}
   // } ;
 
+  const fbLogin = e => {
+    e.preventDefault()
+    Auth.federatedSignIn({ provider: "Facebook" }).then(cred => {
+      // If success, you will get the AWS credentials
+      console.log(cred);
+      return Auth.currentAuthenticatedUser();
+  }).then(user => {
+      // If success, the user object you passed in Auth.federatedSignIn
+      console.log(user);
+  }).catch(e => {
+      console.log(e)
+  });;
+    
+
+  }
+
   return (
     <RegisterStyles>
       <h4>Register</h4>
@@ -68,12 +94,8 @@ const Register = () => {
         <div className="buttonDiv">
           <button>Register</button>
           <button
-            onClick={async (e) => {
-              e.preventDefault();
-              
-              let stuff = await Auth.federatedSignIn({ provider: "Facebook" });
-              console.log(stuff)
-            }}
+            onClick={(e) => fbLogin(e)}
+         
           >
             Open Facebook
           </button>
