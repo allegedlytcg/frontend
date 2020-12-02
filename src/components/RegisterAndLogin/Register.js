@@ -49,6 +49,8 @@ const Register = () => {
 
   const fbLogin = e => {
     e.preventDefault()
+    let hostedUIOptions = HostedUIOptions(scopes: ["openid", "email"], identityProvider: "Google")
+
     Auth.federatedSignIn({ provider: "Facebook" }).then(cred => {
       // If success, you will get the AWS credentials
       console.log(cred);
