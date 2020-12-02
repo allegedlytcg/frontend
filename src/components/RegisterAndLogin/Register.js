@@ -62,7 +62,7 @@ const Register = () => {
     
 
   }
-
+// looking like we might need another component that's the loging in page that pareses out that code from the url and 
   return (
     <RegisterStyles>
       <h4>Register</h4>

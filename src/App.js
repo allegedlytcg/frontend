@@ -9,6 +9,7 @@ import Dropdown from './components/menu/Dropdown';
 import Home from './pages/Home';
 import RegisterAndLogin from './pages/ResisterAndLogin';
 import DeckEditor from './pages/DeckEditor';
+import AuthRedirect from './pages/AuthRedirect';
 import './index.css';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,6 +58,7 @@ function App() {
 					)}
 				/>
 				<Route path='/deckeditor' component={DeckEditor} />
+				<Route path='/auth' component={AuthRedirect} />
 			</Switch>
 		</>
 	);
