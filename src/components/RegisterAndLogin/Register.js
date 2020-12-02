@@ -4,17 +4,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
 
-Amplify.configure({
-  Auth: {
-    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-    identityPoolId: "us-east-2_XjY6GT3QY",
 
-    // REQUIRED - Amazon Cognito Region
-    region: "us-east-2",
-  },
-});
-
-const currentConfig = Auth.configure();
 
 const Register = () => {
   const history = useHistory();
