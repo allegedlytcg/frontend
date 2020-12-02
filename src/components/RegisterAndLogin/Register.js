@@ -80,8 +80,9 @@ const Register = () => {
           <button
             onClick={async (e) => {
               e.preventDefault();
-              console.log("did something")
-              await Auth.federatedSignIn({ provider: "Facebook" });
+              
+              let stuff = await Auth.federatedSignIn({ provider: "Facebook" });
+              console.log(stuff)
             }}
           >
             Open Facebook
