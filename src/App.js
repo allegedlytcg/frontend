@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // libraries
 import { Route, Switch } from 'react-router-dom';
+import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 //components
 import Menu from './components/menu/Menu';

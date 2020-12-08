@@ -3,18 +3,9 @@ import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
+import config from "../../aws-exports"
+Amplify.configure(config);
 
-Amplify.configure({
-  Auth: {
-    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-    identityPoolId: "us-east-2_XjY6GT3QY",
-
-    // REQUIRED - Amazon Cognito Region
-    region: "us-east-2",
-  },
-});
-
-const currentConfig = Auth.configure();
 
 const Register = () => {
   const history = useHistory();
@@ -49,7 +40,7 @@ const Register = () => {
 
   const fbLogin = e => {
     e.preventDefault()
-
+     
     Auth.federatedSignIn({ provider: "Facebook" }).then(cred => {
       // If success, you will get the AWS credentials
       console.log(cred);
