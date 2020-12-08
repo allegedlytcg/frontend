@@ -3,9 +3,42 @@ import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Amplify, { Auth } from "aws-amplify";
-import config from "../../aws-exports"
-Amplify.configure(config);
+// import config from "../../aws-exports"
 
+// Amplify.configure(config);
+Amplify.configure({
+  Auth: {
+    // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
+    identityPoolId: "us-east-2_XjY6GT3QY",
+
+    // REQUIRED - Amazon Cognito Region
+    region: "us-east-2",
+    
+      aws_project_region: "us-east-2",
+      aws_cognito_identity_pool_id: "us-east-2:fe1c382c-1179-4318-8105-3a4852dd2e9b",
+      aws_cognito_region: "us-east-2",
+      aws_user_pools_id: "us-east-2_Kl25w6ieQ",
+      aws_user_pools_web_client_id: "474ugf0pfpdoag0qf81nigrhne",
+      oauth: {
+          domain: "frontende60f844c-e60f844c-dev.auth.us-east-2.amazoncognito.com",
+          scope: [
+              "phone",
+              "email",
+              "openid",
+              "profile",
+              "aws.cognito.signin.user.admin"
+          ],
+          redirectSignIn: "localhost:3000/registerandlogin/",
+          redirectSignOut: "localhost:3000/registerandlogin/",
+          responseType: "code"
+      },
+      federationTarget: "COGNITO_USER_POOLS"
+
+  
+  },
+});
+
+const currentConfig = Auth.configure();
 
 const Register = () => {
   const history = useHistory();
