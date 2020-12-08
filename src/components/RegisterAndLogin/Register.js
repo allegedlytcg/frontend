@@ -28,8 +28,8 @@ Amplify.configure({
               "profile",
               "aws.cognito.signin.user.admin"
           ],
-          redirectSignIn: "localhost:3000/registerandlogin/",
-          redirectSignOut: "localhost:3000/registerandlogin/",
+          redirectSignIn: "https://cognito.d2hdukfixal4k9.amplifyapp.com/registerandlogin/",
+          redirectSignOut: "https://cognito.d2hdukfixal4k9.amplifyapp.com/registerandlogin/",
           responseType: "code"
       },
       federationTarget: "COGNITO_USER_POOLS"
