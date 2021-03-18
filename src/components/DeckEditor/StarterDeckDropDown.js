@@ -1,36 +1,57 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import * as _ from "lodash"
+import { getStarterDecks } from '../../services/DeckService';
+import { GlobalContext } from '../../context/GlobalState';
 
-const StarterDeckDropDown = (props) => {
-	const { setEdit, setExisting, setDeckName, setSelectedCard } = props;
-	let user = localStorage.getItem('currentUser');
+const StarterDeckDropDown = () => {
+	const {
+		cardCatalogState,
+		editingDeckDispatch,
+		deckNameDispatch,
+		selectedCardDispatch,
+		existingDispatch,
+	} = useContext(GlobalContext);
 
-	const getStarterDeck = (starterDeckName) => {
-		setEdit([]);
-		setDeckName('');
-		setExisting(false);
-		const name = starterDeckName.replace(/ /g, '').toLowerCase();
-		axios
-			.get(
-				`https://alleged-mongo-backend.herokuapp.com/api/v1/pokemon/${name}`,
-			)
-			.then((starter) => {
-				let placeholder = '';
-				if (user) placeholder = user + "'s ";
-				let cards = _.sortBy(starter.data, "type","nationalPokedexNumber", "supertype", "name")
-				setEdit(cards);
-				setDeckName(`${placeholder}${starterDeckName} Deck`);
-				setSelectedCard([cards[0]]);
-			})
-			.catch((err) => console.log(err));
+	const user = localStorage.getItem('currentUser');
+
+	const handleChange = async (starterDeckName) => {
+		existingDispatch({ type: 'RESET' });
+		editingDeckDispatch({ type: 'RESET' });
+
+		if (starterDeckName === 'Starter Decks') {
+			editingDeckDispatch({ type: 'RESET' });
+			deckNameDispatch({ type: 'RESET' });
+			selectedCardDispatch({
+				type: 'SET_SELECTED_CARD',
+				payload: cardCatalogState[0],
+			});
+
+			return;
+		}
+
+		try {
+			let placeholder = '';
+			if (user) placeholder = user + "'s ";
+
+			const cards = await getStarterDecks(starterDeckName);
+			editingDeckDispatch({ type: 'SET_EDITING_DECK', payload: cards });
+			deckNameDispatch({
+				type: 'SET_DECK_NAME',
+				payload: `${placeholder}${starterDeckName} Deck`,
+			});
+			selectedCardDispatch({
+				type: 'SET_SELECTED_CARD',
+				payload: cards[0],
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
 		<DropdownStyles>
-			<select onChange={(e) => getStarterDeck(e.target.value)}>
-				<option>Starter Decks</option>
+			<select onChange={(e) => handleChange(e.target.value)}>
+				<option value={'Starter Decks'}>Starter Decks</option>
 				<option>Blackout</option>
 				<option>Brushfire</option>
 				<option>Overgrowth</option>

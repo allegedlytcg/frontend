@@ -1,42 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { GlobalContext } from '../../context/GlobalState';
 
-const MyDeckDropDown = (props) => {
+const MyDeckDropDown = () => {
 	const {
-		setEdit,
-		setExisting,
-		setDeckId,
-		getDecks,
-		userDecks,
-		// setUserDecks,
-		setDeckName,
-		setSelectedCard,
-	} = props;
+		userDecksState,
+		editingDeckDispatch,
+		deckNameDispatch,
+		existingDispatch,
+		deckIdDispatch,
+		selectedCardDispatch,
+		cardCatalogState,
+	} = useContext(GlobalContext);
 
-	useEffect(() => {
-		getDecks();
-	}, [getDecks]);
+	const handleChange = (deckObj) => {
+		if (deckObj === 'Create New Deck') {
+			editingDeckDispatch({ type: 'RESET' });
+			existingDispatch({ type: 'RESET' });
+			deckNameDispatch({ type: 'RESET' });
+			selectedCardDispatch({
+				type: 'SET_SELECTED_CARD',
+				payload: cardCatalogState[0],
+			});
 
-	// if deck selected from dropdown update the edit state array
-	const addAllToEdit = (deckObj) => {
-		// next two lines clear those states when the click the create new option
-		setExisting(false);
-		setEdit([]);
-		setDeckName('');
-		let newDeckObj = JSON.parse(deckObj);
-		setDeckName(newDeckObj.name);
-		setExisting(true);
-		setDeckId(newDeckObj._id);
-		// console.log(newDeckObj.cards[0]);
-		setSelectedCard([newDeckObj.cards[0]]);
-		setEdit(newDeckObj.cards);
+			return;
+		}
+
+		existingDispatch({ type: 'RESET' });
+		editingDeckDispatch({ type: 'RESET' });
+		deckNameDispatch({ type: 'RESET' });
+		const newDeckObj = JSON.parse(deckObj);
+		deckNameDispatch({ type: 'SET_DECK_NAME', payload: newDeckObj.name });
+		existingDispatch({ type: 'SET_EXISTING' });
+		deckIdDispatch({ type: 'SET_DECK_ID', payload: newDeckObj._id });
+		selectedCardDispatch({
+			type: 'SET_SELECTED_CARD',
+			payload: newDeckObj.cards[0],
+		});
+		editingDeckDispatch({
+			type: 'SET_EDITING_DECK',
+			payload: newDeckObj.cards,
+		});
 	};
 
 	return (
 		<StyledDropdown className='select'>
-			<select onChange={(e) => addAllToEdit(e.target.value)}>
-				<option>Create New Deck</option>
-				{userDecks.map((deckObj) => {
+			<select onChange={(e) => handleChange(e.target.value)}>
+				<option value={'Create New Deck'}>Create New Deck</option>
+				{userDecksState.map((deckObj) => {
 					return (
 						<option
 							value={JSON.stringify(deckObj)}

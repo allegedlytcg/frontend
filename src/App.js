@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 // libraries
 import { Route, Switch } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 
+import { GlobalState } from './context/GlobalState';
 //components
 import Menu from './components/menu/Menu';
 import MenuItem from './components/menu/MenuItem';
@@ -12,7 +14,6 @@ import DeckEditor from './pages/DeckEditor';
 import './index.css';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 //custom hooks
 import useDarkMode from './utils/useDarkMode';
 
@@ -31,8 +32,7 @@ function App() {
 	};
 
 	return (
-		<>
-			{/* this might be terrible */}
+		<GlobalState>
 			<Menu>
 				<MenuItem
 					open={open}
@@ -56,9 +56,11 @@ function App() {
 						<RegisterAndLogin open={open} setOpen={setOpen} />
 					)}
 				/>
-				<Route path='/deckeditor' component={DeckEditor} />
+				<ToastProvider autoDismiss={true}>
+					<Route path='/deckeditor' component={DeckEditor} />
+				</ToastProvider>
 			</Switch>
-		</>
+		</GlobalState>
 	);
 }
 
