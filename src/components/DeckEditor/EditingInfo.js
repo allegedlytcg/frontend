@@ -1,131 +1,139 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import axiosWithAuth from '../../utils/axiosWithAuth';
+import { Roller } from 'react-awesome-spinners';
+import { useToasts } from 'react-toast-notifications';
+import { GlobalContext } from '../../context/GlobalState';
+import {
+	saveDeck,
+	getUserDecks,
+	updateDeck,
+	deleteDeck,
+} from '../../services/DeckService';
 
-const EditingInfo = (props) => {
+const EditingInfo = () => {
 	const {
-		edit,
-		setEdit,
-		existing,
-		setExisting,
-		deckName,
-		deckId,
-		getDecks,
-		setDeckName,
-	} = props;
+		deckNameState,
+		deckNameDispatch,
+		editingDeckState,
+		editingDeckDispatch,
+		existingState,
+		existingDispatch,
+		userDecksDispatch,
+		deckIdState,
+	} = useContext(GlobalContext);
 
-	const [updated, setUpdated] = useState(false);
-	const [deleted, setDeleted] = useState(false);
-	const [created, setCreated] = useState(false);
-	const [err, setErr] = useState('');
+	const { addToast } = useToasts();
+
+	const [loading, setLoading] = useState(false);
 
 	const userInput = (e) => {
-		setDeckName(e.target.value);
+		deckNameDispatch({ type: 'SET_DECK_NAME', payload: e.target.value });
 	};
 
-	// post request to api/v1/deck
-	const saveDeck = () => {
+	const handleSave = async () => {
+		setLoading(true);
 		const deckObj = {};
-		deckObj.name = deckName;
-		deckObj.cards = edit;
-
-		axiosWithAuth()
-			.post('/deck', deckObj)
-			// # TODO redirect to somewhere makes sense after saving or maybe not
-			.then((created) => {
-				setCreated(true);
-				getDecks();
-				setInterval(function () {
-					setCreated(false);
-				}, 2000);
-			})
-			.catch((err) => {
-				console.log(err, 'error saving deck');
-				setErr('error saving deck');
-				setInterval(function () {
-					setErr('');
-				}, 2000);
+		deckObj.name = deckNameState;
+		deckObj.cards = editingDeckState;
+		try {
+			const res = await saveDeck(deckObj);
+			const newDeck = await getUserDecks();
+			userDecksDispatch({ type: 'SET_USER_DECKS', payload: newDeck });
+			existingDispatch({ type: 'SET_EXISTING' });
+			setLoading(false);
+			addToast(`${deckObj.name} Successfully ${res.statusText}`, {
+				appearance: 'success',
 			});
-	};
-
-	// put req to api/v1/deck/deckId
-	const updateDeck = () => {
-		const deckObj = {};
-		deckObj.name = deckName;
-		deckObj.cards = edit;
-		if (deckName.length >= 4) {
-			axiosWithAuth()
-				.put(`/deck/${deckId}`, deckObj)
-				.then((update) => {
-					setUpdated(true);
-					getDecks();
-					setInterval(function () {
-						setUpdated(false);
-					}, 2000);
-				})
-				.catch((err) => console.log(err, 'for sure error'));
+		} catch (error) {
+			console.log(error);
+			addToast(error.message, { appearance: 'error' });
+			setLoading(false);
 		}
 	};
 
-	// delete req to api/v1/deck/deckId
-	const deleteDeck = () => {
-		axiosWithAuth()
-			.delete(`/deck/${deckId}`)
-			.then((del) => {
-				setDeleted(true);
-				getDecks();
-				setEdit([]);
-				setExisting(false);
-				setDeckName('');
-				setInterval(function () {
-					setDeleted(false);
-				}, 2000);
-			})
-			.catch((err) => console.log(err, 'error on dlete'));
+	const handleUpdate = async () => {
+		setLoading(true);
+		const deckObj = {};
+		deckObj.name = deckNameState;
+		deckObj.cards = editingDeckState;
+		try {
+			await updateDeck(deckIdState, deckObj);
+			const newDeck = await getUserDecks();
+			userDecksDispatch({ type: 'SET_USER_DECKS', payload: newDeck });
+			setLoading(false);
+			addToast(`${deckObj.name} Successfully Updated`, {
+				appearance: 'success',
+			});
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+			addToast(error.message, { appearance: 'error' });
+		}
 	};
+
+	const handleDelete = async () => {
+		setLoading(true);
+		try {
+			await deleteDeck(deckIdState);
+			const newDeck = await getUserDecks();
+			userDecksDispatch({ type: 'SET_USER_DECKS', payload: newDeck });
+			deckNameDispatch({ type: 'RESET' });
+			editingDeckDispatch({ type: 'RESET' });
+			existingDispatch({ type: 'RESET' });
+			setLoading(false);
+			addToast(`${deckNameState} Successfully Deleted`, {
+				appearance: 'success',
+			});
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+			addToast(error.message, { appearance: 'error' });
+		}
+	};
+
 	return (
 		<EditingInfoStyles>
-			<label>Deck Name</label>
+			<label style={{ display: 'flex', height: '2rem' }}>
+				Deck Name{' '}
+				{deckNameState.length < 4 ? (
+					<p className='validation'>
+						* deck names must be at least 4 characters
+					</p>
+				) : null}
+			</label>
 			<StyledDiv>
 				<input
 					name='name'
-					value={deckName}
+					value={deckNameState}
 					onChange={userInput}
 				></input>
 
-				{existing === false ? (
+				{existingState === false ? (
 					<ButtonCont>
-						<button onClick={saveDeck}>Save</button>
+						<button onClick={handleSave}>Save</button>
 					</ButtonCont>
 				) : (
 					<ButtonCont>
-						<button onClick={updateDeck}>Save</button>
+						<button onClick={handleUpdate}>Save</button>
 
-						<button onClick={deleteDeck}>Delete</button>
-						{deleted ? <p> Deck Succesfully Deleted!</p> : null}
+						<button onClick={handleDelete}>Delete</button>
 					</ButtonCont>
 				)}
+				<LoadingContainer>
+					{loading ? <Roller></Roller> : null}
+				</LoadingContainer>
 			</StyledDiv>
-			{deckName.length < 4 ? (
-				<p className='validation'>
-					* deck names must be at least 4 characters
-				</p>
-			) : null}
-
-			{updated ? <p> Deck Succesfully Updated!</p> : null}
-			{deleted ? <p> Deck Succesfully Deleted!</p> : null}
-			{created ? <p> Deck Succesfully Created!</p> : null}
-			{err ? <p>{err}</p> : null}
 		</EditingInfoStyles>
 	);
 };
 
 const EditingInfoStyles = styled.div`
-	margin: 1rem 0 0 0;
+	margin: 1rem 0;
 	input {
 		height: 1rem;
 	}
 	.validation {
+		position: relative;
 		color: red;
 		font-size: 12px;
 		margin-top: 0px;
@@ -141,7 +149,14 @@ const ButtonCont = styled.div`
 
 const StyledDiv = styled.div`
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
+	width: 100%;
+`;
+
+const LoadingContainer = styled.div`
+	position: absolute;
+	left: 69rem;
+	top: 6rem;
 `;
 
 export default EditingInfo;
