@@ -17,7 +17,22 @@ const Login = () => {
 		});
 	};
 
-	const userLogin = (e) => {
+	// const userLogin = (e) => {
+	// 	e.preventDefault();
+	// 	axios
+	// 		.post(
+	// 			`https://alleged-mongo-backend.herokuapp.com/api/v1/user/login`,
+	// 			user,
+	// 		)
+	// 		.then((res) => {
+	// 			localStorage.setItem('currentUser', res.data.name);
+	// 			localStorage.setItem('token', res.data.token);
+	// 			history.push('/');
+	// 		})
+	// 		.catch((err) => console.log(err, 'for sure error'));
+	// };
+
+	const cognitoUserLogin = (e) => {
 		e.preventDefault();
 		axios
 			.post(
@@ -35,7 +50,7 @@ const Login = () => {
 	return (
 		<LoginStyles>
 			<h4>Log in</h4>
-			<form onSubmit={userLogin}>
+			<form onSubmit={cognitoUserLogin}>
 				<div className='labelAndInput'>
 					<label>username</label> <br />
 					<input

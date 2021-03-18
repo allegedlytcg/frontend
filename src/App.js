@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // libraries
 import { Route, Switch } from 'react-router-dom';
+import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 //components
 import Menu from './components/menu/Menu';
@@ -9,6 +10,7 @@ import Dropdown from './components/menu/Dropdown';
 import Home from './pages/Home';
 import RegisterAndLogin from './pages/ResisterAndLogin';
 import DeckEditor from './pages/DeckEditor';
+import AuthRedirect from './pages/AuthRedirect';
 import './index.css';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,6 +59,7 @@ function App() {
 					)}
 				/>
 				<Route path='/deckeditor' component={DeckEditor} />
+				<Route path='/auth' component={AuthRedirect} />
 			</Switch>
 		</>
 	);
