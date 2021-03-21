@@ -84,13 +84,7 @@ function DropdownMenu(props) {
 				<div className='menu'>
 					<h2>Main Menu</h2>
 					{/* Someday this might link to password reset form  or maybe that goes into settings but so maybe avatars or sprites or something kewl*/}
-					{token ? (
-						<DropdownItem
-							leftIcon={<FontAwesomeIcon icon={faUser} />}
-						>
-							{username}
-						</DropdownItem>
-					) : (
+					{token ? null : (
 						<Link to='registerandlogin'>
 							<DropdownItem
 								leftIcon={<FontAwesomeIcon icon={faUser} />}

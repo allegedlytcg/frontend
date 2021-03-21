@@ -64,6 +64,8 @@ export const GlobalState = (props) => {
 					payload: userDecks,
 				});
 				existingDispatch({ type: 'RESET' });
+				editingDeckDispatch({ type: 'RESET' });
+				deckNameDispatch({ type: 'RESET' });
 			} catch (error) {}
 		}
 
